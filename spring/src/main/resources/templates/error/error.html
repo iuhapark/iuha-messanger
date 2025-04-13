@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unexpected Error</title>
+</head>
+<body>
+<h1>오류 발생</h1>
+<p th:text="${message}">예상치 못한 오류가 발생했습니다.</p>
+<a th:href="@{/}">홈으로 돌아가기</a>
+</body>
+</html>
