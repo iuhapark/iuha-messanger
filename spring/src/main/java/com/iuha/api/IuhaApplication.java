@@ -1,4 +1,4 @@
-package com.iuha.com;
+package com.iuha.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
