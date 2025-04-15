@@ -20,7 +20,57 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    /* Spring Security */
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    /* OAuth */
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'com.google.api-client:google-api-client:2.6.0'
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server'
+
+    /* JPA */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    /* jsoup */
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.3'
+
+    /* thymeleaf */
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    /* log4j */
+    implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.23.1'
+
+    /* Lombok */
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+
+    /* hibernate */
+    runtimeOnly 'com.h2database:h2'
+
+    /** redis */
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    /* mysql */
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    /* messaging */
+    implementation 'org.springframework:spring-messaging:6.2.5'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:3.4.4'
+    implementation 'org.webjars:stomp-websocket:2.3.4'
+
+    /* jackson */
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    /* rabbitmq */
+    implementation 'org.springframework.amqp:spring-rabbit:3.2.4'
 }
 
 tasks.named('test') {
