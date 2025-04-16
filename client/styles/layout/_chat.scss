@@ -1,0 +1,145 @@
+@import "./global";
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-body {
+  display: flex;
+  height: 100%;
+}
+
+.chat-main {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+
+  .chat-room {
+    position: relative;
+    height: 85vh;
+    background-color: var(--background);
+    color: var(--text-color);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 85vh;
+}
+
+.chat-message-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  &.me {
+    align-items: flex-end;
+
+    .chat-bubble-wrapper {
+      flex-direction: row-reverse; // 말풍선 오른쪽, 시간 왼쪽
+      text-align: right;
+    }
+  }
+
+  &.you {
+    align-items: flex-start;
+
+    .chat-bubble-wrapper {
+      flex-direction: row; // 말풍선 왼쪽, 시간 오른쪽
+      text-align: left;
+    }
+  }
+}
+
+.chat-bubble-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.chat-time {
+  font-size: 0.75rem;
+  color: var(--text-color);
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+
+.chat-sender {
+  font-size: 0.75rem;
+  color: var(--text-color);
+}
+
+.chat-bubble {
+  max-width: 70%;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  word-break: break-word;
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+
+  &.me {
+    align-self: flex-end;
+    background-color: var(--active-bg);
+  }
+
+  &.you {
+    align-self: flex-start;
+    background-color: var(--hover-bg);
+  }
+}
+
+.chat-bottom {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  padding: 0 1rem;
+  background-color: var(--background);
+
+  .chat-input-area {
+    display: flex;
+    gap: 0.5rem;
+    background-color: var(--background);
+  }
+
+  .chat-input {
+    flex: 1;
+    border: solid var(--border-color);
+    border-radius: 2rem;
+    padding: 0.6rem;
+    background-color: var(--background);
+    color: var(--text-color);
+  }
+
+  .chat-send-btn {
+    padding: 0.6rem 1rem;
+    background-color: var(--button-color);
+    color: var(--background);
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--button-hover);
+    }
+  }
+}
+
+.chat-loading {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.25rem;
+  color: var(--text-color);
+  background-color: var(--background);
+}
