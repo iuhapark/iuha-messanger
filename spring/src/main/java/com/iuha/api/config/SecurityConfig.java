@@ -33,7 +33,7 @@ public class SecurityConfig {
                         )
                 )
                 .authorizeHttpRequests((authorizeRequest) -> authorizeRequest
-                        .requestMatchers("/chat/**").hasRole(Role.USER.name())
+                        .requestMatchers("/api/chat/**").authenticated()
                         .requestMatchers("/", "/css/**", "images/**", "/js/**", "/login/*", "/logout/*").permitAll()
                         .anyRequest().authenticated()
                 )
