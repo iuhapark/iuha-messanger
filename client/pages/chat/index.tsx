@@ -16,7 +16,7 @@ const Chat = () => {
         {activeRoomId ? (
           <ChatRoom roomId={activeRoomId} />
         ) : (
-          <div className='chat-placeholder'>Select a chat room to start chatting</div>
+          <div className='chat-placeholder'>Select a chat room to start chatting.</div>
         )}
       </div>
     </div>

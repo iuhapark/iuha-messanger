@@ -11,7 +11,7 @@ const Header = () => {
     <header className='header'>
       <div className='logo'>iuha</div>
       <div className='header-right'>
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <button className='header-icon' onClick={logout}>
           <LogoutIcon className='header-icon' />
         </button>

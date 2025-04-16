@@ -8,25 +8,14 @@
   background-color: var(--background);
   border-right: 1px solid var(--border-color);
   padding-block: 1rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
   overflow-y: auto;
 
   .new-room-btn {
     align-self: flex-end;
-    margin-inline: 0.8rem;
+    margin-inline: 0.9rem;
     margin-bottom: 1rem;
-    width: 2rem;
-    height: 2rem;
-    padding: 0.2rem;
     border-radius: 2rem;
-    border: none;
     cursor: pointer;
-    font-weight: bold;
-    background-color: transparent;
-    color: var(--foreground);
 
     &:hover {
       background-color: var(--button-hover);
@@ -38,6 +27,7 @@
     padding: 0.7rem;
     border-radius: 0.7rem;
     transition: all 0.2s ease;
+    position: static;
 
     &:hover {
       background-color: var(--hover-bg);

@@ -1,14 +1,17 @@
 @import "./global";
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--background);
-    color: var(--foreground);
-    border-bottom: 1px solid var(--border-color);
-    padding: 0.2rem;
-    flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: var(--background);
+  border-bottom: 1px solid var(--border-color);
   }
   
   .logo {
@@ -23,11 +26,8 @@
 
     .header-icon{
       cursor: pointer;
-      width: 1.8rem;
-      height: 1.8rem;
       border-radius: 50%;
-      color: var(--foreground);   
-      border: none;
+      color: var(--text-color);   
       padding: 0%;
       background-color: transparent;
     
@@ -51,7 +51,6 @@
 
   .header-icon {
     cursor: pointer;
-    font-size: 1.8rem;
-    color: var(--foreground);
+    color: var(--text-color);
   }
   
