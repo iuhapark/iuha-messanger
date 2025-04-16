@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f7f7;
+  --foreground: #000;
+  --border-color: #ddd;
+  --hover-bg: #eee;
+  --active-bg: #eee;
+  --button-color: #333;
+  --button-hover: #ccc;
   }
   
   @theme inline {
@@ -14,8 +19,13 @@
   
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: #0a0a0a;
-      --foreground: #ededed;
+      --background: #1e1e1e;
+      --foreground: #ffffff;
+      --border-color: #333;
+      --hover-bg: #333;
+      --active-bg: #333;
+      --button-color: #ffffff;
+      --button-hover: #444;
     }
   }
   
