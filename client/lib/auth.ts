@@ -1,8 +1,9 @@
 import { destroyCookie } from "nookies";
-
+import api from './api';
+import { User } from '@/\btypes';
 
 export const login = () => {
-  window.location.href = `http://localhost:8080/oauth2/authorization/google`
+  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`
 }
 
 export const logout = () => {
@@ -12,9 +13,11 @@ export const logout = () => {
   destroyCookie(null, 'refreshToken');
 
   /* 서버 로그아웃 */
-  window.location.href = `http://localhost:8080/logout`
+  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/logout`
 
-  /* 클라이언트 리디렉션 */
-  // window.location.href = '/';
+};
 
+export const getSessionUser = async (): Promise<User> => {
+  const res = await api.get('/auth/user');
+  return res.data;
 };

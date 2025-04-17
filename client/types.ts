@@ -10,12 +10,22 @@ export interface User {
 export interface ChatRoom {
   id: string;
   name: string;
+  sender?: User;
+  receiver?: User;
 }
 
 export interface Message {
   id?: string;
-  senderId: string;
-  receiverId: string;
-  content: string;
+  sender: string;
+  receiver: string;
+  message: string;
   timestamp?: string;
+}
+
+export interface ChatRoomProps {
+  roomId: string;
+}
+
+export interface ChatMessageProps {
+  roomId: string;
 }
