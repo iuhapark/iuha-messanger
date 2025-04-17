@@ -1,48 +1,33 @@
 package com.iuha.api.controller;
 
-import com.iuha.api.entity.model.User;
-import com.iuha.api.jwt.JwtTokenProvider;
-import com.iuha.api.repository.UserRepository;
+import com.iuha.api.config.auth.LoginUser;
+import com.iuha.api.entity.dto.SessionUser;
+import com.iuha.api.entity.dto.UserDto;
+import com.iuha.api.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.sql.SQLException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/token")
+@Slf4j
+@RequestMapping("/api/auth")
 public class AuthController {
 
-    private final JwtTokenProvider jwtTokenProvider;
-    private final StringRedisTemplate redisTemplate;
-    private final UserRepository userRepository;
+    private final HttpSession httpSession;
+    private final UserService service;
 
-    /**
-     * Authorization 헤더에 담긴 RefreshToken을 기반으로 유저 정보 반환
-     */
     @GetMapping("/user")
-    public ResponseEntity<?> getUserFromToken(@RequestHeader("Authorization") String token) {
-        String refreshToken = token.replace("Bearer ", "");
-
-        if (!jwtTokenProvider.isTokenValid(refreshToken, true)) {
-            return ResponseEntity.status(401).body("Invalid or expired refresh token.");
-        }
-
-        String email = jwtTokenProvider.getEmailFromToken(refreshToken);
-        String redisToken = redisTemplate.opsForValue().get(email);
-
-        if (redisToken == null || !redisToken.equals(refreshToken)) {
-            return ResponseEntity.status(401).body("Token not found in Redis.");
-        }
-
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        return userOpt
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public SessionUser user(@LoginUser SessionUser user) {
+        log.info("세션에서 꺼낸 유저: {}", user);
+        return user;
+    }
+    @PostMapping(path = "/login")
+    public ResponseEntity<SessionUser> login(@RequestBody UserDto dto) throws SQLException {
+        return ResponseEntity.ok(service.login(dto));
     }
 }

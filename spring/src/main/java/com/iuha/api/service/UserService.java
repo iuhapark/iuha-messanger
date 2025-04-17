@@ -1,5 +1,6 @@
 package com.iuha.api.service;
 
+import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
 
@@ -14,6 +15,7 @@ public interface UserService {
                 .name(dto.getName())
                 .password(dto.getPassword())
                 .profile(dto.getProfile())
+                .role(dto.getRole())
                 .build();
     }
 
@@ -25,8 +27,10 @@ public interface UserService {
                 .name(user.getName())
                 .password(user.getPassword())
                 .profile(user.getProfile())
+                .role(user.getRole())
                 .build();
     }
 
-    Optional<User> findById(Long id);
+    SessionUser login(UserDto dto);
+    Optional<User> findById(String id);
 }
