@@ -1,52 +1,65 @@
-'use client'
-
-import { useEffect, useState } from 'react';
-import api, { API } from '@/lib/api';
-import { useRouter } from 'next/navigation';
-
-interface ChatMessage {
-  id: string;
-  sender: string;
-  receiver: string;
-  message: string;
-  timestamp: string;
-}
+import { useEffect, useState } from "react";
+import api from "@/lib/api";
+import { useRouter } from "next/router";
+import { ChatRoom } from "@/\btypes";
+import { useAuth } from "@/hooks/useAuth";
+import { errorHandling } from "@/utils/error";
 
 const ChatRoomList = () => {
-  const [rooms, setRooms] = useState<ChatMessage[]>([]);
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
   const router = useRouter();
+  const { user } = useAuth();
+  const userId = user?.id;
 
+  /* 내 채팅방 목록 조회 */
   useEffect(() => {
-    const fetchMessages = async () => {
-      const res = await api.get(`${API.CHAT}/my`);
-      setRooms(
-        res.data.sort((a: ChatMessage, b: ChatMessage) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-        )
-      );
+    const fetchRooms = async () => {
+      try {
+        const res = await api.get('/chat/my');
+        setChatRooms(res.data);
+      } catch (err: any) {
+        const message = errorHandling(err);
+        alert(message);
+      }
     };
-    fetchMessages();
+    fetchRooms();
   }, []);
 
-  const handleRoomClick = (receiverId: string) => {
-    router.push(`/chat?roomId=${receiverId}`);
+  /* 채팅방 클릭 시 이동 */
+  const handleClick = (room: ChatRoom) => {
+    router.push({
+      pathname: `/chat/${room.id}`,
+      query: {
+        senderId: user?.id,
+        receiverId: user?.id,
+      },
+    });
   };
 
-  const uniqueReceivers = Array.from(
-    new Map(rooms.map((msg) => [msg.receiver, msg])).values()
-  );
+  /* 채팅방 생성 DB 저장 */
+  const createRoom = async () => {
+    try {
+      const { data } = await api.post(`/chat/save`, {
+        name: `${user?.name}`,
+        sender: { id: userId },
+        receiver: { id: userId },
+      });
+      setChatRooms((prev) => [...prev, data]);
+      handleClick(data);
+    } catch (err) {
+      const message = errorHandling(err);
+      alert(message);
+    }
+  };
 
   return (
-    <aside className='chat-side'>
-      <h2>Chat Rooms</h2>
-      <ul>
-        {uniqueReceivers.map((msg) => (
-          <li key={msg.receiver} onClick={() => handleRoomClick(msg.receiver)}>
-            {msg.receiver} - {msg.message}
-          </li>
-        ))}
-      </ul>
-    </aside>
+    <div className='chat-list'>
+      {chatRooms.map((room) => (
+        <div key={room.id} className='room' onClick={() => handleClick(room)}>
+          {room.name}
+        </div>
+      ))}
+    </div>
   );
 };
 
