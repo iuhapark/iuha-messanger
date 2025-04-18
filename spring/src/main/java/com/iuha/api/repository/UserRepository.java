@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
     List<ChatRoom> findByNameOrderByIdDesc(String roomId);
     Optional<User> findByEmail(String email); // 중복 가입 확인
 }
