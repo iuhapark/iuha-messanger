@@ -15,16 +15,22 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String profile;
+    private Role role;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes,
-                           String nameAttributeKey, String name,
-                           String email, String picture) {
+                           String nameAttributeKey,
+                           String name,
+                           String email,
+                           String profile,
+                           Role role) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.profile = profile;
+        this.role = role;
+
     }
 
     // OAuth2User에서 반환하는 사용자 정보는 Map
@@ -42,19 +48,19 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
-                .picture((String) attributes.get("picture"))
+                .profile((String) attributes.get("profile"))
                 .attributes(attributes)
                 .nameAttributeKey(usernameAttributeName)
                 .build();
     }
 
     // User 엔티티 생성
-    public User toEntity() {
+    public User toEntity(Role role) {
         return User.builder()
                 .name(name)
                 .email(email)
                 .profile(profile)
-                .role(Role.USER)
+                .role(role)
                 .build();
     }
 }

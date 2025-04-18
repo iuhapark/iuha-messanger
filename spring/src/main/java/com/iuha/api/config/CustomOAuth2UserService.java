@@ -2,8 +2,11 @@ package com.iuha.api.config;
 
 
 import com.iuha.api.entity.model.CustomOAuth2User;
+import com.iuha.api.entity.vo.Role;
+import com.iuha.api.properties.MailProperties;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -21,6 +24,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+
+    @Autowired
+    private final MailProperties mailProperties;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -57,11 +63,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private User saveOrUpdate(OAuthAttributes attributes) {
+        Role role = mailProperties.isAdmin(attributes.getEmail()) ? Role.ADMIN : Role.USER;
         User user = userRepository.findByEmail(attributes.getEmail())
                 // 구글 사용자 정보 업데이트(이미 가입된 사용자) => 업데이트
                 .map(entity -> entity.update(attributes.getName(), attributes.getProfile()))
                 // 가입되지 않은 사용자 => User 엔티티 생성
-                .orElse(attributes.toEntity());
+                .orElse(attributes.toEntity(role));
 
         return userRepository.save(user);
     }
