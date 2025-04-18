@@ -1,17 +1,17 @@
-'use client'
+import ChatMessages from './ChatMessages';
+import TextArea from './TextArea';
 
-import { useSearchParams } from 'next/navigation';
-import MessageInput from './MessageInput';
-// import ChatMessage from './ChatMessage';
+interface Props {
+  roomId: string;
+  senderId: string;
+  receiverId: string;
+}
 
-const ChatRoom = () => {
-  const searchParams = useSearchParams();
-  const roomId = searchParams.get('roomId') || '';
-
+const ChatRoom = ({ roomId, senderId, receiverId }: Props) => {
   return (
-    <div className='chat-main'>
-      {/* <ChatMessage roomId={roomId} /> */}
-      <MessageInput roomId={roomId} />
+    <div className='chat-room'>
+      <ChatMessages roomId={roomId} />
+      <TextArea roomId={roomId} senderId={senderId} receiverId={receiverId} />
     </div>
   );
 };
