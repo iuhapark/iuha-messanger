@@ -1,12 +1,15 @@
 package com.iuha.api.jwt;
 
 import com.iuha.api.entity.model.User;
-import io.jsonwebtoken.*;
+import com.iuha.api.properties.JwtProperties;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -22,25 +25,22 @@ import java.util.List;
 public class JwtTokenProvider {
 
     private final StringRedisTemplate redisTemplate;
+    private final JwtProperties jwtProperties;
 
-    @Value("${jwt.secret}")
-    private String secretKey;
-
-    @Value("${jwt.issuer}")
     private String issuer;
-
-    @Value("${jwt.expired.access}")
+    private String secret;
     private long accessTokenExpirySeconds;
-
-    @Value("${jwt.expired.refresh}")
     private long refreshTokenExpirySeconds;
-
     private SecretKey signingKey;
 
     @PostConstruct
     public void init() {
+        this.secret = jwtProperties.getSecret();
+        this.issuer = jwtProperties.getIssuer();
+        this.accessTokenExpirySeconds = jwtProperties.getExpired().getAccess();
+        this.refreshTokenExpirySeconds = jwtProperties.getExpired().getRefresh();
         this.signingKey = Keys.hmacShaKeyFor(
-                Base64.getEncoder().encode(secretKey.getBytes())
+                Base64.getEncoder().encode(secret.getBytes())
         );
     }
 
@@ -118,10 +118,13 @@ public class JwtTokenProvider {
 
     /** 토큰에서 사용자 ID 추출 */
     public String getUserIdFromToken(String token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
         return Jwts.parserBuilder()
                 .setSigningKey(signingKey)
                 .build()
-                .parseClaimsJws(token.replace("Bearer ", ""))
+                .parseClaimsJws(token)
                 .getBody()
                 .get("id", String.class);
     }
