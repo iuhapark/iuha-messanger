@@ -1,11 +1,9 @@
-'use client';
-
-import ChatRoomList from "@/components/chat/ChatRoomList";
 import ChatRoom from "@/components/chat/ChatRoom";
+import ChatRoomList from "@/components/chat/ChatRoomList";
 import { useState } from "react";
 
 const Chat = () => {
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
+  const [ activeRoom, setActiveRoom ] = useState();
 
   return (
     <div className='chat-page'>
@@ -13,10 +11,12 @@ const Chat = () => {
         <ChatRoomList />
       </div>
       <div className='chat-right'>
-        {activeRoomId ? (
-          <ChatRoom />
+        {activeRoom ? (
+          <ChatRoom roomId={''} senderId={''} receiverId={''} />
         ) : (
-          <div className='chat-placeholder'>Select a chat room to start chatting.</div>
+          <div className='chat-placeholder'>
+            Select a chat room to start chatting.
+          </div>
         )}
       </div>
     </div>

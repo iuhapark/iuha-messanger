@@ -9,7 +9,10 @@ import { logout } from "@/lib/auth";
 const Header = () => {
   return (
     <header className='header'>
-      <div className='logo'>iuha</div>
+      <div className='logo'
+      onClick={() => window.location.href = '/'}
+      >
+        iuha</div>
       <div className='header-right'>
         {/* <ThemeToggle /> */}
         <button className='header-icon' onClick={logout}>
