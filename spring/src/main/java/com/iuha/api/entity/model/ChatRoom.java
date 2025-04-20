@@ -1,13 +1,17 @@
 package com.iuha.api.entity.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import lombok.Getter;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ChatRoom {
 
     @Id
@@ -16,9 +20,15 @@ public class ChatRoom {
 
     private String name;
 
-    public ChatRoom() {}
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ChatMessage> chatMessages = new ArrayList<>();
 
-    public ChatRoom(String name) {
-        this.name = name;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
+    private User sender;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
+
 }

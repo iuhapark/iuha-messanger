@@ -1,52 +1,35 @@
 package com.iuha.api.entity.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String roomId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private ChatRoom chatRoom;
+
     private String sender;
     private String receiver;
     private String message;
     private LocalDateTime timestamp;
 
-    public ChatMessage() {}
-
-    public ChatMessage(String roomId, String sender, String receiver, String message, LocalDateTime timestamp) {
-        this.roomId = roomId;
+    public ChatMessage(String id, String sender, String receiver, String message, LocalDateTime timestamp) {
+        this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
         this.timestamp = timestamp;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
     }
 }

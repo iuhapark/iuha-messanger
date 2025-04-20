@@ -8,10 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
-
-    List<ChatMessage> findByRoomIdOrderByTimestampAsc(String roomId);
-
+public interface ChatMessageRepository extends JpaRepository<ChatMessage, String> {
+    List<ChatMessage> findByChatRoomIdOrderByTimestampAsc(String chatRoomId);
+    List<ChatMessage> findBySenderOrReceiverOrderByTimestampAsc(String sender, String receiver);
 }
 
 

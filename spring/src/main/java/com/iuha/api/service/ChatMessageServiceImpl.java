@@ -19,7 +19,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     public ChatMessage save(ChatMessage message) {
         message = new ChatMessage(
-                message.getRoomId(),
+                message.getId(),
                 message.getSender(),
                 message.getReceiver(),
                 message.getMessage(),

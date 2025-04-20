@@ -1,10 +1,12 @@
 package com.iuha.api.controller;
 
 import com.iuha.api.entity.model.ChatMessage;
+import com.iuha.api.jwt.JwtTokenProvider;
+import com.iuha.api.repository.ChatMessageRepository;
 import com.iuha.api.service.ChatMessageService;
 import com.iuha.api.util.ChatStorage;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.handler.annotation.*;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 
@@ -15,6 +17,7 @@ public class ChatController {
 
     public ChatController(ChatMessageService chatMessageService) {
         this.chatMessageService = chatMessageService;
+
     }
 
     @MessageMapping("/chat/{roomId}")
@@ -22,7 +25,7 @@ public class ChatController {
     public ChatMessage sendMessage(ChatMessage message) {
         ChatMessage saved = chatMessageService.save(
                 new ChatMessage(
-                        HtmlUtils.htmlEscape(message.getRoomId()),
+                        HtmlUtils.htmlEscape(message.getId()),
                         HtmlUtils.htmlEscape(message.getSender()),
                         HtmlUtils.htmlEscape(message.getReceiver()),
                         HtmlUtils.htmlEscape(message.getMessage()),
@@ -31,5 +34,6 @@ public class ChatController {
         );
         return saved;
     }
+
 }
 
