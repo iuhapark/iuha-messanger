@@ -95,7 +95,7 @@
 
 .chat-bottom {
   position: absolute;
-  bottom: 2rem;
+  bottom: 1rem;
   left: 0;
   right: 0;
   padding: 0 1rem;
@@ -111,13 +111,13 @@
     flex: 1;
     border: solid var(--border-color);
     border-radius: 2rem;
-    padding: 0.6rem;
+    padding: 0.4rem;
     background-color: var(--background);
     color: var(--foreground);
   }
 
   .chat-send-btn {
-    padding: 0.6rem 1rem;
+    padding: 0.4rem 1rem;
     background-color: var(--button-color);
     color: var(--background);
     border-radius: 2rem;
