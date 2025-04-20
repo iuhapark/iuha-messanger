@@ -116,5 +116,15 @@ public class JwtTokenProvider {
         return roles.isEmpty() ? null : roles.get(0).toString();
     }
 
+    /** 토큰에서 사용자 ID 추출 */
+    public String getUserIdFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build()
+                .parseClaimsJws(token.replace("Bearer ", ""))
+                .getBody()
+                .get("id", String.class);
+    }
+
 }
 
