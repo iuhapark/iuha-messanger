@@ -1,0 +1,21 @@
+package com.iuha.api.entity.dto;
+
+import com.iuha.api.entity.vo.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+@Setter
+public class UserDto {
+    private String id;
+    private String username;
+    private String password;
+    private String email;
+    private String name;
+    private String profile;
+    private Role role;
+}
