@@ -1,7 +1,6 @@
 import '@/styles/_index.scss';
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Auth } from "@/hooks/Auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +14,6 @@ const geistMono = Geist_Mono({
 import { login } from "@/lib/auth";
 
 const Login = () => {
-  const { user, loading } = Auth();
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} content-wrapper grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}

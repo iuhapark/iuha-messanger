@@ -13,7 +13,7 @@ public class ChatStorage {
         /* 서버 저장 조건 */
 
         /* 그외 로컬 스토리지 저장 */
-        chatMessages.computeIfAbsent(message.getRoomId(), k -> new ArrayList<>()).add(message);
+        chatMessages.computeIfAbsent(message.getId(), k -> new ArrayList<>()).add(message);
     }
 
     public static List<ChatMessage> getMessages(String roomId) {

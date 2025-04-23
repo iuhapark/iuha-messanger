@@ -10,11 +10,11 @@ const Chat = () => {
   return (
     <div className='chat-page'>
       <div className='chat-left'>
-        <ChatRoomList onSelectRoom={(roomId) => setActiveRoomId(roomId)} />
+        <ChatRoomList />
       </div>
       <div className='chat-right'>
         {activeRoomId ? (
-          <ChatRoom roomId={activeRoomId} />
+          <ChatRoom />
         ) : (
           <div className='chat-placeholder'>Select a chat room to start chatting.</div>
         )}

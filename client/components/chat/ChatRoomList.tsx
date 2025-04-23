@@ -1,40 +1,53 @@
-  import { useEffect, useState } from "react";
-  import api from "@/lib/api";
-  import { ChatRoom } from "@/\btypes";
-  import CreateIcon from "@mui/icons-material/Create";
-import { CHAT_API } from "@/lib/constants";
+'use client'
 
-  interface Props {
-    onSelectRoom: (roomId: string) => void;
-  }
+import { useEffect, useState } from 'react';
+import api, { API } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 
-  const ChatRoomList = ({ onSelectRoom }: Props) => {
-    const [rooms, setRooms] = useState<ChatRoom[]>([]);
+interface ChatMessage {
+  id: string;
+  sender: string;
+  receiver: string;
+  message: string;
+  timestamp: string;
+}
 
-    useEffect(() => {
-      api.get(CHAT_API.ALL).then((res) => setRooms(res.data));
-    }, []);
+const ChatRoomList = () => {
+  const [rooms, setRooms] = useState<ChatMessage[]>([]);
+  const router = useRouter();
 
-    const handleCreateRoom = async () => {
-      const today = new Date(); // timestamp
-      const date = today.toISOString().split('T')[0]; // YYYY-MM-DD
-      const time = today.toTimeString().split(' ')[0]; // HH:MM:SS
-      const name = `${date} ${time}`;
-      const { data } = await api.post(CHAT_API.SAVE, name);
-      setRooms((prev) => [...prev, data]);
-      onSelectRoom(data.id);
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const res = await api.get(`${API.CHAT}/my`);
+      setRooms(
+        res.data.sort((a: ChatMessage, b: ChatMessage) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        )
+      );
     };
+    fetchMessages();
+  }, []);
 
-    return (
-      <div className='chat-list'>
-        <button className='new-room-btn' onClick={handleCreateRoom}><CreateIcon /></button>
-        {rooms.map((room) => (
-          <div key={room.id} className='room' onClick={() => onSelectRoom(room.id)}>
-            {room.name}
-          </div>
-        ))}
-      </div>
-    );
+  const handleRoomClick = (receiverId: string) => {
+    router.push(`/chat?roomId=${receiverId}`);
   };
 
-  export default ChatRoomList;
+  const uniqueReceivers = Array.from(
+    new Map(rooms.map((msg) => [msg.receiver, msg])).values()
+  );
+
+  return (
+    <aside className='chat-side'>
+      <h2>Chat Rooms</h2>
+      <ul>
+        {uniqueReceivers.map((msg) => (
+          <li key={msg.receiver} onClick={() => handleRoomClick(msg.receiver)}>
+            {msg.receiver} - {msg.message}
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
+};
+
+export default ChatRoomList;
