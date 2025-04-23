@@ -1,17 +1,9 @@
 import { useEffect, useState } from "react";
 import nookies from "nookies";
 import api from "@/lib/api";
-import { USER_API } from "@/lib/constants";
+import { API } from "@/lib/api";
+import { User } from "@/types";
 
-export interface User {
-    id: number;
-    username: string;
-    email: string;
-    name: string;
-    profile: string;
-    role: 'USER' | 'ADMIN';
-  }
-  
   export const Auth = () => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
@@ -24,12 +16,12 @@ export interface User {
         return;
       }
   
-      // Axios 헤더에 토큰 자동 주입
+      /* Axios 헤더에 토큰 자동 주입 */
       api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   
       const fetchUser = async () => {
         try {
-          const res = await api.get(USER_API.ME, {
+          const res = await api.get(`${API.USER}/auth`, {
             withCredentials: true,
           });
           setUser(res.data);
