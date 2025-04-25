@@ -1,17 +1,17 @@
-import ChatMessages from './ChatMessages';
-import TextArea from './TextArea';
+import { ChatRoom as ChatRoomType } from "@/\btypes";
+import ChatMessages from "./ChatMessages";
+import TextArea from "./TextArea";
+import { useEffect } from "react";
 
-interface Props {
-  roomId: string;
-  senderId: string;
-  receiverId: string;
-}
-
-const ChatRoom = ({ roomId, senderId, receiverId }: Props) => {
+const ChatRoom = ({ id, name, receiver, sender }: ChatRoomType) => {
+  useEffect (() => {
+    console.log('TextArea props:', { id, sender, receiver });
+  }
+  ,[])
   return (
     <div className='chat-room'>
-      <ChatMessages roomId={roomId} />
-      <TextArea roomId={roomId} senderId={senderId} receiverId={receiverId} />
+      <ChatMessages roomId={id} />
+      <TextArea id={id} name={name} receiver={receiver} sender={sender}/>
     </div>
   );
 };

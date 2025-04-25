@@ -1,22 +1,19 @@
-import { useEffect, useState } from "react";
+import { ChatRoom, ChatRoomListProps, User } from "@/\btypes";
 import api from "@/lib/api";
-import { useRouter } from "next/router";
-import { ChatRoom } from "@/\btypes";
-import { useAuth } from "@/hooks/useAuth";
 import { errorHandling } from "@/utils/error";
+import { useEffect, useState } from "react";
+import { IoCreateOutline } from "react-icons/io5";
+import { ChatStep } from "@/config/type/Data";
 
-const ChatRoomList = () => {
-  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
-  const router = useRouter();
-  const { user } = useAuth();
-  const userId = user?.id;
+const ChatRoomList = ({ setStep, onSelect }: ChatRoomListProps & { setStep: (step: ChatStep) => void }) => {
+  const [rooms, setRooms] = useState<ChatRoom[]>([]);
 
   /* 내 채팅방 목록 조회 */
   useEffect(() => {
     const fetchRooms = async () => {
       try {
         const res = await api.get('/chat/my');
-        setChatRooms(res.data);
+        setRooms(res.data);
       } catch (err: any) {
         const message = errorHandling(err);
         alert(message);
@@ -25,37 +22,15 @@ const ChatRoomList = () => {
     fetchRooms();
   }, []);
 
-  /* 채팅방 클릭 시 이동 */
-  const handleClick = (room: ChatRoom) => {
-    router.push({
-      pathname: `/chat/${room.id}`,
-      query: {
-        senderId: user?.id,
-        receiverId: user?.id,
-      },
-    });
-  };
-
-  /* 채팅방 생성 DB 저장 */
-  const createRoom = async () => {
-    try {
-      const { data } = await api.post(`/chat/save`, {
-        name: `${user?.name}`,
-        sender: { id: userId },
-        receiver: { id: userId },
-      });
-      setChatRooms((prev) => [...prev, data]);
-      handleClick(data);
-    } catch (err) {
-      const message = errorHandling(err);
-      alert(message);
-    }
-  };
-
   return (
     <div className='chat-list'>
-      {chatRooms.map((room) => (
-        <div key={room.id} className='room' onClick={() => handleClick(room)}>
+      {/* 상태 NEW로 변경*/}
+      <button className='new-room-btn' onClick={() => setStep(ChatStep.NEW)}>
+        <IoCreateOutline />
+      </button>
+      {rooms.map((room) => (
+        /* 선택 시 해당 room으로 이동 && 상태 READY로 변경 */
+        <div key={room.id} onClick={() => { onSelect(room); setStep(ChatStep.READY)}} className='room'>
           {room.name}
         </div>
       ))}
