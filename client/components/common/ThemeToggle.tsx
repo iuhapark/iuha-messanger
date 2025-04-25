@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
+import { MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineLightMode } from "react-icons/md";
 
 const ThemeToggle = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -23,7 +23,7 @@ const ThemeToggle = () => {
 
   return (
     <button className='header-icon' onClick={toggleTheme}>
-      {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+      {theme === 'light' ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
     </button>
   );
 };

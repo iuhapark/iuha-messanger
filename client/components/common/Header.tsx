@@ -3,7 +3,7 @@
 import Image from "next/image";
 import UserImage from "@/assets/img/user/sam.png";
 import ThemeToggle from "./ThemeToggle";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { IoLogOutOutline } from "react-icons/io5";
 import { logout } from "@/lib/auth";
 
 const Header = () => {
@@ -16,7 +16,7 @@ const Header = () => {
       <div className='header-right'>
         {/* <ThemeToggle /> */}
         <button className='header-icon' onClick={logout}>
-          <LogoutIcon className='header-icon' />
+          <IoLogOutOutline />
         </button>
         <Image src={UserImage} alt='user' className='user-image' />
       </div>
