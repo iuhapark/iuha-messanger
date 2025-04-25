@@ -1,3 +1,5 @@
+import { ChatStep } from "./config/type/Data";
+
 export interface User {
   id: string;
   username: string;
@@ -15,17 +17,18 @@ export interface ChatRoom {
 }
 
 export interface Message {
-  id?: string;
+  roomId: string;
   sender: string;
   receiver: string;
   message: string;
   timestamp?: string;
 }
 
-export interface ChatRoomProps {
-  roomId: string;
+export interface ChatRoomListProps {
+  onSelect: (room: ChatRoom) => void;
 }
 
-export interface ChatMessageProps {
-  roomId: string;
+export interface UserListProps {
+  setStep: (step: ChatStep) => void;
+  onSelect: (room: ChatRoom) => void;
 }
