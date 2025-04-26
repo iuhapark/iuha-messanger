@@ -1,10 +1,8 @@
 package com.iuha.api.entity.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +26,7 @@ public class ChatRoom {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "chatRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatMessage> chatMessages;
 
 
