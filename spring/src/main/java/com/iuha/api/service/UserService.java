@@ -4,6 +4,7 @@ import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -33,4 +34,5 @@ public interface UserService {
 
     SessionUser login(UserDto dto);
     Optional<User> findById(String id);
+    List<UserDto> getUsers();
 }

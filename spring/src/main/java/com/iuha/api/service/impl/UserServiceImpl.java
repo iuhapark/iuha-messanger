@@ -1,21 +1,23 @@
-package com.iuha.api.service;
+package com.iuha.api.service.impl;
 
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
 import com.iuha.api.entity.vo.Role;
 import com.iuha.api.repository.UserRepository;
+import com.iuha.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -27,16 +29,15 @@ public class UserServiceImpl implements UserService{
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             boolean flag = user.getPassword().equals(dto.getPassword());
-            if (flag){
+            if (flag)
                 return new SessionUser(User.builder()
                         .id(user.getId().toString())
                         .email(user.getEmail())
                         .name(user.getName())
                         .role(Role.USER)
                         .build());
-            } else {
+            else
                 throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-            }
         } else{
             throw new IllegalArgumentException("해당 유저가 존재하지 않습니다.");
         }
@@ -45,5 +46,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public Optional<User> findById(String id) {
         return userRepository.findById(id);
+    }
+
+    @Override
+    public List<UserDto> getUsers() {
+        return userRepository.getUsers();
     }
 }
