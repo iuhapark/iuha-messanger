@@ -15,6 +15,7 @@
     margin-bottom: 1rem;
     border-radius: 2rem;
     cursor: pointer;
+    font-size: x-large;
 
     &:hover {
       background-color: var(--button-hover);
@@ -38,4 +39,15 @@
     }
   }
 
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  flex-shrink: 0;
+  background-color: var(--text-color);
+  padding-block: 1rem;
+  overflow-y: auto;
+  border-radius: 2rem;
 }
