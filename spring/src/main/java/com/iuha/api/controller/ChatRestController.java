@@ -4,105 +4,48 @@ import com.iuha.api.config.auth.LoginUser;
 import com.iuha.api.entity.dto.ChatMessageDto;
 import com.iuha.api.entity.dto.ChatRoomDto;
 import com.iuha.api.entity.dto.SessionUser;
-import com.iuha.api.entity.model.ChatMessage;
 import com.iuha.api.entity.model.ChatRoom;
-import com.iuha.api.entity.model.User;
-import com.iuha.api.jwt.JwtTokenProvider;
-import com.iuha.api.repository.ChatMessageRepository;
 import com.iuha.api.repository.ChatRoomRepository;
-import com.iuha.api.repository.UserRepository;
+import com.iuha.api.service.ChatMessageService;
+import com.iuha.api.service.ChatRoomService;
 import com.iuha.api.util.ChatStorage;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api/chat")
+@RequiredArgsConstructor
 @Slf4j
 public class ChatRestController {
 
+    private final ChatRoomService chatRoomService;
+    private final ChatMessageService chatMessageService;
     private final ChatRoomRepository chatRoomRepository;
-    private final UserRepository userRepository;
-    private final ChatMessageRepository chatMessageRepository;
-    private final JwtTokenProvider jwtTokenProvider;
 
     /* 내 채팅방 목록 조회 */
     @GetMapping("/my")
-    public List<ChatRoomDto> getMyRooms(@LoginUser SessionUser user) throws IllegalAccessException {
-        if (user == null) throw new IllegalAccessException("로그인이 필요합니다.");
-        String myId = user.getId();
-
-        List<ChatRoom> rooms = chatRoomRepository.findChatRoomsByUserId(myId);
-
-        return rooms.stream().map(room -> {
-            boolean isSender = room.getSender().getId().equals(myId);
-            User opponent = isSender ? room.getReceiver() : room.getSender();
-            return new ChatRoomDto(
-                    room.getId(),
-                    room.getName(),
-                    opponent.getId(),
-                    opponent.getName()
-            );
-        }).toList();
+    public ResponseEntity<List<ChatRoomDto>> getMyRooms(@LoginUser SessionUser user) {
+        log.info("내 채팅방 목록 조회 요청: {}", user);
+        return ResponseEntity.ok(chatRoomService.getMyRooms(user));
     }
 
     /* 메시지 전송 */
-//    @PostMapping("/{roomId}/send")
-//    public ResponseEntity<?> sendMessage(
-//            @LoginUser SessionUser sessionUser,
-//            @PathVariable String roomId,
-//            @RequestBody ChatMessageDto request
-//    ) {
-//        var sender = userRepository.findById(sessionUser.getId())
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
-//        var receiver = userRepository.findById(request.getReceiver().getId())
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상대방입니다."));
-//        var chatRoom = chatRoomRepository.findById(roomId)
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
-//
-//        var chatMessage = new ChatMessage();
-//        chatMessageRepository.save(chatMessage);
-//        return ResponseEntity.ok().build();
-//    }
     @PostMapping("/{roomId}/send")
-    public ResponseEntity<?> sendMessage(
-            @LoginUser SessionUser sessionUser,
-            @PathVariable String roomId,
-            @RequestBody ChatMessage message
-    ) {
-        String senderId = sessionUser.getId();
-
-        ChatRoom room = chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 채팅방입니다."));
-
-        message.setChatRoom(room);
-        message.setSender(senderId);
-        message.setTimestamp(LocalDateTime.now());
-
-        chatMessageRepository.save(message);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> sendMessage(@LoginUser SessionUser user,
+                                         @RequestBody ChatMessageDto dto) {
+        return ResponseEntity.ok(chatMessageService.sendMessage(user, dto));
     }
 
     /* 채팅방 생성 DB 저장 */
     @PostMapping("/save")
-    public ChatRoom saveRoom(@RequestBody ChatRoom chatRoom, @LoginUser SessionUser user) throws IllegalAccessException {
-        if (user == null) throw new IllegalAccessException("로그인이 필요합니다.");
-
-        User sender = userRepository.findById(user.getId()).orElseThrow();
-        User receiver = userRepository.findById(chatRoom.getReceiver().getId()).orElseThrow();
-
-        log.info("채팅방 생성 요청 정보: {}", chatRoom);
-        log.info("receiver: {}", chatRoom.getReceiver());
-
-        chatRoom.setSender(sender);
-        chatRoom.setReceiver(receiver);
-
-        return chatRoomRepository.save(chatRoom);
+    public ResponseEntity<ChatRoom> saveRoom(@LoginUser SessionUser user,
+                                             @RequestBody ChatRoom chatRoom) throws Exception {
+        return ResponseEntity.ok(chatRoomService.saveRoom(user, chatRoom));
     }
 
     /* 채팅방 생성 스토리지 저장 */
@@ -125,18 +68,9 @@ public class ChatRestController {
 
     /* 특정 채팅방 메시지 조회 */
     @GetMapping("/{roomId}")
-    public List<ChatMessageDto> getChatMessages(@PathVariable String roomId) {
-        return chatMessageRepository.findByChatRoomIdOrderByTimestampAsc(roomId)
-                .stream()
-                .map(ChatMessageDto::new)
-                .toList();
-    }
-
-    public ChatRestController(ChatMessageRepository chatMessageRepository, ChatRoomRepository chatRoomRepository, UserRepository userRepository, JwtTokenProvider jwtTokenProvider) {
-        this.chatMessageRepository = chatMessageRepository;
-        this.chatRoomRepository = chatRoomRepository;
-        this.userRepository = userRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
+    public ResponseEntity<List<ChatMessageDto>> getChatMessages(@PathVariable String roomId) {
+        log.info("채팅방 메시지 조회 요청: {}", roomId);
+        return ResponseEntity.ok(chatMessageService.getChatMessages(roomId));
     }
 
 }
