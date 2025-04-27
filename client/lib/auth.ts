@@ -17,6 +17,7 @@ export const logout = () => {
 
 };
 
+/* 세션에서 유저 정보 추출 */
 export const getSessionUser = async (): Promise<User> => {
   const res = await api.get('/auth/user');
   return res.data;

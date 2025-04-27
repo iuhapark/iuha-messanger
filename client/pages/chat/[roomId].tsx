@@ -13,8 +13,9 @@ const ChatRoomPage = () => {
     return <div className='chat-placeholder'>채팅방을 찾을 수 없습니다.</div>;
   }
 
-  return (
-    <ChatRoom roomId={roomId} senderId={senderId} receiverId={receiverId} />
+  return (<>
+     <ChatRoom id={roomId} name={''} senderId={senderId} receiverId={receiverId} />
+    </>
   );
 };
 
