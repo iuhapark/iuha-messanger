@@ -1,5 +1,6 @@
 package com.iuha.api.controller;
 
+import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
 import com.iuha.api.repository.UserRepository;
 import com.iuha.api.service.UserService;
@@ -20,9 +21,10 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
 
-    @GetMapping("/all")
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    @GetMapping("/list")
+    public ResponseEntity<List<UserDto>> getUsers() {
+        log.info("유저 특정 필드만 조회");
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     @PostMapping("/save")
