@@ -2,6 +2,7 @@ package com.iuha.api.controller;
 
 import com.iuha.api.entity.dto.ChatMessageDto;
 import com.iuha.api.entity.model.ChatMessage;
+import com.iuha.api.entity.model.ChatRoom;
 import com.iuha.api.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,10 @@ public class ChatController {
     @MessageMapping("/chat/{roomId}")
     @SendTo("/topic/{roomId}")
     public ChatMessage sendMessage(ChatMessageDto dto) {
-        log.info("채팅 메시지 roomId: {}", dto.getRoomId());
-        log.info("채팅 메시지 sender: {}", dto.getSender());
-        log.info("채팅 메시지 receiver: {}", dto.getReceiver());
-        log.info("채팅 메시지 message: {}", dto.getMessage());
         return chatMessageService.save(
                 new ChatMessage(
                         null,
+                        ChatRoom.builder().id(dto.getRoomId()).build(),
                         HtmlUtils.htmlEscape(dto.getSender()),
                         HtmlUtils.htmlEscape(dto.getReceiver()),
                         HtmlUtils.htmlEscape(dto.getMessage()),

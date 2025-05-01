@@ -3,15 +3,11 @@ import ChatMessages from "./ChatMessages";
 import TextArea from "./TextArea";
 import { useEffect } from "react";
 
-const ChatRoom = ({ id, name, receiver, sender }: ChatRoomType) => {
-  useEffect (() => {
-    console.log('TextArea props:', { id, sender, receiver });
-  }
-  ,[])
+const ChatRoom = ({ id, name, sender, receiver }: ChatRoomType) => {
   return (
     <div className='chat-room'>
       <ChatMessages roomId={id} />
-      <TextArea id={id} name={name} receiver={receiver} sender={sender}/>
+      <TextArea id={id} receiver={receiver} sender={sender} name={""}/>
     </div>
   );
 };

@@ -1,27 +1,20 @@
 import { useState } from 'react';
 import { useStomp } from '@/hooks/useStomp';
+import { ChatRoom as ChatRoomType, Message } from '@/\btypes';
 
-interface Props {
-  roomId: string;
-  senderId: string;
-  receiverId: string;
-}
 
-const TextArea = ({ roomId, senderId, receiverId }: Props) => {
+const TextArea = ({ id, name, sender, receiver }: ChatRoomType) => {
   const [message, setMessage] = useState('');
-  const { sendMessage } = useStomp(roomId);
+  const { sendMessage } = useStomp(id);
 
-  const handleSend = () => {
-    const trimmed = message.trim();
-    if (!trimmed) return;
-
-    sendMessage({
-      sender: senderId,
-      receiver: receiverId,
-      message: trimmed,
-      timestamp: new Date().toISOString(),
-    });
-
+  const send = () => {
+    const data: Message = {
+      roomId: id,
+      sender: sender,
+      receiver: receiver,
+      message: message.trim(),
+    };
+    sendMessage(data);
     setMessage('');
   };
 
@@ -31,14 +24,13 @@ const TextArea = ({ roomId, senderId, receiverId }: Props) => {
         className='chat-input-area'
         onSubmit={(e) => {
           e.preventDefault();
-          handleSend();
-        }}
-      >
+          send();
+        }}>
         <input
           type='text'
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder='Type a message'
+          placeholder='Type a message...'
           className='chat-input'
         />
         <button type='submit' className='chat-send-btn'>

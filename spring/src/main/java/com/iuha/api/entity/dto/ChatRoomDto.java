@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 public class ChatRoomDto {
     private String id;
     private String name;
-    private UserDto sender;
-    private UserDto receiver;
+    private String sender;
+    private String receiver;
 
     public ChatRoomDto(ChatRoom chatRoom) {
         this.id = chatRoom.getId();
         this.name = chatRoom.getName();
-        this.sender = new UserDto(chatRoom.getSender());
-        this.receiver = new UserDto(chatRoom.getReceiver());
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
 }

@@ -25,7 +25,7 @@ const ChatMessages = ({ roomId }: { roomId: string }) => {
     fetchUser();
   }, []);
 
-  /* 특정 채팅방 메시지 조회 */
+  /* 최초 DB 메시지 로딩 */
   useEffect(() => {
     const fetchMessages = async () => {
       try {
