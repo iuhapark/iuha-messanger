@@ -1,27 +1,43 @@
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
-import { User } from '@/\btypes';
+import { User, UserListProps } from '@/\btypes';
+import { errorHandling } from '@/utils/error';
+import { ChatStep } from '@/config/type/Data';
 
-const UserList = ({ onSelect }: { onSelect: (user: User) => void }) => {
-  const [users, setUsers] = useState<User[]>([]);
+/* 유저 목록 조회 및 선택 */
+const UserList = ({ setStep, onSelect }: UserListProps) => {
+  const [receivers, setReceivers] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await api.get('/users/all');
-      setUsers(res.data);
+      try {
+        const res = await api.get('/users/list');
+        setReceivers(res.data);
+      } catch (err) {
+        errorHandling(err);
+      }
     };
     fetchUsers();
   }, []);
 
+  const handleSelect = async (receiver: User) => {
+    try {
+      const { data } = await api.post(`/chat/save`, {
+        name: receiver.name,
+        receiver: { id: receiver.id },
+      });
+      onSelect(data);
+      setStep(ChatStep.READY);
+    } catch (err) {
+      errorHandling(err);
+    }
+  };
+
   return (
-    <div className='chat-list'>
-      {users.map((user) => (
-        <div
-          key={user.id}
-          className='room'
-          onClick={() => onSelect(user)}
-        >
-          {user.name}
+    <div className='user-list'>
+      {receivers.map((receiver) => (
+        <div key={receiver.id} className='room' onClick={() => handleSelect(receiver)}>
+          {receiver.name}
         </div>
       ))}
     </div>

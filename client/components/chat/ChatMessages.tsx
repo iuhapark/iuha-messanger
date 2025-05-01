@@ -1,12 +1,12 @@
-import { useStomp } from '@/hooks/useStomp';
-import { useEffect, useRef, useState } from 'react';
-import api from '@/lib/api';
-import { Message } from '@/\btypes'; // 타입에 맞게 경로 조정해줘!
-import { errorHandling } from '@/utils/error';
-import { getSessionUser } from '@/lib/auth';
+import { useStomp } from "@/hooks/useStomp";
+import { useEffect, useRef, useState } from "react";
+import api from "@/lib/api";
+import { Message } from "@/\btypes"; // 타입에 맞게 경로 조정해줘!
+import { errorHandling } from "@/utils/error";
+import { getSessionUser } from "@/lib/auth";
 
 const ChatMessages = ({ roomId }: { roomId: string }) => {
-  const { messages: realTimeMessages } = useStomp(roomId);
+  const { messages: newMessages } = useStomp(roomId);
   const [dbMessages, setDbMessages] = useState<Message[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -42,14 +42,14 @@ const ChatMessages = ({ roomId }: { roomId: string }) => {
   /* 스크롤 항상 맨 아래로 */
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [dbMessages, realTimeMessages]);
+  }, [dbMessages, newMessages]);
 
   /* DB 메시지 + WebSocket 실시간 메시지 합치기 */
-  const allMessages = [...dbMessages, ...realTimeMessages];
+  const messages = [...dbMessages, ...newMessages];
 
   return (
     <div className='chat-messages'>
-      {allMessages.map((m, idx) => (
+      {messages.map((m, idx) => (
         <div key={idx} className={`chat-message-block ${m.sender === userId ? 'me' : 'you'}`}>
           <div className='chat-sender'>{m.sender}</div>
           <div className='chat-bubble-wrapper'>

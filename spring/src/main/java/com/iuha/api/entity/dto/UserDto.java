@@ -1,5 +1,6 @@
 package com.iuha.api.entity.dto;
 
+import com.iuha.api.entity.model.User;
 import com.iuha.api.entity.vo.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,4 +19,10 @@ public class UserDto {
     private String name;
     private String profile;
     private Role role;
+
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.profile = user.getProfile();
+    }
 }

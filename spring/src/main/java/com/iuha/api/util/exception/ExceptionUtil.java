@@ -25,6 +25,13 @@ public class ExceptionUtil {
                 ));
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public static class BadRequestException extends RuntimeException {
+        public BadRequestException(String message) {
+            super(message);
+        }
+    }
+
     /* 405 에러 처리 */
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<?> handle405(IllegalStateException ex) {
@@ -51,8 +58,8 @@ public class ExceptionUtil {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public static class UnauthorizedException extends RuntimeException {
-        public UnauthorizedException() {
-            super("로그인이 필요합니다.");
+        public UnauthorizedException(String message) {
+            super(message);
         }
     }
 

@@ -26,11 +26,11 @@ export const useStomp = (roomId: string) => {
     };
   }, [roomId]);
 
-  const sendMessage = (msg: Message) => {
+  const sendMessage = (data: Message) => {
     if (!clientRef.current) return;
     clientRef.current.publish({
       destination: `/app/chat/${roomId}`,
-      body: JSON.stringify(msg),
+      body: JSON.stringify(data),
     });
   };
 

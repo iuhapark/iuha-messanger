@@ -30,7 +30,8 @@
       color: var(--text-color);   
       padding: 0%;
       background-color: transparent;
-    
+      font-size: x-large;
+
       &:hover {
         background-color: var(--button-hover);
       }
@@ -48,9 +49,3 @@
       background-color: var(--button-hover);
     }
   }
-
-  .header-icon {
-    cursor: pointer;
-    color: var(--text-color);
-  }
-  
