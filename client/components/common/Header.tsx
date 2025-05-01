@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import UserImage from "@/assets/img/user/sam.png";
-import ThemeToggle from "./ThemeToggle";
+// import ThemeToggle from "./ThemeToggle";
 import { IoLogOutOutline } from "react-icons/io5";
 import { logout } from "@/lib/auth";
 

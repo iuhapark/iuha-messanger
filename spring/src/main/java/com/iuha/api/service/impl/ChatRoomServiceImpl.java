@@ -42,8 +42,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
             return ChatRoomDto.builder()
                     .id(room.getId())
                     .name(room.getName())
-                    .sender(new UserDto(room.getSender()))
-                    .receiver(new UserDto(room.getReceiver()))
+                    .sender(room.getSender().getId())
+                    .receiver(room.getReceiver().getId())
                     .build();
         }).toList();
     }
