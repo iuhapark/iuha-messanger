@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import api from '@/lib/api';
+import { instance } from '@/lib/api';
 import { User } from '@/\btypes';
-import { errorHandling } from '@/utils/error';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -10,10 +9,9 @@ export const useAuth = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get(`/auth/user`);
+        const res = await instance.get(`/user`);
         setUser(res.data);
       } catch (err) {
-        errorHandling(err);
         setUser(null);
       } finally {
         setLoading(false);
