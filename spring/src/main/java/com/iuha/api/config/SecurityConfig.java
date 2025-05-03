@@ -1,6 +1,7 @@
 package com.iuha.api.config;
 
 import com.iuha.api.handler.OAuth2LoginSuccessHandler;
+import com.iuha.api.handler.OAuth2LogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LogoutSuccessHandler oAuth2LogoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -27,16 +29,20 @@ public class SecurityConfig {
                     config.setAllowedOrigins(List.of("http://localhost:3000", "https://www.iuhapark.com"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
-                    config.setExposedHeaders(List.of("Authorization"));
+//                    config.setExposedHeaders(List.of("Authorization"));
                     config.setAllowCredentials(true);
                     return config;
                 }))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/chat/**", "/api/token/user").authenticated()
-                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**").permitAll()
+                        .requestMatchers("/api/chat/**").authenticated()
+                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 // 로그아웃 성공 시 / 주소로 이동
-                .logout((logoutConfig) -> logoutConfig.logoutSuccessUrl("http://localhost:3000/"))
+                .logout((logoutConfig) -> logoutConfig
+                        .logoutSuccessUrl("http://localhost:3000/")
+                        .logoutSuccessHandler(oAuth2LogoutSuccessHandler))
+
+
                 // OAuth2 로그인 기능에 대한 여러 설정
                 .oauth2Login((oauth) -> oauth
                         .userInfoEndpoint((endpoint) -> endpoint.userService(customOAuth2UserService))

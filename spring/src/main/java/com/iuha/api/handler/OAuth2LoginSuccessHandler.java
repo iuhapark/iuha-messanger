@@ -32,12 +32,12 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         User user = oAuth2User.getUser();
 
         // JWT 토큰 발급
-        String accessToken = jwtTokenProvider.createAccessToken(user);
-        String refreshToken = jwtTokenProvider.createRefreshToken(user); // Redis 저장 포함
+//        String accessToken = jwtTokenProvider.createAccessToken(user);
+//        String refreshToken = jwtTokenProvider.createRefreshToken(user); // Redis 저장 포함
 
         // 토큰을 헤더에 담거나 쿠키에 저장
-        setTokenCookie(response, "accessToken", accessToken, false);
-        setTokenCookie(response, "refreshToken", refreshToken, true);
+//        setTokenCookie(response, "accessToken", accessToken, false);
+//        setTokenCookie(response, "refreshToken", refreshToken, true);
 
         // 리디렉션
         response.sendRedirect("http://localhost:3000"); // 프론트 페이지
