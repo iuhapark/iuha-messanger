@@ -1,5 +1,14 @@
 import axios from 'axios';
 
+const instance = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true, // 쿠키 기반 세션 인증
+});
+
+export { instance };
+
+
 /** Axios 인스턴스 생성 */
 const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api`,
