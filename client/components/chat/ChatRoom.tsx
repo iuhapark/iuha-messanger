@@ -1,7 +1,6 @@
 import { ChatRoom as ChatRoomType } from "@/\btypes";
 import ChatMessages from "./ChatMessages";
 import TextArea from "./TextArea";
-import { useEffect } from "react";
 
 const ChatRoom = ({ id, name, sender, receiver }: ChatRoomType) => {
   return (

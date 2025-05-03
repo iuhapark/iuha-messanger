@@ -11,7 +11,7 @@ const ChatMessages = ({ roomId }: { roomId: string }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [userId, setUserId] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {

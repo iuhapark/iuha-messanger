@@ -12,6 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ChatMessage {
+
+//    public enum MessageType {
+//        ENTER, TALK, LEAVE
+//    }
+//    private MessageType type;
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
