@@ -11,12 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatMessage {
-
-//    public enum MessageType {
-//        ENTER, TALK, LEAVE
-//    }
-//    private MessageType type;
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,16 +21,18 @@ public class ChatMessage {
     @JoinColumn(name = "room_id")
     private ChatRoom chatRoom;
 
-    private String sender;
-    private String receiver;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
+    private User sender;
+
+    @Enumerated(EnumType.STRING)
+    private MessageType type;
+
     private String message;
     private LocalDateTime timestamp;
 
-    public ChatMessage(String id, String sender, String receiver, String message, LocalDateTime timestamp) {
-        this.id = id;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.message = message;
-        this.timestamp = timestamp;
+    public enum MessageType {
+        ENTER, TALK, LEAVE
     }
+
 }

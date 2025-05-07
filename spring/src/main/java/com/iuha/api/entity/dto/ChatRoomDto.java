@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @Getter
 @NoArgsConstructor
@@ -13,14 +15,15 @@ import lombok.NoArgsConstructor;
 public class ChatRoomDto {
     private String id;
     private String name;
-    private String sender;
-    private String receiver;
+    private List<UserDto> participants;
+    private String lastMessage;
 
     public ChatRoomDto(ChatRoom chatRoom) {
         this.id = chatRoom.getId();
         this.name = chatRoom.getName();
-        this.sender = sender;
-        this.receiver = receiver;
+        this.participants = chatRoom.getParticipants().stream()
+                .map(userRoom -> new UserDto(userRoom.getUser()))
+                .toList();
     }
 
 }

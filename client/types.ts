@@ -12,17 +12,17 @@ export interface User {
 export interface ChatRoom {
   id: string;
   name: string;
-  sender?: string;
-  receiver?: string;
+  participants: User[];
+  lastMessage?: string;
 }
 
 export interface Message {
   id?: string;
   roomId?: string;
-  sender?: string;
-  receiver?: string;
-  message?: string;
+  sender?: User;
+  message: string;
   timestamp?: string;
+  type?: 'ENTER' | 'TALK' | 'LEAVE';
 }
 
 export interface ChatRoomListProps {

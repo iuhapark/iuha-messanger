@@ -3,6 +3,7 @@ package com.iuha.api.entity.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,16 +19,9 @@ public class ChatRoom {
     private String id;
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    private User sender;
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRoom> participants = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id")
-    private User receiver;
-
-    @OneToMany(mappedBy = "chatRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ChatMessage> chatMessages;
-
-
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
+    private List<Message> messages = new ArrayList<>();
 }
