@@ -1,45 +1,48 @@
 package com.iuha.api.service;
 
-import com.iuha.api.config.auth.LoginUser;
-import com.iuha.api.entity.dto.ChatMessageDto;
+import com.iuha.api.entity.dto.MessageDto;
 import com.iuha.api.entity.dto.SessionUser;
-import com.iuha.api.entity.model.ChatMessage;
+import com.iuha.api.entity.dto.UserDto;
+import com.iuha.api.entity.model.Message;
 import com.iuha.api.entity.model.ChatRoom;
-import org.apache.logging.log4j.message.Message;
-import org.springframework.http.ResponseEntity;
+import com.iuha.api.entity.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ChatMessageService {
 
-    default ChatMessage dtoToEntity(ChatMessageDto dto) {
-        return ChatMessage.builder()
+    default Message dtoToEntity(MessageDto dto) {
+        return Message.builder()
                 .id(dto.getId())
+                .chatRoom(ChatRoom.builder().id(dto.getRoomId()).build())
+                .sender(User.builder().id(dto.getId()).build())
+                .type(dto.getType())
                 .message(dto.getMessage())
                 .timestamp(LocalDateTime.now())
-                .chatRoom(ChatRoom.builder().id(dto.getRoomId()).build())
-                .sender(dto.getSender())
-                .receiver(dto.getReceiver())
                 .build();
     }
 
-    default ChatMessageDto entityToDto(ChatMessage message) {
-        return ChatMessageDto.builder()
+    default MessageDto entityToDto(Message message) {
+        return MessageDto.builder()
                 .id(message.getId())
+                .roomId(message.getChatRoom().getId())
+                .sender(UserDto.builder()
+                        .id(message.getSender().getId())
+                        .name(message.getSender().getName())
+                        .profile(message.getSender().getProfile())
+                        .build())
+                .type(message.getType())
                 .message(message.getMessage())
                 .timestamp(message.getTimestamp())
-                .roomId(message.getChatRoom().getId())
-                .sender(message.getSender())
-                .receiver(message.getReceiver())
                 .build();
     }
 
-    ChatMessage save(ChatMessage message);
+    Message save(Message message);
 
-    ChatMessage sendMessage(SessionUser sessionUser, ChatMessageDto dto);
+    Message sendMessage(SessionUser sessionUser, MessageDto dto);
 
-    List<ChatMessageDto> getChatMessages(String roomId);
+    List<MessageDto> getChatMessages(String roomId);
 
 
 
