@@ -24,5 +24,16 @@ public class UserDto {
         this.id = user.getId();
         this.name = user.getName();
         this.profile = user.getProfile();
+        this.role = user.getRole();
+    }
+
+    public static UserDto from(User user) {
+        return UserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .name(user.getName())
+                .profile(user.getProfile())
+                .build();
     }
 }

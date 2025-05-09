@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ChatRoomService {
     List<ChatRoomDto> getMyRooms(SessionUser user);
-    ChatRoom saveRoom(SessionUser user, ChatRoom chatRoom) throws Exception;
+    ChatRoom saveRoom(SessionUser user, ChatRoomDto dto) throws Exception;
 }
