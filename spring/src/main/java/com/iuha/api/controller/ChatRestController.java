@@ -1,7 +1,7 @@
 package com.iuha.api.controller;
 
 import com.iuha.api.config.auth.LoginUser;
-import com.iuha.api.entity.dto.ChatMessageDto;
+import com.iuha.api.entity.dto.MessageDto;
 import com.iuha.api.entity.dto.ChatRoomDto;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.model.ChatRoom;
@@ -37,15 +37,16 @@ public class ChatRestController {
     /* 메시지 전송 */
     @PostMapping("/{roomId}/send")
     public ResponseEntity<?> sendMessage(@LoginUser SessionUser user,
-                                         @RequestBody ChatMessageDto dto) {
+                                         @RequestBody MessageDto dto) {
         return ResponseEntity.ok(chatMessageService.sendMessage(user, dto));
     }
 
     /* 채팅방 생성 DB 저장 */
     @PostMapping("/save")
-    public ResponseEntity<ChatRoom> saveRoom(@LoginUser SessionUser user,
-                                             @RequestBody ChatRoom chatRoom) throws Exception {
-        return ResponseEntity.ok(chatRoomService.saveRoom(user, chatRoom));
+    public ResponseEntity<ChatRoomDto> saveRoom(@LoginUser SessionUser user,
+                                             @RequestBody ChatRoomDto dto) throws Exception {
+        ChatRoom chatRoom = chatRoomService.saveRoom(user, dto);
+        return ResponseEntity.ok(new ChatRoomDto(chatRoom));
     }
 
     /* 채팅방 생성 스토리지 저장 */
@@ -68,7 +69,7 @@ public class ChatRestController {
 
     /* 특정 채팅방 메시지 조회 */
     @GetMapping("/{roomId}")
-    public ResponseEntity<List<ChatMessageDto>> getChatMessages(@PathVariable String roomId) {
+    public ResponseEntity<List<MessageDto>> getChatMessages(@PathVariable String roomId) {
         log.info("채팅방 메시지 조회 요청: {}", roomId);
         return ResponseEntity.ok(chatMessageService.getChatMessages(roomId));
     }

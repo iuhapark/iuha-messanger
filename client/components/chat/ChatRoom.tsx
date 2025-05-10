@@ -1,12 +1,12 @@
 import { ChatRoom as ChatRoomType } from "@/\btypes";
-import ChatMessages from "./ChatMessages";
+import ChatMessages from "./Messages";
 import TextArea from "./TextArea";
 
-const ChatRoom = ({ id, name, sender, receiver }: ChatRoomType) => {
+const ChatRoom = ({ id, name, participants }: ChatRoomType) => {
   return (
     <div className='chat-room'>
       <ChatMessages roomId={id} />
-      <TextArea id={id} receiver={receiver} sender={sender} name={""}/>
+      <TextArea id={id} name={name} participants={participants} />
     </div>
   );
 };
