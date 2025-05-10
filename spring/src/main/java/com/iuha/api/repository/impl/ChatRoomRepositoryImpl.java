@@ -1,9 +1,6 @@
 package com.iuha.api.repository.impl;
 
-import com.iuha.api.entity.model.ChatRoom;
-import com.iuha.api.entity.model.QChatMessage;
-import com.iuha.api.entity.model.QChatRoom;
-import com.iuha.api.entity.model.QUser;
+import com.iuha.api.entity.model.*;
 import com.iuha.api.repository.ChatRoomRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +16,18 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
     @Override
     public List<ChatRoom> findChatRoomsByUserId(String userId) {
         QChatRoom chatRoom = QChatRoom.chatRoom;
-        QUser sender = QUser.user;
-        QUser receiver = new QUser("receiver");
-        QChatMessage message = QChatMessage.chatMessage;
+        QUserRoom userRoom = QUserRoom.userRoom;
 
         return queryFactory
-                .selectFrom(chatRoom)
-                .join(chatRoom.sender, sender).fetchJoin()
-                .join(chatRoom.receiver, receiver).fetchJoin()
-                .leftJoin(chatRoom.chatMessages, message).fetchJoin()
-                .where(chatRoom.sender.id.eq(userId)
-                        .or(chatRoom.receiver.id.eq(userId)))
+                .select(userRoom)
+                .from(userRoom)
+                .join(userRoom.chatRoom, chatRoom).fetchJoin()
+                .where(userRoom.user.id.eq(userId))
                 .distinct()
-                .fetch();
+                .fetch()
+                .stream()
+                .map(UserRoom::getChatRoom)
+                .toList();
     }
 
 }
