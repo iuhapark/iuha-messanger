@@ -14,7 +14,7 @@ const ChatRoomPage = () => {
   }
 
   return (<>
-     <ChatRoom id={roomId} name={''} senderId={senderId} receiverId={receiverId} />
+     <ChatRoom id={roomId} name={''} sender={senderId} receiver={receiverId} />
     </>
   );
 };

@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { useStomp } from '@/hooks/useStomp';
-import { ChatRoom as ChatRoomType, Message } from '@/\btypes';
+import { ChatRoom as ChatRoomType, Message, User } from '@/\btypes';
+import { useAuth } from '@/hooks/useAuth';
 
-const TextArea = ({ id, name, sender, receiver }: ChatRoomType) => {
+const TextArea = ({ id, participants }: ChatRoomType) => {
   const [message, setMessage] = useState('');
   const { sendMessage } = useStomp(id);
+  const { user } = useAuth();
 
   const send = () => {
     const data: Message = {
       roomId: id,
-      sender: sender,
-      receiver: receiver,
+      sender: { 
+        id: user?.id,
+        name: user?.name,
+        profile: user?.profile,
+       } as User,
       message: message.trim(),
     };
     sendMessage(data);

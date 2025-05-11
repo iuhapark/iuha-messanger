@@ -24,7 +24,7 @@ const UserList = ({ setStep, onSelect }: UserListProps) => {
     try {
       const { data } = await api.post(`/chat/save`, {
         name: receiver.name,
-        receiver: { id: receiver.id },
+        participants: [{ id: receiver.id }],
       });
       onSelect(data);
       setStep(ChatStep.READY);
