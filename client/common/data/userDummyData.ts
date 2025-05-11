@@ -1,7 +1,4 @@
 import { StaticImageData } from "next/image";
-import UserImage from "../../assets/img/user/juha.png";
-import UserImage2 from "../../assets/img/user/sam.png";
-import UserImage3 from "../../assets/img/user/yuri.png";
 
 export interface IUserProps {
 	id: string;
@@ -24,7 +21,7 @@ const juha: IUserProps = {
 	surname: 'Park',
 	position: 'CEO, Founder',
 	email: 'juha@iuha.com',
-	src: UserImage,
+	src: '/assets/img/user/juha.png',
 	isOnline: true,
 	isReply: true,
 	password: '@ABC123',
@@ -37,7 +34,7 @@ const sam: IUserProps = {
 	surname: 'Kim',
 	position: 'Worker',
 	email: 'sam@iuha.com',
-	src: UserImage2,
+	src: '/assets/img/user/sam.png',
 	isOnline: true,
 	password: '@ABC123',
 };
@@ -49,7 +46,7 @@ const yuri: IUserProps = {
 	surname: 'Seok',
 	position: 'Worker',
 	email: 'yuri@iuha.com',
-	src: UserImage3,
+	src: '/assets/img/user/yuri.png',
 	isOnline: true,
 	password: '@ABC123',
 };
