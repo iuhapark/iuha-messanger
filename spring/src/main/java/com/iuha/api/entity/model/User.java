@@ -2,15 +2,13 @@ package com.iuha.api.entity.model;
 
 import com.iuha.api.entity.vo.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +27,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    /* 친구 목록 */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserFriend> friends = new ArrayList<>();
+
+    /* 채팅방 참여 목록 */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserRoom> userRooms = new ArrayList<>();
+
     public User update(String name, String profile) {
         this.name = name;
         this.profile = profile;
@@ -36,12 +42,13 @@ public class User {
     }
 
     public String getRoleKey() {
-        return this.role.getKey();
+        return this.role != null ? this.role.getKey() : "ROLE_USER";
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority(this.getRoleKey()));
+        return this.role != null
+                ? List.of(new SimpleGrantedAuthority(this.getRoleKey()))
+                : List.of();
     }
-
 }
 
