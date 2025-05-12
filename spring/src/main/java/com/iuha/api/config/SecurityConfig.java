@@ -1,12 +1,20 @@
 package com.iuha.api.config;
 
-import com.iuha.api.handler.OAuth2LoginSuccessHandler;
-import com.iuha.api.handler.OAuth2LogoutSuccessHandler;
+import com.iuha.api.handler.LoginSuccessHandler;
+import com.iuha.api.handler.OAuth2SuccessHandler;
+import com.iuha.api.handler.LogoutSuccessHandler;
+import com.iuha.api.service.impl.CustomOAuth2UserService;
+import com.iuha.api.service.impl.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -18,8 +26,23 @@ import java.util.List;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
-    private final OAuth2LogoutSuccessHandler oAuth2LogoutSuccessHandler;
+    private final OAuth2SuccessHandler OAuth2SuccessHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
+    private final LogoutSuccessHandler logoutSuccessHandler;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, CustomUserDetailsService userDetailsService) throws Exception {
+        AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        return builder.build();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,20 +56,22 @@ public class SecurityConfig {
                     config.setAllowCredentials(true);
                     return config;
                 }))
+                .formLogin(form -> form
+                        .loginProcessingUrl("/login")
+                        .successHandler(loginSuccessHandler)
+                        .permitAll())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/chat/**").authenticated()
-                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/api/auth/**").permitAll()
+                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/local/login", "/api/**", "/save").permitAll()
                         .anyRequest().authenticated())
                 // 로그아웃 성공 시 / 주소로 이동
                 .logout((logoutConfig) -> logoutConfig
                         .logoutSuccessUrl("http://localhost:3000/")
-                        .logoutSuccessHandler(oAuth2LogoutSuccessHandler))
-
-
+                        .logoutSuccessHandler(logoutSuccessHandler))
                 // OAuth2 로그인 기능에 대한 여러 설정
                 .oauth2Login((oauth) -> oauth
                         .userInfoEndpoint((endpoint) -> endpoint.userService(customOAuth2UserService))
-                        .successHandler(oAuth2LoginSuccessHandler));
+                        .successHandler(OAuth2SuccessHandler));
         return http.build();
     }
 }

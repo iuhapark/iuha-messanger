@@ -9,14 +9,13 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class OAuth2LogoutSuccessHandler implements LogoutSuccessHandler {
+public class LogoutSuccessHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate redisTemplate;
 
@@ -27,6 +26,7 @@ public class OAuth2LogoutSuccessHandler implements LogoutSuccessHandler {
         if (session != null) session.invalidate();
 
         // 쿠키 삭제
+        deleteCookie("JSESSIONID", response);
         deleteCookie("accessToken", response);
         deleteCookie("refreshToken", response);
 

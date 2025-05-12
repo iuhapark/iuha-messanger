@@ -1,11 +1,13 @@
 package com.iuha.api.service;
 
+import com.iuha.api.component.Messenger;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.PrincipalUserDetails;
 import com.iuha.api.entity.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,8 +36,8 @@ public interface UserService {
                 .role(user.getRole())
                 .build();
     }
-
-    SessionUser login(UserDto dto);
+    Messenger save(UserDto dto);
+    SessionUser login(UserDto dto, HttpServletResponse response, HttpSession session);
     Optional<User> findById(String id);
     List<UserDto> getUsers();
     void logout(HttpServletRequest request, HttpServletResponse response);

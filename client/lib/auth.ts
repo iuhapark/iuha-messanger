@@ -1,6 +1,6 @@
+import { User } from "@/\btypes";
 import { destroyCookie } from "nookies";
-import api, { instance } from './api';
-import { User } from '@/\btypes';
+import { instance } from "./api";
 
 export const login = () => {
   window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`
@@ -18,22 +18,11 @@ export const logout = async () => {
   } catch (e) {
     console.warn('서버 로그아웃 실패', e);
   }
-  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/logout`
+  window.location.href = `/`
 
 };
 
 /* 세션에서 유저 정보 추출 */
-// export const getSessionUser = async (): Promise<User | null> => {
-//   try {
-//     const res = await instance.get('/user');
-//     return res.data;
-//   } catch (err: any) {
-//     if (err.response?.status === 401) {
-//       return null;
-//     }
-//     throw err;
-//   }
-// };
 export const getSessionUser = async (): Promise<User> => {
   const res = await instance.get('/user');
   return res.data;

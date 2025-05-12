@@ -1,5 +1,6 @@
 package com.iuha.api.service.impl;
 
+import com.iuha.api.component.Messenger;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,28 +30,35 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final StringRedisTemplate redisTemplate;
+    private final PasswordEncoder passwordEncoder;
 
-    /* 로컬 로그인 */
     @Transactional
     @Override
-    public SessionUser login(UserDto dto) {
-        log.info("login 진입 성공 email: {}", dto.getEmail());
-        Optional<User> optionalUser = userRepository.findByEmail(dto.getEmail());
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            boolean flag = user.getPassword().equals(dto.getPassword());
-            if (flag)
-                return new SessionUser(User.builder()
-                        .id(user.getId().toString())
-                        .email(user.getEmail())
-                        .name(user.getName())
-                        .role(Role.USER)
-                        .build());
-            else
-                throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        } else{
-            throw new IllegalArgumentException("해당 유저가 존재하지 않습니다.");
+    public Messenger save(UserDto dto) {
+        log.info("service 진입 파라미터: {} ", dto);
+        dto.setRole(Role.USER);
+        log.info("Role: {}", dto.getRole());
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        User user = dtoToEntity(dto);
+        User savedUser = userRepository.save(user);
+        return Messenger.builder()
+                .message(userRepository.existsById(savedUser.getId()) ? "SUCCESS" : "FAILURE")
+                .build();
+    }
+
+    /* 로컬 로그인 */
+    @Override
+    @Transactional
+    public SessionUser login(UserDto dto, HttpServletResponse response, HttpSession session) {
+        log.info("login 진입 성공 username: {}", dto.getUsername());
+        User user = userRepository.findByUsername(dto.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+        SessionUser sessionUser = new SessionUser(user);
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
+
+        return new SessionUser(user);
     }
 
     @Override
