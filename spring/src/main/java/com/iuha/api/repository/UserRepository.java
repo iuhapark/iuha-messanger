@@ -10,8 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String>, UserRepositoryCustom {
-    Optional<User> findByEmail(String email); // 중복 가입 확인
-
-    @Query("select count(id) from User where email =:email")
-    Integer existsByEmail(@Param("email") String username);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
 }

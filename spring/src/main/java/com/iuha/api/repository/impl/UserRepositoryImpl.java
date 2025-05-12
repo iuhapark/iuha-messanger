@@ -14,10 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepositoryCustom {
     private final JPAQueryFactory queryFactory;
+    QUser user = QUser.user;
 
     @Override
     public List<UserDto> getUsers() {
-        QUser user = QUser.user;
 
         return queryFactory
                 .select(user)
@@ -31,4 +31,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         .build())
                 .toList();
     }
+
+    @Override
+    public Integer existsByEmail(String username) {
+        Long result = queryFactory
+                .select(user.count())
+                .from(user)
+                .where(user.email.eq(username))
+                .fetchOne();
+
+        return result != null ? result.intValue() : 0;
+    }
+
 }
