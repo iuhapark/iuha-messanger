@@ -13,13 +13,13 @@ public class SessionUser implements Serializable {
     private String name;
     private String email;
     private String profile;
-    private Role role;
+//    private Role role;
 
     public SessionUser(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         this.profile = user.getProfile();
-        this.role = user.getRole();
+//        this.role = user.getRole();
     }
 }
