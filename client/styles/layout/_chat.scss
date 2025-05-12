@@ -37,6 +37,21 @@
   flex-direction: column;
   gap: 0.2rem;
 
+  .profile-img{
+    cursor: pointer;
+    border-color: var(--border-color);
+    border-radius: 50%;
+    color: var(--text-color);   
+    padding: 0%;
+    background-color: transparent;
+    width: 2rem;
+    height: 2rem;
+
+    &:hover {
+      background-color: var(--button-hover);
+    }
+  }
+
   &.me {
     align-items: flex-end;
 
