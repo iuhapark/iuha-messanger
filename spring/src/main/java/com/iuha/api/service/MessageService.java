@@ -10,7 +10,7 @@ import com.iuha.api.entity.model.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ChatMessageService {
+public interface MessageService {
 
     default Message dtoToEntity(MessageDto dto) {
         return Message.builder()
@@ -44,6 +44,5 @@ public interface ChatMessageService {
 
     List<MessageDto> getChatMessages(String roomId);
 
-
-
+    ChatRoom findChatRoomById(String roomId);
 }

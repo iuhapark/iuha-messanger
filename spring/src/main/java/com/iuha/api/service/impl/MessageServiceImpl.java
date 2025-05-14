@@ -8,7 +8,7 @@ import com.iuha.api.entity.model.User;
 import com.iuha.api.repository.ChatRoomRepository;
 import com.iuha.api.repository.MessageRepository;
 import com.iuha.api.repository.UserRepository;
-import com.iuha.api.service.ChatMessageService;
+import com.iuha.api.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ChatMessageServiceImpl implements ChatMessageService {
+public class MessageServiceImpl implements MessageService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final MessageRepository messageRepository;
@@ -45,6 +45,10 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     /* 채팅 메시지 저장 */
     public Message save(Message message) {
+        // 채팅방의 마지막 메시지 업데이트
+        ChatRoom chatRoom = message.getChatRoom();
+        chatRoom.setLastMessage(message.getMessage());
+        chatRoomRepository.save(chatRoom);
         return messageRepository.save(message);
     }
 
@@ -56,5 +60,10 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 .toList();
     }
 
+    @Override
+    public ChatRoom findChatRoomById(String roomId) {
+        return chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("채팅방이 없습니다."));
+    }
 
 }
