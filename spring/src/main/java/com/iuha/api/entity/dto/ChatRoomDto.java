@@ -20,10 +20,10 @@ public class ChatRoomDto {
 
     public ChatRoomDto(ChatRoom chatRoom) {
         this.id = chatRoom.getId();
-        this.name = chatRoom.getName();
         this.participants = chatRoom.getParticipants().stream()
                 .map(userRoom -> new UserDto(userRoom.getUser()))
                 .toList();
+        this.lastMessage = chatRoom.getLastMessage();
     }
 
 }
