@@ -24,10 +24,12 @@
 
   .room {
     cursor: pointer;
-    padding: 0.7rem;
+    padding: 0.5rem;
     border-radius: 0.7rem;
     transition: all 0.2s ease;
     position: static;
+    display: flex;
+    align-items: center;
 
     &:hover {
       background-color: var(--hover-bg);
@@ -37,8 +39,33 @@
       background-color: var(--active-bg);
       border: 1px solid var(--active-border);
     }
-  }
 
+    .room-img{
+      flex: 0 0 20%;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      color: var(--text-color);   
+      background-color: transparent;
+      width: 2.8rem;
+      height: 2.8rem;
+      object-fit: contain;
+    }
+
+    .room-name {
+      flex: 0 0 20%;
+      font-size: 1rem;
+      padding-inline: 1rem;
+    }
+  
+    .room-msg {
+      flex: 1;
+      font-size: 0.8rem;
+      color: var(--text-color);
+      padding-inline: 1rem;
+    }
+    
+  }
 }
 
 .user-list {

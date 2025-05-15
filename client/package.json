@@ -23,7 +23,8 @@
     "nookies": "^2.5.2",
     "sass": "^1.86.2",
     "sockjs-client": "^1.6.1",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "react-hook-form": "^7.56.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

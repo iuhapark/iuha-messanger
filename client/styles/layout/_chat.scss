@@ -1,10 +1,5 @@
 @import "./global";
 
-.app-layout {
-  display: flex;
-  flex-direction: column;
-}
-
 .chat {
   flex-grow: 1;
   padding: 2rem;
@@ -30,7 +25,6 @@
   gap: 0.5rem;
   height: 85vh;
   padding: 1rem;
-}
 
 .chat-message-block {
   display: flex;
@@ -38,6 +32,7 @@
   gap: 0.2rem;
 
   .profile-img{
+    flex: 0 0 20%;
     cursor: pointer;
     border-color: var(--border-color);
     border-radius: 50%;
@@ -45,13 +40,18 @@
     padding: 0%;
     background-color: transparent;
     width: 2rem;
-    height: 2rem;
 
     &:hover {
       background-color: var(--button-hover);
     }
   }
 
+  .chat-sender {
+    flex: 0 0 20%;
+    font-size: 0.75rem;
+    color: var(--foreground);
+  }
+  
   &.me {
     align-items: flex-end;
 
@@ -84,12 +84,6 @@
   white-space: nowrap;
 }
 
-
-.chat-sender {
-  font-size: 0.75rem;
-  color: var(--foreground);
-}
-
 .chat-bubble {
   max-width: 80%;
   padding: 0.5rem;
@@ -106,6 +100,7 @@
     align-self: flex-start;
     background-color: var(--hover-bg);
   }
+}
 }
 
 .chat-bottom {
