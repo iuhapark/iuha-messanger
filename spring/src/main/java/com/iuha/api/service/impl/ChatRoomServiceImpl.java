@@ -34,12 +34,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
         List<ChatRoom> chatRooms = chatRoomRepository.findChatRoomsByUserId(myId);
 
-        return chatRooms.stream().map(room ->
-                ChatRoomDto.builder()
-                        .id(room.getId())
-                        .name(room.getName())
-                        .build()
-        ).toList();
+        return chatRooms.stream()
+                .map(ChatRoomDto::new)
+                .toList();
     }
 
     @Override
@@ -50,9 +47,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         User receiver = userRepository.findById(dto.getParticipants().get(0).getId())
                 .orElseThrow(() -> new IllegalArgumentException("상대방 정보가 존재하지 않습니다."));
 
-        ChatRoom chatRoom = ChatRoom.builder()
-                .name(dto.getName())
-                .build();
+        ChatRoom chatRoom = new ChatRoom();
 
         List<UserRoom> userRooms = List.of(
                 UserRoom.builder().chatRoom(chatRoom).user(sender).build(),

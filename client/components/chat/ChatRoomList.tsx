@@ -4,12 +4,17 @@ import { errorHandling } from "@/utils/error";
 import { useEffect, useState } from "react";
 import { IoCreateOutline } from "react-icons/io5";
 import { ChatStep } from "@/config/type/Data";
+import { useAuth } from "@/context/AuthContext";
 
 const ChatRoomList = ({ setStep, onSelect }: ChatRoomListProps & { setStep: (step: ChatStep) => void }) => {
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
+  const { user } = useAuth();
+  const myId = user?.id;
 
   /* 내 채팅방 목록 조회 */
   useEffect(() => {
+    if (!myId) return;
+
     const fetchRooms = async () => {
       try {
         const res = await api.get('/chat/my');
@@ -20,7 +25,7 @@ const ChatRoomList = ({ setStep, onSelect }: ChatRoomListProps & { setStep: (ste
       }
     };
     fetchRooms();
-  }, []);
+  }, [myId]);
 
   return (
     <div className='chat-list'>
@@ -30,8 +35,18 @@ const ChatRoomList = ({ setStep, onSelect }: ChatRoomListProps & { setStep: (ste
       </button>
       {rooms.map((room) => (
         /* 선택 시 해당 room으로 이동 && 상태 READY로 변경 */
-        <div key={room.id} onClick={() => { onSelect(room); setStep(ChatStep.READY)}} className='room'>
-          {room.name}
+        <div key={room.id} onClick={() => { onSelect(room); setStep(ChatStep.READY)}}>
+          {room.participants
+          .filter((user: User) => user.id !== myId)
+          .map((user: User) => (
+            <div key={user.id} className='room'>
+                <img src={user.profile} alt={user.name} className='room-img' />
+                <div className='flex-col justify-start'>
+                <div className='room-name'>{user.name}</div>
+                <div className='room-msg'>{room.lastMessage?.slice(0, 10)}</div>
+              </div>
+            </div>
+          ))}
         </div>
       ))}
     </div>
