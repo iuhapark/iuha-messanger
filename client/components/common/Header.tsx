@@ -1,25 +1,41 @@
 'use client';
 
 // import ThemeToggle from "./ThemeToggle";
-import { IoLogOutOutline } from "react-icons/io5";
 import { logout } from "@/lib/auth";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
+import { IoMdPerson, IoIosLogOut } from "react-icons/io";
+import { Fragment, useEffect } from "react";
 
 const Header = () => {
-  const { user } = useAuth();
+const { user, loading } = useAuth();
+
+  if (!loading)
+
   return (
     <header className='header'>
-      <div className='logo'
-      onClick={() => window.location.href = '/'}
-      >
-        iuha</div>
+      <a 
+      className='header-logo'
+      href = '/'>
+        iuha
+      </a>
       <div className='header-right'>
-        {/* <ThemeToggle /> */}
-        <button className='header-icon' onClick={logout}>
-          <IoLogOutOutline />
+      {/* <ThemeToggle /> */}
+      {user ? (
+        <Fragment>
+          <button className='header-icon' onClick={logout}>
+            <IoIosLogOut />
+          </button>
+          <img
+          className='user-image'
+          src={user?.profile || '/assets/img/default.png'}
+          alt='user' />
+        </Fragment>
+      ) : (
+        <button className='header-icon'>
+          <IoMdPerson />
         </button>
-        <img src={user?.profile} alt='user' className='user-image' />
-      </div>
+      )}
+    </div>
     </header>
   );
 };
