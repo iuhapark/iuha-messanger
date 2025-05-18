@@ -26,83 +26,90 @@
   height: 85vh;
   padding: 1rem;
 
-.chat-message-block {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  .chat-message-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 
-  .profile-img{
-    flex: 0 0 20%;
-    cursor: pointer;
-    border-color: var(--border-color);
-    border-radius: 50%;
-    color: var(--text-color);   
-    padding: 0%;
-    background-color: transparent;
-    width: 2rem;
-
-    &:hover {
-      background-color: var(--button-hover);
+    .chat-user {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-  }
 
-  .chat-sender {
-    flex: 0 0 20%;
-    font-size: 0.75rem;
-    color: var(--foreground);
-  }
-  
-  &.me {
-    align-items: flex-end;
+    .profile {
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 2.8rem;
+      height: 2.8rem;
+      object-fit: cover;
+      cursor: pointer;
+      background-color: transparent;
+
+      &:hover {
+        background-color: var(--button-hover);
+      }
+    }
+
+    .username {
+      font-size: 1rem;
+      padding-bottom: 0.5vh;
+    }
 
     .chat-bubble-wrapper {
-      flex-direction: row-reverse; // 말풍선 오른쪽, 시간 왼쪽
-      text-align: right;
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .chat-bubble {
+      position: relative;
+      padding: 0.5rem;
+      border-radius: 2rem;
+      background-color: var(--hover-bg);
+      word-break: break-word;
+      
+      &.me {
+      background-color: var(--bubble-color);
+      color: var(--bubble-text);
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: -8px;
+        border-width: 2px 0 8px 12px;
+        border-style: solid;
+        border-color: transparent transparent transparent var(--bubble-color);
+      }
+    }
+
+    &.you {
+      
+      &::after {
+      content: '';
+      position: absolute;
+      left: -8px;
+      border-width: 2px 12px 8px 0;
+      border-style: solid;
+      border-color: transparent var(--hover-bg) transparent transparent;
     }
   }
-
-  &.you {
-    align-items: flex-start;
-
-    .chat-bubble-wrapper {
-      flex-direction: row; // 말풍선 왼쪽, 시간 오른쪽
-      text-align: left;
+}
+    
+    &.me {
+      align-items: flex-end;
     }
+
+    &.you {
+      align-items: flex-start;
+    }
+
+    .chat-time {
+      font-size: 0.75rem;
+      color: var(--foreground);
+    } 
   }
 }
-
-.chat-bubble-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.3rem;
-}
-
-.chat-time {
-  font-size: 0.75rem;
-  color: var(--foreground);
-  opacity: 0.6;
-  white-space: nowrap;
-}
-
-.chat-bubble {
-  max-width: 80%;
-  padding: 0.5rem;
-  border-radius: 2rem;
-  word-break: normal;
-  background-color: var(--hover-bg);
-  color: var(--foreground);
-
-  &.me {
-    align-self: flex-end;
-  }
-
-  &.you {
-    align-self: flex-start;
-    background-color: var(--hover-bg);
-  }
-}
-}
-
 .chat-bottom {
   position: absolute;
   bottom: 1rem;
@@ -153,11 +160,12 @@
   display: flex;
   flex: 1;
   height: var(--screen-height);
+  background-color: var(--aside-color);
 
   .chat-left {
-    border-right: 1px solid var(--border-color);
-    background-color: var(--background);
+    // border-right: 1px solid var(--border-color);
     overflow-y: auto;
+    
   }
 
   .chat-right {
@@ -170,7 +178,7 @@
   .chat-placeholder {
     padding: 2rem;
     color: var(--foreground);
-    opacity: 0.5;
     text-align: center;
+    font-size: 1rem;
   }
 }

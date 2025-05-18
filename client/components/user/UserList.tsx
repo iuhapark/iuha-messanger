@@ -36,7 +36,7 @@ const UserList = ({ setStep, onSelect }: UserListProps) => {
   return (
     <div className='user-list'>
       {receivers.map((receiver) => (
-        <div key={receiver.id} className='room' onClick={() => handleSelect(receiver)}>
+        <div key={receiver.id} className='bubble' onClick={() => handleSelect(receiver)}>
           {receiver.name}
         </div>
       ))}

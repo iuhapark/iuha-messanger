@@ -3,9 +3,8 @@
 .chat-list {
   display: flex;
   flex-direction: column;
-  width: 230px;
+  width: var(--sidebar-width);
   flex-shrink: 0;
-  background-color: var(--background);
   padding-block: 1rem;
   overflow-y: auto;
 
@@ -70,11 +69,28 @@
 
 .user-list {
   display: flex;
-  flex-direction: column;
-  width: 230px;
-  flex-shrink: 0;
-  background-color: var(--text-color);
-  padding-block: 1rem;
-  overflow-y: auto;
-  border-radius: 2rem;
+  position: grid;
+  border-radius: 50%;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+  font-size: 1rem;
+  place-items: center;
+
+  .bubble {
+    background-color: var(--bubble-color);
+    border-radius: 2rem;
+    padding-inline: 1vh;
+    height: 1.8rem;
+    cursor: pointer;
+    color: var(--bubble-text);
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+
+    &:hover {
+      background-color: var(--bubble-hover);
+      color: var(--bubble-hover-text);
+    }
+  }
 }
