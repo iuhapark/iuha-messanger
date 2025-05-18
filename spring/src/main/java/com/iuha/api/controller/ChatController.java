@@ -4,9 +4,11 @@ import com.iuha.api.entity.dto.MessageDto;
 import com.iuha.api.entity.model.Message;
 import com.iuha.api.entity.model.ChatRoom;
 import com.iuha.api.entity.model.User;
+import com.iuha.api.repository.UserRepository;
 import com.iuha.api.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -20,13 +22,16 @@ import java.time.LocalDateTime;
 public class ChatController {
 
     private final MessageService messageService;
+    private final UserRepository userRepository;
 
     /* 메시지 전송 */
     @MessageMapping("/chat/{roomId}")
     @SendTo("/topic/{roomId}")
-    public MessageDto sendMessage(MessageDto dto) {
-        ChatRoom chatRoom = messageService.findChatRoomById(dto.getRoomId());
-        User sender = User.builder().id(dto.getSender().getId()).build();
+    public MessageDto sendMessage(@DestinationVariable String roomId, MessageDto dto) {
+        ChatRoom chatRoom = messageService.findChatRoomById(roomId);
+        // sender id로 전체 유저 정보 조회
+        User sender = userRepository.findById(dto.getSender().getId())
+                .orElseThrow(() -> new RuntimeException("사용자 정보가 존재하지 않습니다."));
 
         Message saved = messageService.save(
                 Message.builder()

@@ -48,6 +48,7 @@ public class MessageServiceImpl implements MessageService {
         // 채팅방의 마지막 메시지 업데이트
         ChatRoom chatRoom = message.getChatRoom();
         chatRoom.setLastMessage(message.getMessage());
+        chatRoom.setUpdatedAt(message.getTimestamp());
         chatRoomRepository.save(chatRoom);
         return messageRepository.save(message);
     }

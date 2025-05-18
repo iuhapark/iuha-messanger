@@ -41,7 +41,7 @@ const Messages = ({ roomId }: { roomId: string }) => {
 
   /* 스크롤 항상 맨 아래로 */
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [dbMessages, newMessages]);
 
   /* DB 메시지 + WebSocket 실시간 메시지 합치기 */
@@ -51,13 +51,15 @@ const Messages = ({ roomId }: { roomId: string }) => {
     <div className='chat-messages'>
       {messages.map((m, idx) => (
         <div key={idx} className={`chat-message-block ${m.sender?.id === userId ? 'me' : 'you'}`}>
-          <img src={m.sender?.profile} alt='profile' className='profile-img' />
-          <div className='chat-sender'>{m.sender?.name}</div>
+          <div className='chat-user'>
+          <img src={m.sender?.profile || '/assets/img/default.png'} alt='profile' className='profile' />
+          <div className='username'>{m.sender?.name}</div>
+          </div>
           <div className='chat-bubble-wrapper'>
-            <div className='chat-time'>{m.timestamp?.slice(11, 16)}</div>
             <div className={`chat-bubble ${m.sender?.id === userId ? 'me' : 'you'}`}>
               {m.message}
             </div>
+            <div className='chat-time'>{m.timestamp?.slice(11, 16)}</div>
           </div>
         </div>
       ))}
