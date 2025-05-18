@@ -41,7 +41,7 @@ const Messages = ({ roomId }: { roomId: string }) => {
 
   /* 스크롤 항상 맨 아래로 */
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [dbMessages, newMessages]);
 
   /* DB 메시지 + WebSocket 실시간 메시지 합치기 */

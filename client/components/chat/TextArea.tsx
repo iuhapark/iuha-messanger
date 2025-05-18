@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useStomp } from '@/hooks/useStomp';
 import { ChatRoom as ChatRoomType, Message, User } from '@/\btypes';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/context/AuthContext';
 
-const TextArea = ({ id, participants }: ChatRoomType) => {
+const TextArea = ({ id, participants, lastMessage }: ChatRoomType) => {
   const [message, setMessage] = useState('');
   const { sendMessage } = useStomp(id);
   const { user } = useAuth();

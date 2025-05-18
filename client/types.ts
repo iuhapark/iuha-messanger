@@ -3,6 +3,7 @@ import { ChatStep } from "./config/type/Data";
 export interface User {
   id: string;
   username: string;
+  password: string;
   email: string;
   name: string;
   profile: string;
@@ -11,7 +12,6 @@ export interface User {
 
 export interface ChatRoom {
   id: string;
-  name: string;
   participants: User[];
   lastMessage?: string;
 }

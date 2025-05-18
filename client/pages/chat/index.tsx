@@ -26,9 +26,8 @@ const Chat = () => {
         {step === ChatStep.READY && room && (
           <ChatRoom
             id={room.id}
-            name={room.name}
-            sender={room.sender}
-            receiver={room.receiver}
+            participants={room.participants}
+            lastMessage={room.lastMessage}
           />
         )}
         {!step && (
