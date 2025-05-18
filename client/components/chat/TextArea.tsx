@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStomp } from '@/hooks/useStomp';
 import { ChatRoom as ChatRoomType, Message, User } from '@/\btypes';
 import { useAuth } from '@/context/AuthContext';
 
-const TextArea = ({ id, participants, lastMessage }: ChatRoomType) => {
+const TextArea = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & { onRefresh: () => void }) => {
   const [message, setMessage] = useState('');
   const { sendMessage } = useStomp(id);
   const { user } = useAuth();
+	const ref = useRef<HTMLInputElement>(null);
 
-  const send = () => {
+  /** 초기 Input Focus */
+  useEffect(() => {
+    if(ref.current)
+      ref.current.focus();
+  }, []);
+
+  /** 엔터키로 메시지 전송 */
+  const send = async () => {
     const data: Message = {
       roomId: id,
       sender: { 
@@ -18,8 +26,10 @@ const TextArea = ({ id, participants, lastMessage }: ChatRoomType) => {
        } as User,
       message: message.trim(),
     };
-    sendMessage(data);
+    onRefresh();
+    await sendMessage(data);
     setMessage('');
+    ref.current?.focus();
   };
 
   return (
@@ -30,7 +40,8 @@ const TextArea = ({ id, participants, lastMessage }: ChatRoomType) => {
           e.preventDefault();
           send();
         }}>
-        <input
+        <input 
+          ref={ref}
           type='text'
           value={message}
           onChange={(e) => setMessage(e.target.value)}

@@ -3,8 +3,8 @@
 // import ThemeToggle from "./ThemeToggle";
 import { logout } from "@/lib/auth";
 import { useAuth } from "@/context/AuthContext";
-import { IoMdPerson, IoIosLogOut } from "react-icons/io";
-import { Fragment, useEffect } from "react";
+import { IoMdPerson, IoMdLogOut } from "react-icons/io";
+import { Fragment } from "react";
 
 const Header = () => {
 const { user, loading } = useAuth();
@@ -23,7 +23,7 @@ const { user, loading } = useAuth();
       {user ? (
         <Fragment>
           <button className='header-icon' onClick={logout}>
-            <IoIosLogOut />
+            <IoMdLogOut />
           </button>
           <img
           className='user-image'
