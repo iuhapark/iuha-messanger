@@ -9,7 +9,6 @@ import com.iuha.api.service.UserService;
 import com.iuha.api.util.exception.ExceptionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,6 @@ import java.sql.SQLException;
 public class AuthController {
 
     private final UserService service;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @SuppressWarnings("static-access")
     @PostMapping("/save")
@@ -32,23 +30,13 @@ public class AuthController {
         return ResponseEntity.ok(service.save(dto));
     }
 
+    /** 세션 유저 정보 조회 */
     @GetMapping("/user")
-    public SessionUser user(@LoginUser SessionUser user)  {
-        if (user == null) {
-            throw new ExceptionUtil.UnauthorizedException("세션이 만료되었습니다. 로그인이 필요합니다.");
-        }
+    public SessionUser user(@LoginUser SessionUser user) throws Exception {
+        if (user == null) throw new ExceptionUtil.UnauthorizedException("세션이 만료되었습니다.");
         log.info("세션에서 꺼낸 유저: {}", user.getEmail());
         return user;
     }
-
-    /** 로컬 로그인 */
-//    @PostMapping(path = "/local/login")
-//    public ResponseEntity<SessionUser> login(@RequestBody UserDto dto,
-//                                             HttpServletResponse response,
-//                                             HttpSession session) {
-//        log.info("user login 파라미터: {} ", dto);
-//        return ResponseEntity.ok(service.login(dto, response, session));
-//    }
 
     /** OAuth 2.0 로그인 */
     @PostMapping("/oauth2/{registration}")
