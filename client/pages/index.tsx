@@ -1,7 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
-import { notoSansKR } from "@/styles/fonts";
+import { notoSansKR } from "@/config/fonts";
 import Image from "next/image";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { IoIosArrowRoundBack, IoLogoGithub, IoIosGlobe } from "react-icons/io";
 import { FaRegFileLines } from "react-icons/fa6";
 import Login from "./auth/login";
@@ -12,13 +12,20 @@ export default function Home() {
   const [showLogin, setShowLogin] = useState(false);
 
   const onBack = useCallback(() => setShowLogin(false), []);
+  const ref = useRef<HTMLInputElement>(null);
 
+  /** 초기 Input Focus */
+  useEffect(() => {
+    if(ref.current)
+      ref.current.focus();
+  }, []);
+  
   if (loading) return <div>Loading...</div>;
   if (user) return <Chat />;
 
   return (
-    <div>
-      {showLogin && <IoIosArrowRoundBack onClick={onBack} className='icon' />}
+  <div>
+    {showLogin && <IoIosArrowRoundBack onClick={onBack} className='icon' />}
     <div className={`${notoSansKR.className} content-wrapper`}>
       <main className='font-[family-name:var(--font-noto-sans-kr)]'>
         {showLogin ? (
@@ -66,6 +73,6 @@ export default function Home() {
         )}
       </main>
     </div>
-    </div>
+  </div>
   );
 }

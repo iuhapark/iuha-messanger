@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.iuha.api.util.exception.ExceptionUtil;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,15 +41,25 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     }
 
     @Override
-    public ChatRoom saveRoom(SessionUser user, ChatRoomDto dto) throws Exception {
-        User sender = userRepository.findById(user.getId())
+    @Transactional
+    public ChatRoom saveRoom(SessionUser sessionUser, ChatRoomDto dto) throws Exception {
+        User sender = userRepository.findById(sessionUser.getId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자 정보가 존재하지 않습니다."));
 
         User receiver = userRepository.findById(dto.getParticipants().get(0).getId())
                 .orElseThrow(() -> new IllegalArgumentException("상대방 정보가 존재하지 않습니다."));
 
-        ChatRoom chatRoom = new ChatRoom();
+        // 기존 채팅방 있는지 확인
+        Optional<ChatRoom> existingRoom = chatRoomRepository.findExistingChatRoom(sender.getId(), receiver.getId());
 
+        if (existingRoom.isPresent()) {
+            ChatRoom room = existingRoom.get();
+            room.getParticipants().size(); // Lazy 강제 초기화 (직렬화 에러 방지)
+            return room;
+        }
+
+        // 새 채팅방 생성
+        ChatRoom chatRoom = new ChatRoom();
         List<UserRoom> userRooms = List.of(
                 UserRoom.builder().chatRoom(chatRoom).user(sender).build(),
                 UserRoom.builder().chatRoom(chatRoom).user(receiver).build()
@@ -57,4 +68,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         chatRoom.setParticipants(userRooms);
         return chatRoomRepository.save(chatRoom);
     }
+
+
+
 }
