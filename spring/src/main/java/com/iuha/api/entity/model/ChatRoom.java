@@ -3,6 +3,7 @@ package com.iuha.api.entity.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String lastMessage;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRoom> participants = new ArrayList<>();

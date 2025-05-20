@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -17,6 +18,7 @@ public class ChatRoomDto {
     private String name;
     private List<UserDto> participants;
     private String lastMessage;
+    private LocalDateTime updatedAt;
 
     public ChatRoomDto(ChatRoom chatRoom) {
         this.id = chatRoom.getId();
@@ -24,6 +26,7 @@ public class ChatRoomDto {
                 .map(userRoom -> new UserDto(userRoom.getUser()))
                 .toList();
         this.lastMessage = chatRoom.getLastMessage();
+        this.updatedAt = chatRoom.getUpdatedAt();
     }
 
 }

@@ -6,14 +6,14 @@ import { IoCreateOutline } from "react-icons/io5";
 import { ChatStep } from "@/config/type/Data";
 import { useAuth } from "@/context/AuthContext";
 
-const ChatRoomList = ({ setStep, onSelect }: ChatRoomListProps & { setStep: (step: ChatStep) => void }) => {
+const ChatRoomList = ({ setStep, onSelect, refresh }: ChatRoomListProps & { setStep: (step: ChatStep) => void; refresh: number }) => {
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const { user } = useAuth();
   const myId = user?.id;
 
   /* 내 채팅방 목록 조회 */
   useEffect(() => {
-    if (!myId) return;
+    if (!user) return;
 
     const fetchRooms = async () => {
       try {
@@ -25,7 +25,7 @@ const ChatRoomList = ({ setStep, onSelect }: ChatRoomListProps & { setStep: (ste
       }
     };
     fetchRooms();
-  }, [myId]);
+  }, [user?.id, refresh]);
 
   return (
     <div className='chat-list'>
@@ -40,10 +40,10 @@ const ChatRoomList = ({ setStep, onSelect }: ChatRoomListProps & { setStep: (ste
           .filter((user: User) => user.id !== myId)
           .map((user: User) => (
             <div key={user.id} className='room'>
-                <img src={user.profile} alt={user.name} className='room-img' />
+                <img src={user.profile  || '/assets/img/default.png'} alt={user.name} className='room-img' />
                 <div className='flex-col justify-start'>
                 <div className='room-name'>{user.name}</div>
-                <div className='room-msg'>{room.lastMessage?.slice(0, 10)}</div>
+                <div className='room-msg'>{room.lastMessage?.slice(0, 17)}</div>
               </div>
             </div>
           ))}
