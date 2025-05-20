@@ -3,7 +3,6 @@ package com.iuha.api.service;
 import com.iuha.api.component.Messenger;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
-import com.iuha.api.entity.model.PrincipalUserDetails;
 import com.iuha.api.entity.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,9 +36,8 @@ public interface UserService {
                 .build();
     }
     Messenger save(UserDto dto);
-    SessionUser login(UserDto dto, HttpServletResponse response, HttpSession session);
     Optional<User> findById(String id);
-    List<UserDto> getUsers();
+    List<UserDto> getUsers(String id);
     void logout(HttpServletRequest request, HttpServletResponse response);
     UserDto oauthJoin(UserDto dto);
 }

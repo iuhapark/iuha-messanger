@@ -46,21 +46,6 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    /* 로컬 로그인 */
-    @Override
-    @Transactional
-    public SessionUser login(UserDto dto, HttpServletResponse response, HttpSession session) {
-        log.info("login 진입 성공 username: {}", dto.getUsername());
-        User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
-        SessionUser sessionUser = new SessionUser(user);
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-
-        return new SessionUser(user);
-    }
-
     @Override
     public UserDto oauthJoin(UserDto dto) {
         User oauthUser = User.builder()
@@ -94,8 +79,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getUsers() {
-        return userRepository.getUsers();
+    public List<UserDto> getUsers(String id) {
+        return userRepository.getUsers(id);
     }
 
     @Override
