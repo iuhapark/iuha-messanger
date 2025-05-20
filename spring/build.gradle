@@ -83,6 +83,7 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
     testImplementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     testAnnotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
+    annotationProcessor("com.querydsl:querydsl-apt")
 
     /* jakarta */
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"

@@ -17,11 +17,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     QUser user = QUser.user;
 
     @Override
-    public List<UserDto> getUsers() {
-
+    public List<UserDto> getUsers(String id) {
         return queryFactory
                 .select(user)
                 .from(user)
+                .where(user.id.ne(id)) // 로그인한 사용자의 ID를 제외
                 .fetch()
                 .stream()
                 .map(u -> UserDto.builder()
