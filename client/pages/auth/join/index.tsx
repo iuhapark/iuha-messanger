@@ -3,13 +3,21 @@
 import { useForm } from 'react-hook-form';
 import { User } from '@/\btypes';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { instance } from '@/lib/api';
+import { notoSansKR } from "@/config/fonts";
 
 const Join = () => {
   const router = useRouter();
   const [message, setMessage] = useState('');
+  const ref = useRef<HTMLInputElement>(null);
 
+  /** 초기 Input Focus */
+  useEffect(() => {
+    if(ref.current)
+      ref.current.focus();
+  }, []);
+  
   const {
     register,
     handleSubmit,
@@ -35,21 +43,23 @@ const Join = () => {
   };
 
   return (
-    <div className='join-wrapper'>
-      <h1>회원가입</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type='text' placeholder='이름' {...register('name', { required: true })} />
+  <div className='join-wrapper'>
+    <div className={`${notoSansKR.className} font-[family-name:var(--font-noto-sans-kr)]`}>
+      <h1 className='text'>Register</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className='join-form'>
+        <input className='input' type='text' placeholder='이름' {...register('name', { required: true })} ref={(e) => { register('name').ref(e); ref.current = e; }}/>
         {errors.name && <span>이름은 필수입니다.</span>}
-        <input type='text' placeholder='사용자명' {...register('username', { required: true })} />
-        {errors.username && <span>사용자명은 필수입니다.</span>}
-        <input type='email' placeholder='이메일' {...register('email', { required: true })} />
+        <input className='input' type='text' placeholder='아이디' {...register('username', { required: true })} />
+        {errors.username && <span>아이디는 필수입니다.</span>}
+        <input className='input' type='email' placeholder='이메일' {...register('email', { required: true })} />
         {errors.email && <span>이메일은 필수입니다.</span>}
-        <input type='password' placeholder='비밀번호' {...register('password', { required: true })} />
+        <input className='input' type='password' placeholder='비밀번호' {...register('password', { required: true })} />
         {errors.password && <span>비밀번호는 필수입니다.</span>}
-        <button type='submit'>가입하기</button>
+        <button className='btn' type='submit'>다음</button>
       </form>
       {message && <p>{message}</p>}
     </div>
+  </div>
   );
 };
 

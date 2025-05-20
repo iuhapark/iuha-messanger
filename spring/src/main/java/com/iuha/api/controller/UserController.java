@@ -1,5 +1,7 @@
 package com.iuha.api.controller;
 
+import com.iuha.api.config.auth.LoginUser;
+import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
 import com.iuha.api.repository.UserRepository;
@@ -22,9 +24,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<UserDto>> getUsers() {
+    public ResponseEntity<List<UserDto>> getUsers(@LoginUser SessionUser user) throws Exception {
         log.info("유저 특정 필드만 조회");
-        return ResponseEntity.ok(userService.getUsers());
+        if (user == null) throw new Exception("세션이 만료되었습니다.");
+        return ResponseEntity.ok(userService.getUsers(user.getId()));
     }
 
     @PostMapping("/save")
