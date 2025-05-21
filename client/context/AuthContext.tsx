@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  /* 세션 유저 정보 조회 */
   useEffect(() => {
     instance.get('/user')
     .then(res => {
