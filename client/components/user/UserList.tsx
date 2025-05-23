@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react';
-import api from '@/lib/api';
-import { User, UserListProps } from '@/\btypes';
-import { errorHandling } from '@/utils/error';
-import { ChatStep } from '@/config/type/Data';
+import { useEffect, useState } from "react";
+import api from "@/lib/api";
+import { User, UserListProps } from "@/types/index";
+import { ChatStep } from "@/types/data";
+import { errorHandling } from "@/utils/error";
+import { useAuth } from "@/context/AuthContext";
 
 /* 유저 목록 조회 및 선택 */
 const UserList = ({ setStep, onSelect }: UserListProps) => {
   const [receivers, setReceivers] = useState<User[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
+    if (!user || !user.id) return;
     const fetchUsers = async () => {
       try {
         const res = await api.get('/users/list');

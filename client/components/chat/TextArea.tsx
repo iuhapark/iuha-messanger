@@ -1,56 +1,47 @@
 import { useEffect, useRef, useState } from 'react';
 import { useStomp } from '@/hooks/useStomp';
-import { ChatRoom as ChatRoomType, Message, User } from '@/\btypes';
+import { ChatRoom as ChatRoomType, Message, User } from '@/types';
 import { useAuth } from '@/context/AuthContext';
 
 const TextArea = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & { onRefresh: () => void }) => {
   const [message, setMessage] = useState('');
   const { sendMessage } = useStomp(id);
   const { user } = useAuth();
-	const ref = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  /** 초기 Input Focus */
   useEffect(() => {
-    if(ref.current)
-      ref.current.focus();
+    inputRef.current?.focus();
   }, []);
 
-  /** 엔터키로 메시지 전송 */
-  const send = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = message.trim();
+    if (!trimmed) return;
+
     const data: Message = {
       roomId: id,
-      sender: { 
-        id: user?.id,
-        name: user?.name,
-        profile: user?.profile,
-       } as User,
-      message: message.trim(),
+      sender: { id: user?.id, name: user?.name, profile: user?.profile } as User,
+      message: trimmed,
     };
-    onRefresh();
+
     await sendMessage(data);
     setMessage('');
-    ref.current?.focus();
+    inputRef.current?.focus();
+    onRefresh();
   };
 
   return (
     <div className='chat-bottom'>
-      <form
-        className='chat-input-area'
-        onSubmit={(e) => {
-          e.preventDefault();
-          send();
-        }}>
-        <input 
-          ref={ref}
+      <form className='chat-input-area' onSubmit={handleSubmit}>
+        <input
+          ref={inputRef}
           type='text'
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder='Type a message...'
           className='chat-input'
         />
-        <button type='submit' className='chat-send-btn'>
-          Send
-        </button>
+        <button type='submit' className='chat-send-btn'>Send</button>
       </form>
     </div>
   );
