@@ -1,4 +1,4 @@
-import { User } from "@/\btypes";
+import { User } from "@/types/index";
 import { destroyCookie } from "nookies";
 import { instance } from "./api";
 
@@ -22,8 +22,10 @@ export const logout = async () => {
 
 };
 
-/* 세션에서 유저 정보 추출 */
-export const getSessionUser = async (): Promise<User> => {
+export const fetchSessionUser = async (): Promise<User> => {
   const res = await instance.get('/user');
+  if (!res.data || !res.data.id) {
+    throw new Error('User not found');
+  }
   return res.data;
 }
