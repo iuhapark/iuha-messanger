@@ -1,0 +1,62 @@
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+}
+
+.btn-primary {
+  border-radius: 2rem;
+  border: 1px solid transparent;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-color);
+  color: var(--background);
+  gap: 0.5rem;
+  font-weight: 500;
+  height: 2.5rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  height: 2.6rem;
+  font-size: large;
+
+  &:hover {
+    background-color: var(--button-hover);
+  }
+}
+
+.btn-outline {
+  border-radius: 2rem;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  height: 2.6rem;
+  padding: 0 1rem;
+  width: 35%;
+
+  &:hover {
+    background-color: var(--button-hover);
+  }
+}
+
+.icon {
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: x-large;
+  position: absolute;
+  margin: 0 1rem;
+  width: 2rem;
+  height: 2rem;
+  
+  &:hover {
+    background-color: var(--button-hover);
+  }
+}
