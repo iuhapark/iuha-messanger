@@ -1,7 +1,7 @@
 export const enum PAGE {
     USER = '/users',
-    LOGIN = '/auth/login',
-    JOIN = '/auth/join',
+    LOGIN = '/login',
+    JOIN = '/join',
     MYPAGE = '/mypage',
     CHAT = '/chat',
   }
