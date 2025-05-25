@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import * as Stomp from '@stomp/stompjs';
-import { Message } from '@/\btypes';
+import { useEffect, useRef, useState } from "react";
+import * as Stomp from "@stomp/stompjs";
+import { Message } from "@/types/index";
 
 export const useStomp = (roomId: string) => {
   const clientRef = useRef<Stomp.Client | null>(null);

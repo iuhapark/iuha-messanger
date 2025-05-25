@@ -1,4 +1,4 @@
-import { Client, IMessage } from '@stomp/stompjs';
+import { Client, IMessage } from "@stomp/stompjs";
 
 let client: Client | null = null;
 
