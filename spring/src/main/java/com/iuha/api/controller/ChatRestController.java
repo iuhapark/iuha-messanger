@@ -28,7 +28,7 @@ public class ChatRestController {
     private final ChatRoomRepository chatRoomRepository;
 
     /* 내 채팅방 목록 조회 */
-    @GetMapping("/my")
+    @GetMapping("/room-list")
     public ResponseEntity<List<ChatRoomDto>> getMyRooms(@LoginUser SessionUser user) {
         log.info("내 채팅방 목록 조회 요청: {}", user.getEmail());
         return ResponseEntity.ok(chatRoomService.getMyRooms(user));
