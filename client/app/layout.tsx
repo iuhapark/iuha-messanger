@@ -4,11 +4,12 @@ import { Link } from "@heroui/link";
 import clsx from "clsx";
 
 import { Providers } from "./providers";
-import { AuthProvider } from "@/context/AuthContext";
-
+import { fetchSessionUser } from "@/lib/user";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import Navbar from "@/components/navbar";
+import { AuthProvider } from "@/context/authContext";
+import { LoadingProvider } from "@/context/loadingContext";
 
 export const metadata: Metadata = {
   title: {
@@ -28,11 +29,12 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await fetchSessionUser();
   return (
     <html suppressHydrationWarning lang='en'>
       <head />
@@ -43,10 +45,11 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
-          <AuthProvider>
+          <LoadingProvider>
+          <AuthProvider initUser={user}>
           <div className='relative flex flex-col h-screen'>
             <Navbar />
-            <main className='container mx-auto max-w-7xl pt-16 px-6 flex-grow'>
+            <main className='container mx-auto max-w-full pt-10 px-6 flex-grow'>
               {children}
             </main>
             <footer className='w-full flex items-center justify-center py-3'>
@@ -62,6 +65,7 @@ export default function RootLayout({
             </footer>
           </div>
           </AuthProvider>
+          </LoadingProvider>
         </Providers>
       </body>
     </html>

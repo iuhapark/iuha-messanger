@@ -7,7 +7,6 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@heroui/navbar";
-import { Button } from "@heroui/button";
 import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
 import { Input } from "@heroui/input";
@@ -20,12 +19,11 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import {
   BlogIcon,
   GithubIcon,
-  HeartFilledIcon,
   SearchIcon,
 } from "@/components/icons";
 import { it } from "node:test";
 import { fetchSessionUser } from "@/lib/user";
-import UserMenu from "./AuthButton";
+import AvatarProps from "./user/avatar";
 
 const Navbar = async () => {
   const user = await fetchSessionUser()
@@ -51,7 +49,7 @@ const Navbar = async () => {
   );
 
   return (
-    <HeroUINavbar maxWidth='xl' position='sticky'>
+    <HeroUINavbar maxWidth='full' position='sticky'>
       <NavbarContent className='basis-1/5 sm:basis-full' justify='start'>
         <NavbarBrand as='li' className='gap-3 max-w-fit'>
           <NextLink className='flex justify-start items-center gap-1' href='/'>
@@ -77,7 +75,7 @@ const Navbar = async () => {
         </NavbarItem>
         <NavbarItem className='hidden lg:flex'>{searchInput}</NavbarItem>
         <NavbarItem className='hidden md:flex'>
-          <UserMenu user={user} />
+          <AvatarProps initUser={user} />
         </NavbarItem>
       </NavbarContent>
 
@@ -96,7 +94,7 @@ const Navbar = async () => {
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={
-                  index === 2
+                  index === 3 
                     ? 'primary'
                     : index === siteConfig.navMenuItems.length - 1
                       ? 'danger'
