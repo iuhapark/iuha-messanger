@@ -1,5 +1,6 @@
 package com.iuha.api.config;
 
+import com.iuha.api.handler.LoginFailureHandler;
 import com.iuha.api.handler.LoginSuccessHandler;
 import com.iuha.api.handler.OAuth2SuccessHandler;
 import com.iuha.api.handler.LogoutSuccessHandler;
@@ -28,6 +29,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler OAuth2SuccessHandler;
     private final LoginSuccessHandler loginSuccessHandler;
+    private final LoginFailureHandler loginFailureHandler;
     private final LogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
@@ -56,18 +58,23 @@ public class SecurityConfig {
                     config.setAllowCredentials(true);
                     return config;
                 }))
-                .formLogin(form -> form
+                .formLogin(
+//                        form -> form.disable()
+                        form -> form
                         .loginProcessingUrl("/login")
                         .successHandler(loginSuccessHandler)
-                        .permitAll())
+                        .failureHandler(loginFailureHandler)
+                        .permitAll()
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/chat/**").authenticated()
-                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/local/login", "/api/**", "/save").permitAll()
+                        .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/api/**").permitAll()
                         .anyRequest().authenticated())
                 // 로그아웃 성공 시 / 주소로 이동
                 .logout((logoutConfig) -> logoutConfig
-                        .logoutSuccessUrl("http://localhost:3000/")
-                        .logoutSuccessHandler(logoutSuccessHandler))
+                        .logoutUrl("/logout")
+                        .logoutSuccessHandler(logoutSuccessHandler)
+                        .permitAll())
                 // OAuth2 로그인 기능에 대한 여러 설정
                 .oauth2Login((oauth) -> oauth
                         .userInfoEndpoint((endpoint) -> endpoint.userService(customOAuth2UserService))

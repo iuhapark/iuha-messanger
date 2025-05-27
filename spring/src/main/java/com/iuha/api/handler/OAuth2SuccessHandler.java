@@ -48,6 +48,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Cookie cookie = new Cookie(name, token);
         cookie.setPath("/");
         cookie.setHttpOnly(httpOnly);
+        cookie.setSecure(true);
+//        cookie.sameSite("None");
         response.addCookie(cookie);
     }
 }

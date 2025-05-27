@@ -1,13 +1,14 @@
 package com.iuha.api.service;
 
 import com.iuha.api.component.Messenger;
+import com.iuha.api.entity.dto.LoginRequest;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +36,11 @@ public interface UserService {
                 .role(user.getRole())
                 .build();
     }
-    Messenger save(UserDto dto);
+
+    SessionUser login(LoginRequest req, HttpServletRequest request, HttpServletResponse response);
+    Messenger save(UserDto dto) throws SQLException;
     Optional<User> findById(String id);
     List<UserDto> getUsers(String id);
-    void logout(HttpServletRequest request, HttpServletResponse response);
     UserDto oauthJoin(UserDto dto);
+//    List<User> findByName(String name) throws Exception;
 }

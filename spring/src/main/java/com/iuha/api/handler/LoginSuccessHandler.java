@@ -34,7 +34,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         setTokenCookie(response, "accessToken", accessToken, false);
         setTokenCookie(response, "refreshToken", refreshToken, true);
 
-        response.sendRedirect("http://localhost:3000"); // 로그인 후 리디렉션 경로
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
     }
 
     private void setTokenCookie(HttpServletResponse response, String name, String token, boolean httpOnly) {
@@ -42,6 +43,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         cookie.setPath("/");
         cookie.setHttpOnly(httpOnly);
         cookie.setMaxAge(60 * 60 * 24 * 7);
+//        cookie.setSecure(true); // HTTPS only
+//        cookie.setSameSite("None");
         response.addCookie(cookie);
     }
 }
