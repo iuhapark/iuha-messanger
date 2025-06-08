@@ -25,6 +25,8 @@ public class Message {
     @JoinColumn(name = "sender_id")
     private User sender;
 
+    private String receiver;
+
     @Enumerated(EnumType.STRING)
     private MessageType type;
 

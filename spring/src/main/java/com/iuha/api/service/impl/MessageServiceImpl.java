@@ -28,10 +28,9 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message sendMessage(SessionUser sessionUser, MessageDto dto) {
         ChatRoom chatRoom = chatRoomRepository.findById(dto.getRoomId())
-                .orElseThrow(() -> new RuntimeException("채팅방 정보가 존재하지 않습니다."));
-
+                .orElseThrow(() -> new RuntimeException("Chat room not found."));
         User sender = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new RuntimeException("사용자 정보가 존재하지 않습니다."));
+                .orElseThrow(() -> new RuntimeException("Sender not found."));
 
         Message message = Message.builder()
                 .chatRoom(chatRoom)
@@ -64,7 +63,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public ChatRoom findChatRoomById(String roomId) {
         return chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("채팅방이 없습니다."));
+                .orElseThrow(() -> new RuntimeException("Chat room not found."));
     }
 
 }
