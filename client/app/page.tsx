@@ -1,53 +1,57 @@
 import { Link } from "@heroui/link";
-import { Snippet } from "@heroui/snippet";
-import { Code } from "@heroui/code";
 import { button as buttonStyles } from "@heroui/theme";
 
+import { ArrowIcon, GithubIcon } from "@/components/icons";
+import { subtitle, title } from "@/components/primitives";
 import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+import { Button } from "@heroui/button";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <section className='flex flex-col items-center justify-center gap-4 py-8 md:py-10'>
-      <div className='inline-block max-w-xl text-center justify-center'>
-        <span className={title()}>Connect in&nbsp;</span>
-        <span className={title({ color: 'violet' })}>Real-time</span>
-        <span className={title()}>.&nbsp;</span>
+    <section className='relative w-[full] h-[700px] overflow-hidden flex items-center justify-center'>
+    {/* <Image
+      src='/assets/img/main.png'
+      alt='main'
+      fill
+      className='object-none md:object-contain '
+      priority
+    /> */}
+    <div className='relative z-10 flex flex-col items-center justify-center gap-4 px-52 py-40 text-center'>
+      <div className='inline-block max-w-xl'>
+        <span className={title()}>It's not magic.&nbsp;</span>
         <br />
-        <span className={title()}>Chat with anyone, anytime — right away.</span>
+        <span className={title()}>It's&nbsp;</span>
+        <span className={title({ color: 'violet' })}>messaging</span>
+        <span className={title()}>.&nbsp;</span>
         <div className={subtitle({ class: 'mt-4' })}>
-          Experience seamless conversations, zero delay.<br />
+          Experience seamless conversations, zero delay.
+          <br />
         </div>
-      </div>
+    </div>
 
-      <div className='flex gap-3'>
-        <Link
-          className={buttonStyles({
-            color: 'primary',
-            radius: 'full',
-            variant: 'shadow',
-          })}
-          href={siteConfig.navItems.find(i => i.label === 'Chat')?.href}
-        >
-          Chat
-        </Link>
-        <Link
-          className={buttonStyles({ variant: 'bordered', radius: 'full' })}
-          href={siteConfig.links.github}
-        >
-          <GithubIcon size={20} />
-          GitHub
-        </Link>
-      </div>
+    <div className='flex gap-3 mt-6'>
+      <Button
+        as={Link}
+        className={buttonStyles({
+          color: 'primary',
+          radius: 'full',
+          variant: 'shadow',
+        })}
+        href={siteConfig.navItems.find(i => i.label === 'Chat')?.href}
+        endContent={<ArrowIcon size={20}
+      />}
+      >Chat</Button>
+      <Link
+        className={buttonStyles({ variant: 'bordered', radius: 'full' })}
+        href={siteConfig.links.github}
+      >
+        <GithubIcon size={20} />
+        GitHub
+      </Link>
+    </div>
+  </div>
+</section>
 
-      <div className='mt-8'>
-        <Snippet hideCopyButton hideSymbol variant='bordered'>
-          <span>
-            Get started by editing <Code color='primary'>app/page.tsx</Code>
-          </span>
-        </Snippet>
-      </div>
-    </section>
   );
 }
