@@ -1,8 +1,10 @@
 export const enum PAGE {
     USER = '/users',
-    LOGIN = '/login',
-    JOIN = '/join',
-    MYPAGE = '/mypage',
     CHAT = '/chat',
+    ACCOUNT = '/account',
+    FRIENDS = '/friends',
+    SETTINGS = '/settings',
+    SIGNIN = '/sign-in',
+    SIGNUP = '/sign-up',
   }
   
