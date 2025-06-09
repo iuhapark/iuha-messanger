@@ -5,7 +5,6 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-
 export interface User {
   id: string;
   username: string;
@@ -13,13 +12,15 @@ export interface User {
   email: string;
   name: string;
   profile: string;
-  role: 'USER' | 'ADMIN';
+  role: string;
 }
 
 export interface ChatRoom {
   id: string;
   participants: User[];
   lastMessage?: string;
+  updatedAt?: string;
+  messages?: Message[];
 }
 
 export interface Message {
@@ -28,7 +29,7 @@ export interface Message {
   sender?: User;
   message: string;
   timestamp?: string;
-  type?: 'ENTER' | 'TALK' | 'LEAVE';
+  type?: string;
 }
 
 export interface ChatRoomListProps {
@@ -39,3 +40,5 @@ export interface UserListProps {
   setStep: (step: ChatStep) => void;
   onSelect: (room: ChatRoom) => void;
 }
+
+
