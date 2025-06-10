@@ -1,16 +1,17 @@
-'use server';
+'use server'
 
-import { User } from "@/types/index";
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers"
+import { User } from "@/types/index"
 
-/* 세션에서 유저 정보 추출 */
 export const fetchSessionUser = async (): Promise<User | null> => {
   try {
-    const cookie = cookies().toString()
+    const cookieStore = await cookies()
+    const sessionCookie = cookieStore.get('connect.sid')?.value
+    if (!sessionCookie) return null
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
       headers: {
-        Cookie: cookie,
+        Cookie: `connect.sid=${sessionCookie}`,
       },
       credentials: 'include',
       cache: 'no-store',
@@ -20,7 +21,7 @@ export const fetchSessionUser = async (): Promise<User | null> => {
     if (!res.ok || !contentType.includes('application/json')) return null
 
     const user = await res.json()
-    return user && user.id ? user : null
+    return user?.id ? user : null
   } catch (err) {
     console.warn('fetchSessionUser error:', err)
     return null

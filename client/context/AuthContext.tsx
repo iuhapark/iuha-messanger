@@ -1,29 +1,34 @@
 'use client';
+
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { User } from "@/types/index";
-import { fetchSessionUser } from '@/lib/auth'
+import { fetchSessionUser } from "@/lib/auth";
 
-const AuthContext = createContext<{ user: User | null; loading: boolean }>({ user: null, loading: true });
+const AuthContext = createContext<{ user: User | null; setUser: (user: User | null) => void; loading: boolean }>({ user: null, setUser: () => {}, loading: true });
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+export const AuthProvider = ({ children, initUser }: { children: ReactNode, initUser: User | null; }) => {
+  const [user, setUser] = useState<User | null>(initUser);
   const [loading, setLoading] = useState(true);
-  const [mounted, setMounted] = useState(false)
 
   /* 세션 유저 정보 조회 */
   useEffect(() => {
-    setMounted(true)
-    fetchSessionUser()
-      .then((user) => setUser(user?.id ? user : null))
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false))
-  }, [])
-  
-  if (!mounted) return null
+    const loadUser = async () => {
+      try {
+        const session = await fetchSessionUser();
+        setUser(session?.id ? session : null);
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    loadUser();
+  }, []);
+  
   return (
-    <AuthContext.Provider value={{user, loading}}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{user, setUser, loading}}>{children}</AuthContext.Provider>
   );
 };

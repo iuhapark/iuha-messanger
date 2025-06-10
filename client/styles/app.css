@@ -2,6 +2,7 @@
   display: flex;
   gap: 1rem;
   flex-direction: row;
+  align-items: center;
 
   @media (min-width: 640px) {
     flex-direction: row;
@@ -12,51 +13,36 @@
   border-radius: 2rem;
   border: 1px solid transparent;
   transition: background-color 0.3s ease;
-  display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--button-color);
   color: var(--background);
   gap: 0.5rem;
-  font-weight: 500;
-  height: 2.5rem;
-  padding: 0 1rem;
   cursor: pointer;
-  height: 2.6rem;
-  font-size: large;
+  height: 2rem;
 
   &:hover {
     background-color: var(--button-hover);
   }
 }
 
-.btn-outline {
+.btn-secondary {
   border-radius: 2rem;
   border: 1px solid var(--border-color);
   transition: background-color 0.2s, border-color 0.2s;
-  display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
-  height: 2.6rem;
-  padding: 0 1rem;
-  width: 35%;
+  background-color: transparent;
+  cursor: pointer;
+  height: 2rem;
 
   &:hover {
     background-color: var(--button-hover);
   }
 }
-
 .icon {
-  cursor: pointer;
   border-radius: 50%;
-  font-size: x-large;
-  position: absolute;
-  margin: 0 1rem;
-  width: 2rem;
-  height: 2rem;
-  
   &:hover {
-    background-color: var(--button-hover);
+    background-color: var(--hover-bg); 
   }
 }

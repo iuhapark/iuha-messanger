@@ -2,10 +2,7 @@ package com.iuha.api.jwt;
 
 import com.iuha.api.entity.model.User;
 import com.iuha.api.properties.JwtProperties;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -27,21 +24,17 @@ public class JwtTokenProvider {
     private final StringRedisTemplate redisTemplate;
     private final JwtProperties jwtProperties;
 
+    private SecretKey signingKey;
     private String issuer;
-    private String secret;
     private long accessTokenExpirySeconds;
     private long refreshTokenExpirySeconds;
-    private SecretKey signingKey;
 
     @PostConstruct
     public void init() {
-        this.secret = jwtProperties.getSecret();
         this.issuer = jwtProperties.getIssuer();
         this.accessTokenExpirySeconds = jwtProperties.getExpired().getAccess();
         this.refreshTokenExpirySeconds = jwtProperties.getExpired().getRefresh();
-        this.signingKey = Keys.hmacShaKeyFor(
-                Base64.getEncoder().encode(secret.getBytes())
-        );
+        this.signingKey = Keys.hmacShaKeyFor(Base64.getEncoder().encode(jwtProperties.getSecret().getBytes()));
     }
 
     /** AccessToken만 생성 */
@@ -52,11 +45,7 @@ public class JwtTokenProvider {
     /** RefreshToken 생성 + Redis 저장 */
     public String createRefreshToken(User user) {
         String refreshToken = buildToken(user, true);
-        redisTemplate.opsForValue().set(
-                user.getEmail(),
-                refreshToken,
-                Duration.ofSeconds(refreshTokenExpirySeconds)
-        );
+        redisTemplate.opsForValue().set(user.getEmail(), refreshToken, Duration.ofSeconds(refreshTokenExpirySeconds));
         return refreshToken;
     }
 
@@ -77,34 +66,37 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    /** JWT에서 Claims 추출 */
-    private Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(signingKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
     /** 토큰 유효성 검증 */
     public boolean isTokenValid(String token, boolean isRefresh) {
         try {
             Claims claims = getClaims(token);
-            return !claims.getExpiration().before(new Date()) &&
-                    claims.get("type", String.class).equals(isRefresh ? "refresh" : "access");
+            String type = claims.get("type", String.class);
+            return !claims.getExpiration().before(new Date()) && type.equals(isRefresh ? "refresh" : "access");
         } catch (JwtException | IllegalArgumentException e) {
+            log.warn("JWT 검증 실패: {}", e.getMessage());
             return false;
         }
     }
 
-    /** Redis에 저장된 refreshToken과 비교 */
+    /** JWT 검증 + Redis에 저장된 refreshToken과 비교 */
     public boolean isRefreshTokenValid(String email, String token) {
+        if (!isTokenValid(token, true)) return false;
         String saved = redisTemplate.opsForValue().get(email);
         return token.equals(saved);
     }
 
     public void removeRefreshToken(String email) {
         redisTemplate.delete(email);
+    }
+
+    /** JWT에서 Claims 추출 */
+    private Claims getClaims(String token) {
+        token = stripBearer(token);
+        return Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     public String getEmailFromToken(String token) {
@@ -118,16 +110,13 @@ public class JwtTokenProvider {
 
     /** 토큰에서 사용자 ID 추출 */
     public String getUserIdFromToken(String token) {
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-        return Jwts.parserBuilder()
-                .setSigningKey(signingKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .get("id", String.class);
+        return getClaims(token).get("id", String.class);
     }
 
+    public String stripBearer(String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            return token.substring(7);
+        }
+        return token;
+    }
 }
-

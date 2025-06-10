@@ -1,6 +1,7 @@
 package com.iuha.api.service.impl;
 
 import com.iuha.api.component.Messenger;
+import com.iuha.api.entity.dto.LoginRequest;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
@@ -8,6 +9,7 @@ import com.iuha.api.entity.vo.Role;
 import com.iuha.api.jwt.JwtTokenProvider;
 import com.iuha.api.repository.UserRepository;
 import com.iuha.api.service.UserService;
+import com.iuha.api.util.exception.ExceptionUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,15 +35,38 @@ public class UserServiceImpl implements UserService {
     private final StringRedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
+    @Transactional
+    public SessionUser login(LoginRequest req,  HttpServletRequest request, HttpServletResponse response) {
+        log.info("login 진입 성공 username: {}", req.getUsername());
+        User user = userRepository.findByUsername(req.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("User does not exist with username: " + req.getUsername()));
+        if (!passwordEncoder.matches(req.getPassword(), user.getPassword()))
+            throw new IllegalArgumentException("Invalid password.");
+        return new SessionUser(user);
+    }
+
     @Transactional
     @Override
-    public Messenger save(UserDto dto) {
+    public Messenger save(UserDto dto) throws SQLException {
         log.info("service 진입 파라미터: {} ", dto);
+
+        userRepository.findByUsername(dto.getUsername()).ifPresent(user -> {
+            throw new ExceptionUtil.BadRequestException("Username is already taken.");
+        });
+
+        userRepository.findByEmail(dto.getEmail()).ifPresent(user -> {
+            throw new ExceptionUtil.BadRequestException("Email is already taken.");
+        });
+
         dto.setRole(Role.USER);
         log.info("Role: {}", dto.getRole());
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         User user = dtoToEntity(dto);
         User savedUser = userRepository.save(user);
+        log.info("저장된 유저 정보: {}", savedUser);
+        if (savedUser == null) throw new ExceptionUtil.ServerErrorException("Registration failed. Please try again.");
+
         return Messenger.builder()
                 .message(userRepository.existsById(savedUser.getId()) ? "SUCCESS" : "FAILURE")
                 .build();
@@ -54,15 +80,13 @@ public class UserServiceImpl implements UserService {
                 .profile(dto.getProfile())
                 .build();
         if (userRepository.existsByEmail(oauthUser.getEmail()) > 0) {
-            User existOauthUpdate = userRepository.findByEmail(dto.getEmail())
-                    .stream()
-                    .findFirst()
-                    .get();
-            return UserDto.builder()
-                            .id(existOauthUpdate.getId())
-                            .email(existOauthUpdate.getEmail())
+            return userRepository.findByEmail(dto.getEmail())
+                    .map(entity -> UserDto.builder()
+                            .id(entity.getId())
+                            .email(entity.getEmail())
                             .role(Role.USER)
-                            .build();
+                            .build())
+                    .orElseThrow(() -> new RuntimeException("Could not find user with email: " + dto.getEmail()));
         } else {
             var newOauthSave = userRepository.save(oauthUser);
             return UserDto.builder()
@@ -81,26 +105,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getUsers(String id) {
         return userRepository.getUsers(id);
-    }
-
-    @Override
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
-        // 1. 세션 제거
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-
-        // 2. 쿠키 제거
-        deleteCookie("accessToken", response);
-        deleteCookie("refreshToken", response);
-
-        // 3. Redis에서 refreshToken 삭제
-        String refreshToken = getCookieValue(request, "refreshToken");
-        if (refreshToken != null && jwtTokenProvider.isTokenValid(refreshToken, true)) {
-            String email = jwtTokenProvider.getEmailFromToken(refreshToken);
-            redisTemplate.delete(email);
-        }
     }
 
     private void deleteCookie(String name, HttpServletResponse response) {

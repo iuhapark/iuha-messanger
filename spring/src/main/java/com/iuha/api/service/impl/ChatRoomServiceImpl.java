@@ -30,7 +30,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 
     @Override
     public List<ChatRoomDto> getMyRooms(SessionUser user) {
-        if (isNull(user)) throw new ExceptionUtil.UnauthorizedException("로그인이 필요합니다.");
+        if (isNull(user)) throw new ExceptionUtil.UnauthorizedException("Session has expired.");
         String myId = user.getId();
 
         List<ChatRoom> chatRooms = chatRoomRepository.findChatRoomsByUserId(myId);
@@ -44,17 +44,17 @@ public class ChatRoomServiceImpl implements ChatRoomService {
     @Transactional
     public ChatRoom saveRoom(SessionUser sessionUser, ChatRoomDto dto) throws Exception {
         User sender = userRepository.findById(sessionUser.getId())
-                .orElseThrow(() -> new IllegalArgumentException("사용자 정보가 존재하지 않습니다."));
+                .orElseThrow(() -> new ExceptionUtil.BadRequestException("Sender does not exist."));
 
         User receiver = userRepository.findById(dto.getParticipants().get(0).getId())
-                .orElseThrow(() -> new IllegalArgumentException("상대방 정보가 존재하지 않습니다."));
+                .orElseThrow(() -> new ExceptionUtil.BadRequestException("Receiver does not exist."));
 
-        // 기존 채팅방 있는지 확인
+        // 기존 채팅방 존재 여부 확인
         Optional<ChatRoom> existingRoom = chatRoomRepository.findExistingChatRoom(sender.getId(), receiver.getId());
 
         if (existingRoom.isPresent()) {
             ChatRoom room = existingRoom.get();
-            room.getParticipants().size(); // Lazy 강제 초기화 (직렬화 에러 방지)
+            room.getParticipants().size(); // Lazy 강제 초기화
             return room;
         }
 

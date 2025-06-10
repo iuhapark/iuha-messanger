@@ -34,6 +34,7 @@
             </form>
         </div>
     </div>
+    <!-- WebSocket 메시지 -->
     <div class="row">
         <div class="col-md-12">
             <table id="conversation" class="table table-striped">
@@ -47,6 +48,38 @@
             </table>
         </div>
     </div>
+
+<!-- SSE 메시지 -->
+    <div class="row">
+        <div class="col-md-12">
+            <h3>SSE 메시지</h3>
+            <table id="sse-table" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Messages</th>
+                </tr>
+                </thead>
+                <tbody id="sse-messages"></tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<!-- SSE 연결 스크립트 -->
+<script>
+    const eventSource = new EventSource("http://localhost:8080/api/events");
+
+    eventSource.onmessage = function (event) {
+        const li = document.createElement("li");
+        li.className = "list-group-item";
+        li.textContent = event.data;
+        document.getElementById("sse-messages").appendChild(li);
+    };
+
+    eventSource.onerror = function (err) {
+        console.error("SSE 에러 발생:", err);
+        eventSource.close();
+    };
+</script>
 </body>
 </html>

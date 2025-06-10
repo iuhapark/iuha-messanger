@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Roboto, Noto_Sans_KR, Fira_Code as FontMono, Inter as FontSans } from 'next/font/google';
+import { Geist, Geist_Mono, Roboto, Noto_Sans_KR, Fira_Code as FontMono, Inter as FontSans } from "next/font/google";
 
 export const geistSans = Geist({
   variable: '--font-geist-sans',

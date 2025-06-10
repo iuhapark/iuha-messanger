@@ -12,6 +12,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.HtmlUtils;
 
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class ChatController {
         ChatRoom chatRoom = messageService.findChatRoomById(roomId);
         // sender id로 전체 유저 정보 조회
         User sender = userRepository.findById(dto.getSender().getId())
-                .orElseThrow(() -> new RuntimeException("사용자 정보가 존재하지 않습니다."));
+                .orElseThrow(() -> new RuntimeException("Sender not found."));
 
         Message saved = messageService.save(
                 Message.builder()
