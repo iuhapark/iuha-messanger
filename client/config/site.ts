@@ -44,7 +44,11 @@ export const siteConfig = {
     },
     {
       label: 'Sign out',
-      href: '/sign-out',
+      onClick: () => {
+        if (typeof window !== 'undefined') {
+          window.location.href = '/logout';
+        }
+      }
     },
   ],
   links: {
