@@ -1,11 +1,32 @@
+.chat-page {
+  display: flex;
+  flex: 1;
+  transition: all 0.3s;
+  position: relative;
+  border: 1px solid var(--border-color);
+  height: var(--screen-height) ;
+  
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+    transition: all 0.3s;
+  }
+}
+
+.chat-room {
+  display: flex;
+  flex-direction: column;
+  height: var(--screen-height);
+}
+
 .messages {
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  height: calc(var(--screen-height) - 5vh);
-  padding: 1rem;
 
   .message-wrapper {
     display: flex;
@@ -96,15 +117,13 @@
 }
 
 .text-area {
-  position: static;
-  bottom: 1rem;
-  left: 0;
-  right: 0;
-  padding: 0 0 3rem;
-  height: 3vh;
+  padding: 0 0.5rem 0.5rem;
+  display: flex;
+  align-items: center;
 
   .input-wrapper {
     display: flex;
+    width: 100%;
     gap: 0.5rem;
   }
 
@@ -112,23 +131,6 @@
     flex: 1;
     border: solid var(--border-color);
     border-radius: 2rem;
-    padding: 0.4rem;
-  }
-}
-
-.chat-page {
-  display: flex;
-  flex: 1;
-  transition: all 0.3s;
-
-  .chat-block {
-    flex: 1;
-    overflow-y: auto;
-    position: relative;
-    transition: all 0.3s;
-  }
-
-  .chat-block.shifted {
-    margin-left: var(--aside-width);
+    padding: 0.4rem 1rem;
   }
 }

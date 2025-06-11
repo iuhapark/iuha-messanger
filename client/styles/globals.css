@@ -16,9 +16,10 @@
   --bubble-hover: hsl(216, 91%, 61%);
   --bubble-text: black;
   --bubble-hover-text: white;
-  --header-height: 163px;
-  --screen-height: calc(100vh - var(--header-height));
-  --aside-width: /* 257px */ 20px;
+  --header-height: 88px;
+  --footer-height: 48px;
+  --screen-height: 745px;
+  --aside-width: 257px
   --profile-color: var(--background);
   --chat-background: #f7f7f7;
   --loader: #336bdd;

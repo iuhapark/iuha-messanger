@@ -1,8 +1,14 @@
-.btn-group {
+.chat-header {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
   gap: 0.5rem;
+}
+.chat-footer {
+  /* display: flex; */
+  justify-content: space-between;
+  text-align: end;
+  padding: 0.5rem;
 }
 
 .btn-aside {
@@ -35,3 +41,9 @@
     }
     
   }
+
+  @media (min-width: 768px) {
+  .chat-page > div:first-child {
+    width: var(--aside-width);
+  }
+}

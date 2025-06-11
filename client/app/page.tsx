@@ -1,7 +1,7 @@
 import { Link } from "@heroui/link";
 import { button as buttonStyles } from "@heroui/theme";
 
-import { ArrowIcon, GithubIcon } from "@/components/icons";
+import { GithubIcon, RightArrowIcon } from "@/components/icons";
 import { subtitle, title } from "@/components/primitives";
 import { siteConfig } from "@/config/site";
 import { Button } from "@heroui/button";
@@ -39,10 +39,11 @@ export default function Home() {
           variant: 'shadow',
         })}
         href={siteConfig.navItems.find(i => i.label === 'Chat')?.href}
-        endContent={<ArrowIcon size={20}
+        endContent={<RightArrowIcon size={20}
       />}
-      >Chat</Button>
+      >Start chatting</Button>
       <Link
+        isExternal
         className={buttonStyles({ variant: 'bordered', radius: 'full' })}
         href={siteConfig.links.github}
       >
