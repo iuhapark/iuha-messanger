@@ -19,7 +19,7 @@ export default function Error({
       <div className='inline-block text-center justify-center'>
       <h1>Something went wrong!</h1>
       <Button
-        className='btn-primary mt-14 self-center'
+        className='btn-primary h-[2rem] mt-14 self-center'
         onPress={
           // Attempt to recover by trying to re-render the segment
           () => reset()

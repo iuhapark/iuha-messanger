@@ -38,7 +38,7 @@ const UserList = ({ setStep, onSelect }: UserListProps) => {
   };
 
   return (
-    <div className='flex grid-flow-row gap-2'>
+    <div className='flex grid-flow-col md:grid-flow-row gap-2'>
       {receivers.map((receiver) => (
         <AvatarGroup key={receiver.id}>
           <Avatar showFallback name={receiver.name} src={receiver.profile} onClick={() => handleSelect(receiver)}/>

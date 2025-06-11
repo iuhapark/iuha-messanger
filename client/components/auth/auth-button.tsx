@@ -28,8 +28,6 @@ export default function AuthButton({ initUser }: { initUser: User | null }) {
 
   const logoutButton = (
     <Button
-      className='text-sm font-normal text-default-600 bg-default-100'
-      variant='flat'
       onPress={logout}
     >
       Sign out
