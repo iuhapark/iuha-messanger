@@ -73,7 +73,7 @@ const LoginForm = () => {
 
   return (
     loading ? <Loading /> : (
-    <div>
+    <div className='flex flex-col items-center justify-center h-full gap-12'>
       <h1 className={title()}>Sign in</h1>
       <Form onSubmit={handleLogin}>
         <Input
@@ -106,7 +106,7 @@ const LoginForm = () => {
         />
           <Button
             startContent={<GoogleIcon />}
-            className='btn-primary mt-4 self-center'
+            className='btn-primary h-[2rem] mt-4 self-center'
             aria-label='Google login'
             onPress={login}
           >

@@ -68,8 +68,8 @@ const JoinForm = () => {
 
   return (
     loading ? <Loading /> : (
-    <div>
-      <h1 className={title()}>Sign in</h1>
+    <div className='flex flex-col items-center justify-center h-full gap-12'>
+      <h1 className={title()}>Sign up</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           isRequired
@@ -138,14 +138,14 @@ const JoinForm = () => {
           size='sm'
           radius='full'
         /> */}
-        <div className='btn-group'>
+        <div className='btn-group self-center'>
           <Button
-            className='btn-secondary'
+            className='btn-secondary h-[2rem]'
             onPress={() => router.push(PAGE.SIGNIN)}
           >
             Back
           </Button>
-          <Button className='btn-primary' type='submit'>submit</Button>
+          <Button className='btn-primary h-[2rem]' type='submit'>submit</Button>
         </div>
       </Form>
     </div>)
