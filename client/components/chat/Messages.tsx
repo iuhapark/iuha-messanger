@@ -1,6 +1,6 @@
 import { dummyMessages } from "@/data/chat";
 import USERS from "@/data/user";
-import { useChatMessages } from '@/hooks/useChatMessages';
+import { useMessages } from '@/hooks/useMessages';
 import { useStomp } from "@/hooks/useStomp";
 import api from "@/lib/api";
 import { fetchSessionUser } from "@/lib/auth";
@@ -14,7 +14,7 @@ const Messages = ({ roomId }: { roomId: string }) => {
   const [dbMessages, setDbMessages] = useState<Message[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { messages: dummy, selectUser } = useChatMessages();
+  const { messages: dummy, selectUser } = useMessages();
   const [dummyLoaded, setDummyLoaded] = useState<Message[]>([]);
 
   /* 더미 메시지 로딩 */

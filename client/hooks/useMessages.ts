@@ -6,7 +6,7 @@ import { Message, User } from '@/types';
 import { dummyMessages } from '@/data/chat';
 
 
-export function useChatMessages() {
+export function useMessages() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
