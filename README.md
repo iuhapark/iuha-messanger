@@ -1,5 +1,6 @@
 ## Real-Time Chat Messenger with WebSocket & STOMP
 
+![Image](https://github.com/user-attachments/assets/59194d58-d064-4490-a05c-15e24c62d148)
 WebSocket 기반의 1:1 채팅 메신저입니다.
 STOMP 프로토콜을 통해 클라이언트와 서버 간의 통신을 구현했습니다.
 
@@ -25,6 +26,8 @@ STOMP 프로토콜을 통해 클라이언트와 서버 간의 통신을 구현�
 
 ### 🧩 핵심 기능
 
+<img width="1260" alt="Image" src="https://github.com/user-attachments/assets/48b1765e-7813-492d-b451-7a44a8c3d381" />
+
     - Google OAuth2.0 로그인 + JWT 인증/인가
     - WebSocket 기반 1:1 실시간 채팅
     - 채팅방 생성, 메시지 저장 및 조회
@@ -32,3 +35,5 @@ STOMP 프로토콜을 통해 클라이언트와 서버 간의 통신을 구현�
     - 반응형 UI + Drawer 기반 RoomList 구조
 
 ### 아키텍쳐
+
+<img width="1261" alt="Image" src="https://github.com/user-attachments/assets/f0715e2e-f858-4671-b645-5e34a39bdc55" />
