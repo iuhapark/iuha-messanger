@@ -34,7 +34,12 @@ export interface Message {
 
 export interface ChatRoomListProps {
   onSelect: (room: ChatRoom) => void;
+  refresh: number;
+  onClose: () => void;
 }
+// export interface ChatRoomListProps {
+//   onSelect: (room: ChatRoom) => void;
+// }
 
 export interface UserListProps {
   setStep: (step: ChatStep) => void;
