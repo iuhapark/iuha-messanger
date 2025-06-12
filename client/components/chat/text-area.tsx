@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useStomp } from "@/hooks/useStomp";
 import { ChatRoom as ChatRoomType, Message, User } from "@/types";
 import { useAuth } from "@/context/authContext";
+import { UpArrowIcon } from "../icons";
 
 const TextArea = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & { onRefresh: () => void }) => {
   const [message, setMessage] = useState('');
@@ -41,7 +42,7 @@ const TextArea = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & {
           placeholder='Type a message...'
           className='input'
         />
-        <button type='submit' className='btn-primary h-[1.5rem] py-0.4 px-3.5'>Send</button>
+        <button type='submit' className='btn-primary px-2.5'><UpArrowIcon /></button>
       </form>
     </div>
   );

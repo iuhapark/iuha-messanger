@@ -1,33 +1,66 @@
+import { dummyMessages } from "@/data/chat";
+import USERS from "@/data/user";
+import { useChatMessages } from '@/hooks/useChatMessages';
 import { useStomp } from "@/hooks/useStomp";
-import { useEffect, useRef, useState, useMemo } from "react";
 import api from "@/lib/api";
+import { fetchSessionUser } from "@/lib/auth";
 import { Message } from "@/types";
 import { parseAPIError } from "@/utils/error";
-import { fetchSessionUser } from "@/lib/auth";
-import { Avatar, User } from "@heroui/react";
+import { Avatar } from "@heroui/react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const Messages = ({ roomId }: { roomId: string }) => {
   const { messages: newMessages } = useStomp(roomId);
   const [dbMessages, setDbMessages] = useState<Message[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { messages: dummy, selectUser } = useChatMessages();
+  const [dummyLoaded, setDummyLoaded] = useState<Message[]>([]);
 
+  /* 더미 메시지 로딩 */
   useEffect(() => {
-    fetchSessionUser().then(user => setUserId(user.id)).catch(err => alert(parseAPIError(err)));
-  }, []);
-
-  useEffect(() => {
-    api.get(`/chat/${roomId}`).then(res => setDbMessages(res.data)).catch(err => alert(parseAPIError(err)));
+  const dummy = dummyMessages[roomId];
+  setDbMessages(dummy ?? []);
   }, [roomId]);
 
+  /* 세션 유저 정보 로딩 */
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    fetchSessionUser()
+    .then(user => setUserId(user.id))
+    .catch(err => alert(parseAPIError(err)));
+  }, []);
+
+  /* 최초 더미 메시지 로딩 */
+  useEffect(() => {
+    const matchedUser = Object.values(USERS).find(u => u.id === roomId);
+    if (matchedUser) {
+      selectUser(matchedUser);
+      import('@/data/chat').then(({ dummyMessages }) => {
+        const dummy = dummyMessages[roomId] || [];
+        setDummyLoaded(dummy);
+      });
+    }
+  }, [roomId]);
+
+  /* 서버 메시지 로딩 */
+  useEffect(() => {
+    api.get(`/chat/${roomId}`)
+    .then(res => setDbMessages(res.data))
+    .catch(err => alert(parseAPIError(err)));
+  }, [roomId]);
+
+  /* scroll 맨 아래로 */
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [dbMessages, newMessages]);
 
-  const allMessages = useMemo(() => [...dbMessages, ...newMessages], [dbMessages, newMessages]);
+  /* 더미 메시지와 서버 메시지 병합 */
+  const allMessages = useMemo(
+    () => [...dummyLoaded, ...dbMessages, ...newMessages],
+    [dummyLoaded, dbMessages, newMessages]);
 
   return (
-    <div className='messages'>
+    <div className='messages p-[1rem] md:auto'>
       {allMessages.map((m, i) => (
         <div key={i} className={`message-wrapper ${m.sender?.id === userId ? 'me' : 'you'}`}>
           <div className={`user-wrapper ${m.sender?.id === userId ? 'me' : 'you'}`}>
