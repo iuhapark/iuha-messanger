@@ -1,6 +1,6 @@
 'use client';
 
-import { useChatMessages } from "@/hooks/useChatMessages";
+import { useMessages } from "@/hooks/useMessages";
 import ChatRoom from "@/bak/components/room";
 import RoomList from "@/bak/components/room-list";
 
@@ -14,7 +14,7 @@ export default function ChatPage() {
     sendMessage,
     isTyping,
     unreadMap,
-  } = useChatMessages();
+  } = useMessages();
 
   return (
     <div className="chat-page flex h-[calc(100vh-4rem)] overflow-hidden">
