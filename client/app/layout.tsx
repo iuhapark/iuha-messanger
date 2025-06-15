@@ -46,9 +46,9 @@ export default async function RootLayout({
       >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
           <LoadingProvider>
-          <AuthProvider initUser={user}>
+          <AuthProvider initUser={null}>
           <div className='relative flex flex-col h-screen'>
-            <Navbar user={user} />
+            <Navbar/>
             <main className='container mx-auto max-w-full flex-grow'>
               {children}
             </main>

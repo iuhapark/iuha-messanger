@@ -16,22 +16,21 @@ export const AuthProvider = ({ children, initUser }: { children: ReactNode, init
 
   /* 세션 유저 정보 조회 */
   useEffect(() => {
-      const loadUser = async () => {
-        try {
-          const session = await fetchSessionUser();
-          setUser(session ?? null);
-        } catch (err) {
-          if (!isFirstLoad) handleAPIError(err);
-          setUser(null);
-        } finally {
-          setIsFirstLoad(false);
-          setLoading(false);
-        }
-      };
+    const load = async () => {
+      try {
+        const session = await fetchSessionUser();
+        setUser(session?.id ? session : null);
+      } catch (err) {
+        if (!isFirstLoad) handleAPIError(err);
+        setUser(null);
+      } finally {
+        setIsFirstLoad(false);
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
 
-      loadUser();
-    }, []);
-  
   
   return (
     <AuthContext.Provider value={{user, setUser, loading}}>{children}</AuthContext.Provider>

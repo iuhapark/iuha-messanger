@@ -21,8 +21,10 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
 import AvatarProps from "./user/avatar";
 import { User } from "@/types";
+import { fetchSessionUser } from "@/lib/user";
 
-const Navbar = ({ user }: { user: User | null }) => {
+const Navbar = async () => {
+  const user = await fetchSessionUser();
   const searchInput = (
     <Input
       aria-label='Search'
@@ -71,7 +73,7 @@ const Navbar = ({ user }: { user: User | null }) => {
         </NavbarItem>
         <NavbarItem className='hidden lg:flex'>{searchInput}</NavbarItem>
         <NavbarItem className='hidden md:flex'>
-          <AvatarProps user={user} />
+          <AvatarProps initUser={user} />
         </NavbarItem>
       </NavbarContent>
 
