@@ -47,7 +47,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div className='absolute inset-0 z-0'>
+      {/* <div className='absolute inset-0 z-0'>
         <Image
           src='/assets/img/main.png'
           alt='main'
@@ -55,7 +55,7 @@ export default function Home() {
           className='mt-20 object-cover '
           priority
         />
-      </div>
+      </div> */}
     </>
   );
 }

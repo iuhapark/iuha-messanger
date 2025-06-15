@@ -39,16 +39,18 @@ const ChatPage = () => {
   return (
     <div className='chat-page'>
       {isOpen ? (
-        <div className='z-50 absolute md:static border-divider md:border-r w-full md:w-auto bg-background h-full'>
+        <div className='z-50 absolute md:static border-divider md:border-r w-full md:min-w-[257px] bg-background h-full'>
           <RoomList
             onSelect={onSelect}
             setStep={(step) => {
               setStep(step);
               if (step === ChatStep.READY) setIsOpen(false);
-            }}
+            } }
             onClose={() => setIsOpen(false)}
-            refresh={refresh}
-          />
+            refresh={refresh} 
+            chatrooms={[]}
+            selectedChatroom={null}
+            onSelectChatroom={() => {}} />
         </div>
       ) : (
         <div className='md:static absolute z-50 md:border-r border-divider'>
