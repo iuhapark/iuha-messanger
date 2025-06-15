@@ -1,7 +1,6 @@
 import { User } from "@/types/index";
 import { destroyCookie } from "nookies";
 import api, { instance } from "./api";
-import { handleAPIError } from "./api-error";
 
 export const login = () => {
   window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`

@@ -9,7 +9,6 @@ const instance = axios.create({
 
 export { instance };
 
-
 /** Axios 인스턴스 생성 */
 const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api`,
@@ -19,6 +18,7 @@ const api = axios.create({
 
 export default api;
 
+/* API error 인터셉터  */
 api.interceptors.response.use(
   res => res,
   err => {

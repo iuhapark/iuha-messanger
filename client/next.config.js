@@ -3,5 +3,5 @@ const nextConfig = {};
 
 module.exports = {
     nextConfig,
-    // devIndicators: false
+    devIndicators: false
 };
