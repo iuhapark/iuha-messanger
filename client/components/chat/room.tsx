@@ -6,7 +6,7 @@ import { Avatar } from "@heroui/react";
 
 const Room = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & { onRefresh: () => void }) => (
   <div className='chat-room'>
-    {/* <div className='message-header shrink-0'>
+    <div className='flex p-[0.5rem] gap-[0.5rem] items-center font-semibold shrink-0'>
     <Avatar
       showFallback
       name={participants[0]?.name}
@@ -15,7 +15,7 @@ const Room = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & { onR
       className='avatar'
     />
     <h1 className='flex-col'>{participants[0]?.name}</h1>
-    </div> */}
+    </div>
     <Messages roomId={id} />
     <TextArea id={id} participants={participants} lastMessage={lastMessage} onRefresh={onRefresh} />
   </div>

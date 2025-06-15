@@ -1,4 +1,5 @@
 import axios from "axios";
+import { handleAPIError } from "./api-error";
 
 const instance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
@@ -17,3 +18,11 @@ const api = axios.create({
 });
 
 export default api;
+
+api.interceptors.response.use(
+  res => res,
+  err => {
+    handleAPIError(err); 
+    return Promise.reject(err);
+  }
+);

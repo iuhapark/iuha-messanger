@@ -1,32 +1,28 @@
-import {
-  Navbar as HeroUINavbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
-  NavbarBrand,
-  NavbarItem,
-  NavbarMenuItem,
-} from "@heroui/navbar";
+import { Input } from "@heroui/input";
 import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
-import { link as linkStyles } from "@heroui/theme";
+import {
+  Navbar as HeroUINavbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+} from "@heroui/navbar";
 import NextLink from "next/link";
-import clsx from "clsx";
 
-import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
 import {
   BlogIcon,
   GithubIcon,
   SearchIcon,
 } from "@/components/icons";
-import { it } from "node:test";
-import { fetchSessionUser } from "@/lib/user";
+import { ThemeSwitch } from "@/components/theme-switch";
+import { siteConfig } from "@/config/site";
 import AvatarProps from "./user/avatar";
+import { User } from "@/types";
 
-const Navbar = async () => {
-  const user = await fetchSessionUser()
+const Navbar = ({ user }: { user: User | null }) => {
   const searchInput = (
     <Input
       aria-label='Search'
@@ -75,7 +71,7 @@ const Navbar = async () => {
         </NavbarItem>
         <NavbarItem className='hidden lg:flex'>{searchInput}</NavbarItem>
         <NavbarItem className='hidden md:flex'>
-          <AvatarProps initUser={user} />
+          <AvatarProps user={user} />
         </NavbarItem>
       </NavbarContent>
 

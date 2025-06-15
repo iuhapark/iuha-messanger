@@ -48,7 +48,7 @@ const RoomList = ({
 
   return (
     <ListboxWrapper>
-      <div className='chat-header shrink-0'>
+      <div className='chat-header'>
         <Tooltip content='Close' placement='right'>
           <DrawerIcon className='btn-aside' onClick={onClose} />
         </Tooltip>
