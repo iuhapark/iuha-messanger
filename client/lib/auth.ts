@@ -1,6 +1,7 @@
 import { User } from "@/types/index";
 import { destroyCookie } from "nookies";
 import api, { instance } from "./api";
+import { handleAPIError } from "./api-error";
 
 export const login = () => {
   window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`
@@ -23,9 +24,11 @@ export const logout = async () => {
 };
 
 export const fetchSessionUser = async (): Promise<User> => {
-  const res = await api.get('/auth/user');
-  if (!res.data || !res.data.id) {
-    throw new Error('User not found');
+  try {
+    const res = await api.get('/auth/user');
+    if (!res.data?.id) throw new Error('User not found');
+    return res.data;
+  } catch (err) {
+    throw err;
   }
-  return res.data;
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { siteConfig } from '@/config/site';
-import { useAuth } from '@/context/authContext';
 import { logout } from '@/lib/auth';
 import { User } from '@/types';
 import {
@@ -12,15 +11,8 @@ import {
   DropdownTrigger,
   Link,
 } from '@heroui/react';
-import { useEffect } from 'react';
 
-const AvatarProps = ({ initUser }: { initUser: User | null }) => {
-  const { user, setUser } = useAuth();
-
-  /* 초기 사용자 정보를 context에 설정 */
-  useEffect(() => {
-    setUser(initUser ?? null);
-  }, [initUser, setUser]);
+const AvatarProps = ({ user }: { user: User | null }) => {
 
   /* 로그인 여부에 따라 메뉴 필터링 */
   const filteredItems = siteConfig.navMenuItems.filter((item) => {
