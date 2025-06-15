@@ -48,7 +48,7 @@ export default async function RootLayout({
           <LoadingProvider>
           <AuthProvider initUser={user}>
           <div className='relative flex flex-col h-screen'>
-            <Navbar />
+            <Navbar user={user} />
             <main className='container mx-auto max-w-full flex-grow'>
               {children}
             </main>
