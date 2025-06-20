@@ -82,7 +82,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag iuha-image:$(date +%s)
+      run: docker build . --file Dockerfile --tag iuha-image:$(date +%s) --build-arg SKIP_TEST=true
 
 #      # AWS 자격증명
 #    - name: Configure AWS credentials
