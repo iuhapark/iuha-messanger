@@ -6,8 +6,9 @@ import clsx from 'clsx';
 const AccountNavTabs = () => {
   const pathname = usePathname();
 
-  const filtered = siteConfig.navMenuItems.filter(item =>
-    ['/account', '/friends', '/settings'].includes(item.href)
+  const filtered = siteConfig.navMenuItems.filter(
+    (item): item is { label: string; href: string } =>
+      !!item.href && ['/account', '/friends', '/settings'].includes(item.href)
   );
 
   return (

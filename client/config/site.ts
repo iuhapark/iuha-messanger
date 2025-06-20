@@ -1,5 +1,11 @@
 export type SiteConfig = typeof siteConfig;
 
+type NavMenuItem = {
+  label: string;
+  href?: string;
+  onClick?: () => void;
+};
+
 export const siteConfig = {
   name: 'iuha',
   description: 'Connect in Real-time. Chat with anyone, anytime — right away.',
@@ -50,7 +56,7 @@ export const siteConfig = {
         }
       }
     },
-  ],
+  ] as NavMenuItem[],
   links: {
     githubPages: 'https://iuhapark.github.io',
     github: 'https://github.com/iuhapark',
