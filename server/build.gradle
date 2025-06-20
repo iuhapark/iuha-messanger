@@ -80,9 +80,6 @@ dependencies {
     /* jackson */
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
-    /* rabbitmq */
-    implementation 'org.springframework.amqp:spring-rabbit:3.2.4'
-
     /* querydsl */
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
