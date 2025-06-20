@@ -75,8 +75,8 @@ jobs:
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag iuha-image:$(date +%s)
+#    - name: Build the Docker image
+#      run: docker build . --file Dockerfile --tag iuha-image:$(date +%s)
 
 #      # AWS 자격증명
 #    - name: Configure AWS credentials
