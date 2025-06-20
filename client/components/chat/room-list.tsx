@@ -14,7 +14,7 @@ import AuthButton from "../auth/auth-button";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   <div
-    className='flex flex-col h-full'
+    className='listbox'
   >
     {children}
   </div>
@@ -32,6 +32,7 @@ const RoomList = ({
   const myId = user?.id;
   const [searchQuery, setSearchQuery] = React.useState('');
 
+  /* 채팅방 로딩 */
   useEffect(() => {
     if (loading || !user?.id) return;
     setRooms(dummyRooms);

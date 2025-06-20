@@ -49,22 +49,10 @@ public class ChatRestController {
         return ResponseEntity.ok(new ChatRoomDto(chatRoom));
     }
 
-    /* 채팅방 생성 스토리지 저장 */
-    @PostMapping("/new")
-    public ChatRoom createRoom(@RequestBody ChatRoom chatRoom) {
-        return ChatStorage.createRoom(chatRoom);
-    }
-
     /* 모든 채팅방 조회 - ADMIN ONLY */
     @GetMapping("/all")
     public List<ChatRoom> getAllRooms() {
         return chatRoomRepository.findAll();
-    }
-
-    /* 로컬 스토리지 채팅방 조회 */
-    @GetMapping("/rooms")
-    public Set<String> getAllStorageRooms() {
-        return ChatStorage.getAllRoomIds();
     }
 
     /* 특정 채팅방 메시지 조회 */
@@ -74,4 +62,24 @@ public class ChatRestController {
         return ResponseEntity.ok(messageService.getChatMessages(roomId));
     }
 
+    /* 채팅방 생성 스토리지 저장 */
+    @PostMapping("/new")
+    public ChatRoom createRoom(@RequestBody ChatRoom chatRoom) {
+        return ChatStorage.createRoom(chatRoom);
+    }
+
+    /* 로컬 스토리지 채팅방 조회 */
+    @GetMapping("/rooms")
+    public Set<String> getAllStorageRooms() {
+        return ChatStorage.getAllRoomIds();
+    }
+
+    /* 로컬 스토리지 메시지 조회 */
+    @GetMapping("/messages/{roomId}")
+    public List<MessageDto> getStorageMessages(@PathVariable String roomId) {
+        log.info("로컬 스토리지 메시지 조회 요청: {}", roomId);
+        return ChatStorage.getMessages(roomId).stream()
+                .map(MessageDto::from)
+                .toList();
+    }
 }

@@ -7,7 +7,7 @@ import { useAuth } from "@/context/authContext";
 import {Avatar, AvatarGroup, Chip, Tooltip} from "@heroui/react";
 
 /* 유저 목록 조회 및 선택 */
-const UserList = ({ setStep, onSelect }: UserListProps) => {
+const UserSelect = ({ setStep, onSelect }: UserListProps) => {
   const [receivers, setReceivers] = useState<User[]>([]);
   const { user } = useAuth();
 
@@ -26,8 +26,12 @@ const UserList = ({ setStep, onSelect }: UserListProps) => {
 
   const handleSelect = async (receiver: User) => {
     try {
-      const res = await api.get(`/users/${receiver.id}`);
-      onSelect(res.data);
+      const { data } = await api.post(`/chat/save`, {
+        name: receiver.name,
+        participants: [{ id: receiver.id }],
+      });
+      onSelect(data);
+      setStep(ChatStep.READY);
     } catch (err) {
       parseAPIError(err);
     }
@@ -52,4 +56,4 @@ const UserList = ({ setStep, onSelect }: UserListProps) => {
   );
 };
 
-export default UserList;
+export default UserSelect;

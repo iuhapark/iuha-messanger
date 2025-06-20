@@ -1,4 +1,3 @@
-// /data/chat.ts
 'use client';
 
 import { Message } from '@/types/index';

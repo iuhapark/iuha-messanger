@@ -18,7 +18,8 @@ export default function AuthButton({ initUser }: { initUser: User | null }) {
   const loginButton = (
     <Button
       as={Link}
-      className='text-sm font-normal text-default-600 bg-default-100'
+      size='sm'
+      radius='full'
       href={siteConfig.navItems.find(item => item.label === 'Sign in')?.href}
       variant='flat'
     >
@@ -28,6 +29,8 @@ export default function AuthButton({ initUser }: { initUser: User | null }) {
 
   const logoutButton = (
     <Button
+      size='sm'
+      radius='full'
       onPress={logout}
     >
       Sign out

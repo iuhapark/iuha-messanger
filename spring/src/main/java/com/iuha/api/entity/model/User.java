@@ -28,10 +28,12 @@ public class User {
     private Role role;
 
     /* 친구 목록 */
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserFriend> friends = new ArrayList<>();
 
     /* 채팅방 참여 목록 */
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserRoom> userRooms = new ArrayList<>();
 

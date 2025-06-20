@@ -13,18 +13,13 @@ import {
 import RoomList from "./chat/room-list";
 import { ChatRoomListProps } from "@/types";
 import { ChatStep } from "@/types/data";
-import { LayoutIcon } from "./icons";
+import { DrawerIcon, LayoutIcon } from "./icons";
 import AuthButton from "./auth/auth-button";
 import { useAuth } from "@/context/authContext";
 import { useEffect } from "react";
 import NextLink from "next/link";
 
-export default function DrawerProps({
-  setStep,
-  onSelect,
-  refresh,
-  onClose,
-}: ChatRoomListProps & { setStep: (step: ChatStep) => void; refresh: number; onClose: () => void }) {
+export default function DrawerProps() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure({ defaultOpen: true });
     const { user, setUser } = useAuth();
   
@@ -34,10 +29,10 @@ export default function DrawerProps({
   return (
     <>
     <Tooltip content='Open' placement='right'>
-      <Button isIconOnly className='btn-aside' onPress={onOpen} startContent={<LayoutIcon />}>
+      <Button isIconOnly className='btn-aside' onPress={onOpen} startContent={<DrawerIcon />}>
       </Button>
       </Tooltip>
-      <Drawer hideCloseButton isOpen={isOpen} onOpenChange={onOpenChange} placement='left' size='xs' backdrop='transparent'>
+      <Drawer isOpen={isOpen} onOpenChange={onOpenChange} placement='left' size='xs' backdrop='transparent'>
         <DrawerContent>
           {(onClose) => (
             <>
@@ -47,7 +42,7 @@ export default function DrawerProps({
                 </NextLink>
               </DrawerHeader>
               <DrawerBody>
-               <RoomList setStep={setStep} onSelect={onSelect} refresh={refresh} onClose={onClose} />
+                content
               </DrawerBody>
               <DrawerFooter>
                 <AuthButton initUser={user} />

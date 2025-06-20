@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #fffefe;
   --foreground: #000000;
   --border-color: #ddd;
   --text-color: #a2a2a2;
@@ -19,11 +19,12 @@
   --header-height: 88px;
   --footer-height: 48px;
   --chat-header-height: 72px;
-  /* --screen-height: 745px; */
-  --screen-height: calc(100vh - var(--header-height) - var(--footer-height));
+  --screen-height: 745px;
+  /* --screen-height: calc(100vh - var(--header-height) - var(--footer-height)); */
   --aside-width: 257px
   --profile-color: var(--background);
-  --chat-background: #f7f7f7;
+  --chat-background: #ffffff;
+  --aside-background: #fafafa;
   --loader: #336bdd;
 }
 
@@ -40,4 +41,6 @@
     --bubble-hover: var(--hover-bg);
     --profile-color: var(--foreground);
     --chat-background: #111111;
+    --aside-background: #000000;
+
 }

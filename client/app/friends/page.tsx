@@ -1,7 +1,7 @@
 'use client';
 
-import { title } from "@/components/primitives";
-import UserList from "@/components/user/list";
+import { title } from '@/components/primitives';
+import UserList from '@/components/user/list';
 
 export default function FriendsPage() {
   return (

@@ -3,8 +3,9 @@ import { useStomp } from "@/hooks/useStomp";
 import { ChatRoom as ChatRoomType, Message, User } from "@/types";
 import { useAuth } from "@/context/authContext";
 import { UpArrowIcon } from "../icons";
+import api from "@/lib/api";
 
-const TextArea = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & { onRefresh: () => void }) => {
+const TextArea = ({ id, participants, lastMessage, onRefresh, isLocal = false }: ChatRoomType & { onRefresh: () => void; isLocal?: boolean; }) => {
   const [message, setMessage] = useState('');
   const { sendMessage } = useStomp(id);
   const { user } = useAuth();
@@ -16,6 +17,7 @@ const TextArea = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const trimmed = message.trim();
     if (!trimmed) return;
 
@@ -25,7 +27,15 @@ const TextArea = ({ id, participants, lastMessage, onRefresh }: ChatRoomType & {
       message: trimmed,
     };
 
-    await sendMessage(data);
+    if (isLocal) {
+      await api.post('/chat/new', {
+        id,
+        participants,
+        messages: [{ message }],
+      });
+    } else {
+      await sendMessage(data);
+  }
     setMessage('');
     inputRef.current?.focus();
     onRefresh();
