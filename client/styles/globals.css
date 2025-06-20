@@ -21,7 +21,7 @@
   --chat-header-height: 72px;
   --screen-height: 745px;
   /* --screen-height: calc(100vh - var(--header-height) - var(--footer-height)); */
-  --aside-width: 257px
+  --aside-width: 257px;
   --profile-color: var(--background);
   --chat-background: #ffffff;
   --aside-background: #fafafa;
