@@ -80,7 +80,7 @@ jobs:
         build-root-directory: server
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag iuha-image:$(date +%s)
       working-directory: server
 
       # AWS 자격증명
