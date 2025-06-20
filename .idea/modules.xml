@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/iuha.iml" filepath="$PROJECT_DIR$/.idea/iuha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server/iuha.server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/server/iuha.server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server/iuha.server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/server/iuha.server.test.iml" />
     </modules>
   </component>
 </project>
