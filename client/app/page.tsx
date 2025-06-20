@@ -15,7 +15,7 @@ export default function Home() {
           <div className='inline-block max-w-xl'>
             <span className={title()}>It's not magic.&nbsp;</span>
             <br />
-            <span className={title()}>It's&nbsp;</span>
+            <span className={title()}>It&apos;s&nbsp;</span>
             <span className={title({ color: 'violet' })}>messaging</span>
             <span className={title()}>.&nbsp;</span>
             <div className={subtitle({ class: 'mt-4' })}>
