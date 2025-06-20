@@ -85,7 +85,6 @@ const filteredChatrooms = React.useMemo(() => {
         }}
         className='px-3 pb-[1rem]'
         size='sm'
-        autoFocus
         labelPlacement='outside'
         placeholder='Search chats...'
         value={searchQuery}
