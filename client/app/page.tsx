@@ -13,7 +13,7 @@ export default function Home() {
       <section className='relative w-[full] h-[700px] overflow-hidden flex items-center justify-center'>
         <div className='relative z-10 flex flex-col items-center justify-center gap-4 px-52 py-40 text-center'>
           <div className='inline-block max-w-xl'>
-            <span className={title()}>It's not magic.&nbsp;</span>
+            <span className={title()}>It&apos;s not magic.&nbsp;</span>
             <br />
             <span className={title()}>It&apos;s&nbsp;</span>
             <span className={title({ color: 'violet' })}>messaging</span>
