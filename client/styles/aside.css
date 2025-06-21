@@ -56,11 +56,4 @@
       background-color: var(--profile-color);
       color: var(--text-color);
     }
-    
   }
-
-  @media (min-width: 768px) {
-  .chat-page > div:first-child {
-    width: var(--aside-width);
-  }
-}

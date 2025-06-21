@@ -38,9 +38,9 @@ const ChatPage = () => {
   };
 
   return (
-    <div className='chat-page'>
+    <div className='chat-page md:h-[745px] h-[calc(100vh-64px-48px)]'>
       {isOpen ? (
-        <div className='z-50 absolute md:static w-full md:min-w-[257px] h-full'>
+        <div className='z-50 absolute md:static w-full md:max-w-[257px] h-full'>
           <RoomList
             onSelect={onSelect}
             setStep={setStep}

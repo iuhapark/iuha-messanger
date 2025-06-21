@@ -3,7 +3,7 @@
   flex: 1;
   transition: all 0.3s;
   position: relative;
-  height: var(--screen-height);
+  /* height: var(--screen-height); */
   background-color: var(--chat-background);
   
   .content-wrapper {
@@ -18,7 +18,7 @@
 .chat-room {
   display: flex;
   flex-direction: column;
-  height: var(--screen-height);
+  height: 100%;
 }
 
 .messages {
@@ -117,9 +117,11 @@
 }
 
 .text-area {
-  padding: 0 0.5rem 0.5rem;
+  padding: 0 0.5rem 0;
   display: flex;
   align-items: center;
+  background-color: var(--background);
+  padding-top: 0.5rem;
 
   .input-wrapper {
     display: flex;
