@@ -82,13 +82,11 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # Docker 이미지 빌드
-    - name: Docker Image Build
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }} .
-
-      # DockerHub 푸시
-    - name: DockerHub Push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+    # Docker 이미지 빌드 및 푸시
+    - name: Build and Push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }} .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
 
     # AWS 자격증명
     - name: Configure AWS credentials
