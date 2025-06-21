@@ -85,8 +85,8 @@ jobs:
     # Docker 이미지 빌드 및 푸시
     - name: Build and Push Docker image
       run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }} .
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+        docker build -t juhapark/iuha-messenger .
+        docker push juhapark/iuha-messenger
 
     # AWS 자격증명
     - name: Configure AWS credentials
