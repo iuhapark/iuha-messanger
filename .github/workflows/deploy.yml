@@ -100,8 +100,9 @@ jobs:
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
+#        username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
+        port: ${{ secrets.EC2_PORT }}
         script: |
           sudo docker kill ${{ secrets.PROJECT_NAME }}
           sudo docker rm -f ${{ secrets.PROJECT_NAME }}
