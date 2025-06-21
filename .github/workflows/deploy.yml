@@ -97,7 +97,7 @@ jobs:
 #        aws-region: ap-northeast-2
 
     - name: SSH Deploy to EC2
-      uses: appleboy/ssh-action@v1.0.0
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.EC2_HOST }}
 #        username: ${{ secrets.EC2_USERNAME }}
