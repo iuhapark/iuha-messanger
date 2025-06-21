@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a3fdf4c9-21e7-4b34-80bc-b3fe0ea33bf2" name="52.78.36.187" url="https://www.iuhapark.com/">
+        <fileTransfer rootFolder="/home/ubuntu" accessType="SFTP" host="52.78.121.16" port="22" sshConfigId="b7d5ae0a-4c90-482d-b9d6-5c9ea380c053" sshConfig="ubuntu@52.78.121.16:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

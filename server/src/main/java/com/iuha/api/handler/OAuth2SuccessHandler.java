@@ -41,7 +41,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         setTokenCookie(response, "refreshToken", refreshToken, true);
 
         // 리디렉션
-        response.sendRedirect("http://localhost:3000"); // 프론트 페이지
+        response.sendRedirect("https://www.iuhapark.com"); // 프론트 페이지
     }
 
     private void setTokenCookie(HttpServletResponse response, String name, String token, boolean httpOnly) {

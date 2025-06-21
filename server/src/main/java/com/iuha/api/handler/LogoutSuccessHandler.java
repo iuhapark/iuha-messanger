@@ -23,7 +23,7 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // Referer 체크 (CSRF 방지)
         String referer = request.getHeader("Referer");
-        if (referer == null || !referer.contains("iuha.com") || !referer.contains("localhost")) {
+        if (referer == null || !referer.contains("iuhapark.com") || !referer.contains("localhost")) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid logout request");
             return;
         }
@@ -46,8 +46,8 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
 
 
         // 리디렉션
-        response.sendRedirect("http://localhost:3000");
-        // response.sendRedirect("https://iuha.com");
+//        response.sendRedirect("http://localhost:3000");
+         response.sendRedirect("https://www.iuhapark.com");
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");

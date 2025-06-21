@@ -75,30 +75,42 @@ jobs:
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
+    #  DockerHub 로그인
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag iuha-image:$(date +%s) --build-arg SKIP_TEST=true
+    # Docker 이미지 빌드 및 푸시
+    - name: Build and Push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }} .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
 
-#      # AWS 자격증명
-#    - name: Configure AWS credentials
-#      uses: aws-actions/configure-aws-credentials@v1
-#      with:
-#        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#        aws-region: ap-northeast-2
-#
-#    - name: SSH Deploy to EC2
-#      uses: appleboy/ssh-action@v1.0.0
-#      with:
-#        host: ${{ secrets.EC2_HOST }}
-#        username: ec2-user
-#        key: ${{ secrets.EC2_KEY }}
-#        script: |
-#          docker pull yourdockerhub/your-app-name
-#          docker stop app || true && docker rm app || true
-#          docker run -d --name app -p 8080:8080 yourdockerhub/your-app-name
+    # AWS 자격증명
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
+
+    - name: SSH Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_KEY }}
+        script: |
+          sudo docker kill ${{ secrets.PROJECT_NAME }}
+          sudo docker rm -f ${{ secrets.PROJECT_NAME }}
+          sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          
+          sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
+          --name ${{ secrets.PROJECT_NAME }} \
+          -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
+          -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
+          -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
+          -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
