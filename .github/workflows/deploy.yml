@@ -97,9 +97,6 @@ jobs:
 #        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #        aws-region: ap-northeast-2
 
-    - name: Ping EC2
-      run: ping -c 4 ${{ secrets.EC2_HOST }}
-
     - name: SSH Deploy to EC2
       uses: appleboy/ssh-action@v1.0.3
       with:
