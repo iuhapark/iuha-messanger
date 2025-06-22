@@ -14,6 +14,8 @@ services:
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     ports:
       - "3306:3306"
+    networks:
+      - iuha-network
 
   redis:
     container_name: redis-container
@@ -26,3 +28,8 @@ services:
       - ./data/redis:/data
     ports:
       - "6379:6379"
+    networks:
+      - iuha-network
+
+networks:
+  iuha-network:
