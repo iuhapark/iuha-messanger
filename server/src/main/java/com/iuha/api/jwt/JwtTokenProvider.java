@@ -31,9 +31,6 @@ public class JwtTokenProvider {
 
     @PostConstruct
     public void init() {
-        if (jwtProperties.getExpired() == null)
-            throw new IllegalArgumentException("JWT properties are not properly configured.");
-
         this.issuer = jwtProperties.getIssuer();
         this.accessTokenExpirySeconds = jwtProperties.getExpired().getAccess();
         this.refreshTokenExpirySeconds = jwtProperties.getExpired().getRefresh();

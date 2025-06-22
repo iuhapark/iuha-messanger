@@ -5,7 +5,8 @@ RUN ./gradlew :server:bootJar -x test
 
 FROM openjdk:17-alpine
 RUN mkdir /app
-COPY --from=builder /gradle/server/build/libs/server-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=builder /gradle/server/build/libs/*.jar /app/app.jar
+COPY server/src/main/resources/application.yml /app/application.yml
 ARG PROFILE
 EXPOSE 8761
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--spring.config.location=file:/app/application.yml"]
