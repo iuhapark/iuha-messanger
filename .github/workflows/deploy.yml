@@ -105,11 +105,16 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         port: ${{ secrets.EC2_PORT }}
         script: |
+          cd ~/${{ secrets.PROJECT_NAME }}
           sudo docker kill ${{ secrets.PROJECT_NAME }}
           sudo docker rm -f ${{ secrets.PROJECT_NAME }}
           sudo docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
           sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-          
+          git pull origin main
+          sudo docker compose down
+          sudo docker compose pull
+          sudo docker compose up -d --build
+
           sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
           --name ${{ secrets.PROJECT_NAME }} \
           -e SPRING_DATASOURCE_URL=${{ secrets.DB_URL }} \
