@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableEurekaServer
 @EnableScheduling
-@SpringBootApplication
 @EnableConfigurationProperties(JwtProperties.class)
+@SpringBootApplication
 public class IuhaApplication {
 
     public static void main(String[] args) {
