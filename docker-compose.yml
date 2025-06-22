@@ -1,9 +1,4 @@
 services:
-  eureka:
-    image: iuha-messenger
-    ports:
-      - "8761:8761"
-
   mysql:
     container_name: mysql-container
     image: mysql:latest
