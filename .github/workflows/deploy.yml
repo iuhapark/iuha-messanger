@@ -119,4 +119,4 @@ jobs:
 
     - name: Configure Redis
       run: |
-        docker exec redis-container redis-cli
+        sudo docker exec -it redis-container redis-cli ACL SETUSER iuha on >iuha allkeys allcommands
