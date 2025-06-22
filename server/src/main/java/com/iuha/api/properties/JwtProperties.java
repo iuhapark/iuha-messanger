@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
-@Component
-@Configuration
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
     private String issuer; // jwt.issuer
