@@ -116,7 +116,3 @@ jobs:
           -e SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }} \
           -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }} \
           -d ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-
-    - name: Configure Redis
-      run: |
-        sudo docker exec -it redis-container redis-cli ACL SETUSER iuha on >iuha allkeys allcommands
