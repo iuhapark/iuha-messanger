@@ -4,6 +4,7 @@ import { useAuth } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Loading from "../loading/circular";
+import { addToast } from "@heroui/react";
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -11,7 +12,11 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if (!loading && !user) {
-      alert('로그인이 필요한 서비스입니다.')
+      addToast({
+        title: 'Sign in Required',
+        description: 'Redirecting to the sign in page.',
+        icon: 'warning',
+      })
       router.replace('/sign-in')
     }
   }, [loading, user, router])

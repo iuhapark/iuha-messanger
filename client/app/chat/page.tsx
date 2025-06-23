@@ -1,5 +1,6 @@
 'use client';
 
+import ProtectedRoute from "@/components/auth/protected-route";
 import EmptyChatView from "@/components/chat/empty";
 import Room from "@/components/chat/room";
 import RoomList from "@/components/chat/room-list";
@@ -38,6 +39,7 @@ const ChatPage = () => {
   };
 
   return (
+    <ProtectedRoute>
     <div className='chat-page md:h-[745px] h-[calc(100vh-64px-48px)]'>
       {isOpen ? (
         <div className='z-50 absolute md:static w-full md:max-w-[257px] h-full'>
@@ -67,6 +69,7 @@ const ChatPage = () => {
         {content()}
       </div>
     </div>
+    </ProtectedRoute>
   );
 };
 
