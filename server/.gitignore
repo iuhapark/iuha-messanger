@@ -67,3 +67,6 @@ yarn-error.log*
 next-env.d.ts
 
 *.yml
+
+.gradle/
+build/
