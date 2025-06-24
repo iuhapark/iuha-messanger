@@ -27,18 +27,5 @@
         }
       ]
     }
-  ],
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.iuhapark.com"
-        }
-      ],
-      "destination": "https://iuhapark.com/:path*",
-      "permanent": true
-    }
   ]
 }
