@@ -1,16 +1,3 @@
 {
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://www.iuhapark.com/api/:path*"
-    },
-    {
-      "source": "/websocket",
-      "destination": "wss://www.iuhapark.com/websocket"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ]
+  "rewrites": []
 }
