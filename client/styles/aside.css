@@ -19,6 +19,7 @@
   gap: 0.5rem;
   padding: 0.5rem;
   background-color: var(--background);
+  min-height: 56px;
 }
 
 .chat-footer {

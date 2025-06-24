@@ -1,13 +1,27 @@
 'use client'
 
+import { Avatar, Tooltip } from "@heroui/react";
+import MessageHeader from "./header";
 import Messages from "./messages"
 import TextArea from "./text-area"
+import { PrevArrowIcon } from "../icons";
 
-export default function EmptyChatView() {
+export default function EmptyChatView({ isOpen, onOpen }: { isOpen: boolean; onOpen: () => void; }) {
   
   return (
     <div className='chat-room text-center text-gray-500 dark:text-gray-400'>
-      <div className='flex flex-col justify-center h-full gap-4'>
+    <div className='message-header'>
+    {!isOpen && (
+      <div className='md:hidden block'>
+        <Tooltip content='Open' placement='right'>
+          <button className='btn-aside pl-3' onClick={onOpen}>
+            <PrevArrowIcon />
+          </button>
+        </Tooltip>
+      </div>
+    )}
+    </div>
+    <div className='flex flex-col justify-center h-full gap-4'>
         <h1 className='text-xl font-semibold'>Start chatting!</h1>
         <h2 className='text-sm text-muted-foreground'>
           Select a friend or chat room from the list.

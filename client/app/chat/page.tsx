@@ -35,14 +35,27 @@ const ChatPage = () => {
     if (step === ChatStep.READY && room) {
       return <Room {...room} onRefresh={onRefresh} isOpen={isOpen} onOpen={() => setIsOpen(true)} />;
     }
-    return <EmptyChatView />;
+    return <EmptyChatView isOpen={isOpen} onOpen={() => setIsOpen(true)}/>;
   };
+
+    const drawerToggle = (
+    <div className='z-10 absolute md:static bg-transparent md:bg-transparent md:block hidden'
+         style={{ backgroundColor: 'var(--aside-background)' }}>
+      <div className='chat-header'>
+        <Tooltip content='Open' placement='right'>
+          <button className='btn-aside' onClick={() => setIsOpen(true)}>
+            <DrawerIcon />
+          </button>
+        </Tooltip>
+      </div>
+    </div>
+  );
 
   return (
     <ProtectedRoute>
     <div className='chat-page md:h-[745px] h-[calc(100vh-64px-48px)]'>
       {isOpen ? (
-        <div className='z-5 absolute md:static w-full md:max-w-[257px] h-full'>
+        <div className='z-10 absolute md:static w-full md:max-w-[257px] h-full'>
           <RoomList
             onSelect={onSelect}
             setStep={setStep}
@@ -52,18 +65,7 @@ const ChatPage = () => {
             selectedChatroom={null}
             onSelectChatroom={() => {}} />
         </div>
-      ) : (
-        <div className='z-5 absolute md:static bg-transparent md:bg-transparent md:block hidden'
-             style={{ backgroundColor: 'var(--aside-background)' }}>
-          <div className='chat-header'>
-            <Tooltip content='Open' placement='right'>
-              <button className='btn-aside' onClick={() => setIsOpen(!isOpen)}>
-                <DrawerIcon />
-              </button>
-            </Tooltip>
-          </div>
-        </div>
-      )}
+      ) : drawerToggle}
       {/* <DrawerProps /> */}
       <div className={`content-wrapper ${isOpen ? 'md:ml-auto' : ''}`}>
         {content()}

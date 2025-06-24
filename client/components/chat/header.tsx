@@ -1,6 +1,6 @@
 import { User } from "@/types";
 import { Avatar, Tooltip } from "@heroui/react";
-import { PrevArrowIcon, DrawerIcon } from "../icons";
+import { PrevArrowIcon } from "../icons";
 
 type Receiver = {
   receiver: User;
@@ -13,7 +13,7 @@ const MessageHeader = ({ receiver, onOpen, isOpen }: Receiver) => (
     {!isOpen && (
       <div className='md:hidden block'>
         <Tooltip content='Open' placement='right'>
-          <button className='btn-aside' onClick={onOpen}>
+          <button className='btn-aside pl-3' onClick={onOpen}>
             <PrevArrowIcon />
           </button>
         </Tooltip>
