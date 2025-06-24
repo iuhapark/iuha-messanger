@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://52.78.121.16/api/:path*"
+      "destination": "https://www.iuhapark.com/api/:path*"
     },
     {
       "source": "/websocket",
-      "destination": "ws:52.78.121.16/websocket"
+      "destination": "ws:www.iuhapark.com/websocket"
     }
   ],
   "headers": [
