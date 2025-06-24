@@ -1,5 +1,16 @@
 {
-    "rewrites": [
-        {"source": "/(.*)", "destination": "/"}
-    ]
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://www.iuhapark.com/api/:path*"
+    },
+    {
+      "source": "/websocket",
+      "destination": "ws:www.iuhapark.com/websocket"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
 }
