@@ -69,4 +69,3 @@ next-env.d.ts
 *.yml
 
 .gradle/
-build/

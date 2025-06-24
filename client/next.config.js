@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    devIndicators: false
+};
 
 module.exports = {
     nextConfig,
-    devIndicators: false
 };
