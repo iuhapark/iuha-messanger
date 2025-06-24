@@ -42,7 +42,7 @@ const ChatPage = () => {
     <ProtectedRoute>
     <div className='chat-page md:h-[745px] h-[calc(100vh-64px-48px)]'>
       {isOpen ? (
-        <div className='z-50 absolute md:static w-full md:max-w-[257px] h-full'>
+        <div className='z-5 absolute md:static w-full md:max-w-[257px] h-full'>
           <RoomList
             onSelect={onSelect}
             setStep={setStep}
@@ -53,7 +53,7 @@ const ChatPage = () => {
             onSelectChatroom={() => {}} />
         </div>
       ) : (
-        <div className='z-50 absolute md:static bg-transparent md:bg-transparent md:block hidden'
+        <div className='z-5 absolute md:static bg-transparent md:bg-transparent md:block hidden'
              style={{ backgroundColor: 'var(--aside-background)' }}>
           <div className='chat-header'>
             <Tooltip content='Open' placement='right'>
