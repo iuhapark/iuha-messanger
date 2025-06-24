@@ -60,6 +60,9 @@ public class SecurityConfig {
                     config.setAllowCredentials(true);
                     return config;
                 }))
+                .requiresChannel(channel ->
+                        channel.anyRequest().requiresSecure()
+                )
                 .formLogin(
 //                        form -> form.disable()
                         form -> form
