@@ -18,7 +18,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  background-color: var(--aside-background);
+  background-color: var(--background);
 }
 
 .chat-footer {

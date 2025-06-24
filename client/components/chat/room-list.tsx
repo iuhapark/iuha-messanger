@@ -90,8 +90,6 @@ const filteredChatrooms = React.useMemo(() => {
         value={searchQuery}
         onValueChange={setSearchQuery}
         startContent={<SearchIcon className='text-default-400 pointer-events-none flex-shrink-0' />}
-        variant='bordered'
-        radius='lg'
       />
       <div className='flex-1 overflow-auto'>
         <Listbox aria-label='Chats'>
