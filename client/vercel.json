@@ -6,7 +6,7 @@
     },
     {
       "source": "/websocket",
-      "destination": "ws://52.78.121.16:8761/websocket"
+      "destination": "ws:52.78.121.16:8761/websocket"
     }
   ],
   "headers": [
