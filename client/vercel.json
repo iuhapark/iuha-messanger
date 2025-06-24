@@ -1,5 +1,14 @@
 {
-  "rewrites": [],
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://52.78.121.16/api/:path*"
+    },
+    {
+      "source": "/websocket",
+      "destination": "wss://52.78.121.16/websocket"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
