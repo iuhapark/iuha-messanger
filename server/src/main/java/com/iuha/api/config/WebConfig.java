@@ -19,17 +19,5 @@ public class WebConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(loginUserArgumentResolver);
     }
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/api/**") // CORS를 적용할 URL 패턴
-        registry.addMapping("**")
-                .allowedOrigins("http://localhost:3000", "https://www.iuhapark.com")
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
-                .allowedHeaders("*")
-                .allowedMethods("*")
-                .exposedHeaders("Authorization")
-                .allowCredentials(true);
-
-    }
 
 }
