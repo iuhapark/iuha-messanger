@@ -51,7 +51,7 @@ const Messages = ({ roomId }: { roomId: string }) => {
 
   /* scroll 맨 아래로 */
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'auto' });
+    scrollRef.current?.scrollIntoView({ behavior: 'instant' });
   }, [dbMessages, newMessages]);
 
   /* 더미 메시지와 서버 메시지 병합 */

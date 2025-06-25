@@ -76,7 +76,7 @@ export const dummyMessages: DummyMessages = {
   '8': [
     {
       id: '9',
-      message: '해리, 나 궁금한 거 있어~',
+      message: '현수, 나 궁금한 거 있어~',
       roomId: '8',
       sender:  USERS['HARU'],
       type: 'TALK',
