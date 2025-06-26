@@ -63,7 +63,7 @@ const Navbar = async () => {
         justify='end'
       >
         <NavbarItem className='hidden sm:flex gap-2'>
-          <Link isExternal aria-label='Twitter' href={siteConfig.links.githubPages}>
+          <Link isExternal aria-label='Blog' href={siteConfig.links.githubPages}>
             <BlogIcon className='text-default-500' />
           </Link>
           <Link isExternal aria-label='Github' href={siteConfig.links.github}>
@@ -78,6 +78,9 @@ const Navbar = async () => {
       </NavbarContent>
 
       <NavbarContent className='sm:hidden basis-1 pl-4' justify='end'>
+        <Link isExternal aria-label='Blog' href={siteConfig.links.githubPages}>
+            <BlogIcon className='text-default-500' />
+        </Link>
         <Link isExternal aria-label='Github' href={siteConfig.links.github}>
           <GithubIcon className='text-default-500' />
         </Link>
