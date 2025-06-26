@@ -1,5 +1,3 @@
-'use client';
-
 import ProtectedRoute from "@/components/auth/protected-route";
 import EmptyChatView from "@/components/chat/empty";
 import Room from "@/components/chat/room";
