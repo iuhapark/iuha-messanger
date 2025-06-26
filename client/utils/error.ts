@@ -28,13 +28,13 @@ export const parseAPIError = (err: unknown): APIError => {
     const { code, type, message } = err.response.data || {};
     const status = err.response.status;
     // 세션 만료 (예: 401, 403)
-    if (status === 401 || status === 403) {
-      return {
-        code: status,
-        type: "UNAUTHORIZED",
-        message: "Session expired. Please sign in again.",
-      };
-    }
+    // if (status === 401 || status === 403) {
+    //   return {
+    //     code: status,
+    //     type: "UNAUTHORIZED",
+    //     message: "Session expired. Please sign in again.",
+    //   };
+    // }
 
     return {
       code: code ?? status ?? 500,

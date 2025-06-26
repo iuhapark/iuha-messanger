@@ -60,7 +60,7 @@ public class SecurityConfig {
                     config.setAllowCredentials(true);
                     return config;
                 }))
-//               prod env - 모든 요청을 https로 강제
+//               prod env only - 모든 요청을 https로 강제
                 .requiresChannel(channel ->
                         channel.anyRequest().requiresSecure()
                 )
