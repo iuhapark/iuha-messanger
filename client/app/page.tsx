@@ -6,6 +6,7 @@ import { subtitle, title } from "@/components/primitives";
 import { siteConfig } from "@/config/site";
 import { Button } from "@heroui/button";
 import Image from "next/image";
+import clsx from "clsx";
 
 export default function Home() {
   return (
@@ -27,24 +28,27 @@ export default function Home() {
           <div className='flex flex-col items-center gap-4 md:w-auto w-full md:flex-row'>
             <Button
               as={Link}
-              className={buttonStyles({
+              className={clsx(buttonStyles({
                 color: 'primary',
                 radius: 'full',
                 variant: 'shadow',
-                fullWidth: true,
                 size: 'lg',
-              })}
+              }),
+            'w-full md:w-auto'
+          )} 
               href={siteConfig.navItems.find(i => i.label === 'Chat')?.href}
               endContent={<RightArrowIcon size={20}
             />}
             >Start chatting</Button>
             <Link
               isExternal
-              className={buttonStyles({
+              className={clsx(buttonStyles({
                 variant: 'bordered',
                 radius: 'full',
-                fullWidth: true,
-                size: 'lg', })}
+                size: 'lg',
+              }),
+              'w-full md:w-auto'
+            )}
               href={siteConfig.links.github}
             >
               <GithubIcon size={20} />
