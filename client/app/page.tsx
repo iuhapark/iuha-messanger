@@ -1,7 +1,7 @@
 import { Link } from "@heroui/link";
 import { button as buttonStyles } from "@heroui/theme";
 
-import { GithubIcon, RightArrowIcon } from "@/components/icons";
+import { GithubIcon, RightArrowIcon } from "@/components/icons/icons";
 import { subtitle, title } from "@/components/primitives";
 import { siteConfig } from "@/config/site";
 import { Button } from "@heroui/button";

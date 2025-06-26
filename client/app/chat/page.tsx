@@ -4,7 +4,7 @@ import ProtectedRoute from "@/components/auth/protected-route";
 import EmptyChatView from "@/components/chat/empty";
 import Room from "@/components/chat/room";
 import RoomList from "@/components/chat/room-list";
-import { DrawerIcon } from "@/components/icons";
+import { DrawerIcon } from "@/components/icons/icons";
 import UserSelect from "@/components/user/select";
 import { ChatStep } from "@/types/data";
 import { ChatRoom as ChatRoomType } from "@/types/index";

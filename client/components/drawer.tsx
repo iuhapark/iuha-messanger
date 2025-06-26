@@ -13,7 +13,7 @@ import {
 import RoomList from "./chat/room-list";
 import { ChatRoomListProps } from "@/types";
 import { ChatStep } from "@/types/data";
-import { DrawerIcon, LayoutIcon } from "./icons";
+import { DrawerIcon, LayoutIcon } from "./icons/icons";
 import AuthButton from "./auth/auth-button";
 import { useAuth } from "@/context/authContext";
 import { useEffect } from "react";

@@ -1,6 +1,6 @@
 'use client';
 
-import { EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons";
+import { EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons/icons";
 import Loading from "@/components/loading/circular";
 import { useLoading } from "@/context/loadingContext";
 import api from "@/lib/api";

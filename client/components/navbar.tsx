@@ -1,4 +1,3 @@
-import { Input } from "@heroui/input";
 import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
 import {
@@ -14,36 +13,41 @@ import NextLink from "next/link";
 
 import {
   BlogIcon,
-  GithubIcon,
-  SearchIcon,
-} from "@/components/icons";
+  GithubIcon
+} from "@/components/icons/icons";
 import { ThemeSwitch } from "@/components/theme-switch";
+import githubInfo from "@/config/github-info.json";
 import { siteConfig } from "@/config/site";
-import AvatarProps from "./user/avatar";
-import { User } from "@/types";
 import { fetchSessionUser } from "@/lib/user";
+import { Button } from "@heroui/button";
+import { SearchLinearIcon } from "./icons/linear/search";
+import AvatarProps from "./user/avatar";
+// import { useState } from "react";
 
 const Navbar = async () => {
   const user = await fetchSessionUser();
+  // const [commandKey, setCommandKey] = useState<"ctrl" | "command">("command");
+
   const searchInput = (
-    <Input
-      aria-label='Search'
-      classNames={{
-        inputWrapper: 'bg-default-100',
-        input: 'text-sm',
-      }}
+    <Button
+      aria-label='Quick search'
+      className='border-1 px-3 border-default-200 rounded-full text-small font-normal text-default-500 bg-transparent'
       endContent={
-        <Kbd className='hidden lg:inline-block' keys={['command']}>
+        <Kbd className='hidden text-xs rounded-full py-0.5 px-1.5 lg:inline-block' keys={['command']}>
           K
         </Kbd>
       }
-      labelPlacement='outside'
-      placeholder='Search...'
       startContent={
-        <SearchIcon className='text-base text-default-400 pointer-events-none flex-shrink-0' />
+        <SearchLinearIcon
+          className="text-base text-default-400 pointer-events-none flex-shrink-0"
+          size={16}
+          strokeWidth={2}
+        />
       }
-      type='search'
-    />
+      variant="bordered"
+    >
+      Search
+    </Button>
   );
 
   return (
@@ -66,12 +70,22 @@ const Navbar = async () => {
           <Link isExternal aria-label='Blog' href={siteConfig.links.githubPages}>
             <BlogIcon className='text-default-500' />
           </Link>
-          <Link isExternal aria-label='Github' href={siteConfig.links.github}>
-            <GithubIcon className='text-default-500' />
-          </Link>
-          <ThemeSwitch />
+          <ThemeSwitch
+            classNames={{
+              wrapper: '!text-default-500 dark:!text-default-500',
+            }}
+          />
         </NavbarItem>
         <NavbarItem className='hidden lg:flex'>{searchInput}</NavbarItem>
+        <Link
+          isExternal
+          aria-label='Github'
+          className='flex gap-0.5 items-center h-10 px-2 border-1 border-default-200 rounded-full text-default-600 dark:text-default-500'
+          href={siteConfig.links.github}
+        >
+          <GithubIcon className='text-default-500' />
+          <span className="text-xs font-medium">{githubInfo.stars.formatted}</span>
+        </Link>
         <NavbarItem className='hidden md:flex'>
           <AvatarProps initUser={user} />
         </NavbarItem>

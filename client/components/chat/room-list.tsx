@@ -7,7 +7,7 @@ import { ChatRoom, ChatRoomListProps, User } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
 import { Avatar, Input, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
 import { useEffect, useState } from "react";
-import { DrawerIcon, EditDocumentIcon, SearchIcon } from "../icons";
+import { DrawerIcon, EditDocumentIcon, SearchIcon } from "../icons/icons";
 import React from "react";
 import { dummyRooms } from '@/data/room';
 import AuthButton from "../auth/auth-button";

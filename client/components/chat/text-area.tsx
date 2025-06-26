@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useStomp } from "@/hooks/useStomp";
 import { ChatRoom as ChatRoomType, Message, User } from "@/types";
 import { useAuth } from "@/context/authContext";
-import { UpArrowIcon } from "../icons";
+import { UpArrowIcon } from "../icons/icons";
 import api from "@/lib/api";
 
 const TextArea = ({ id, participants, lastMessage, onRefresh, isLocal = false }: ChatRoomType & { onRefresh: () => void; isLocal?: boolean; }) => {

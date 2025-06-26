@@ -4,7 +4,7 @@ import { Avatar, Tooltip } from "@heroui/react";
 import MessageHeader from "./header";
 import Messages from "./messages"
 import TextArea from "./text-area"
-import { PrevArrowIcon } from "../icons";
+import { PrevArrowIcon } from "../icons/icons";
 
 export default function EmptyChatView({ isOpen, onOpen }: { isOpen: boolean; onOpen: () => void; }) {
   

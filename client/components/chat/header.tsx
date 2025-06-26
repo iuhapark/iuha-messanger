@@ -1,6 +1,6 @@
 import { User } from "@/types";
 import { Avatar, Tooltip } from "@heroui/react";
-import { PrevArrowIcon } from "../icons";
+import { PrevArrowIcon } from "../icons/icons";
 
 type Receiver = {
   receiver: User;

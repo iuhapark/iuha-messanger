@@ -1,6 +1,6 @@
 'use client';
 
-import { GoogleIcon } from '@/components/icons';
+import { GoogleIcon } from '@/components/icons/icons';
 import Loading from '@/components/loading/circular';
 import { useLoading } from '@/context/loadingContext';
 import { login } from '@/lib/auth';
