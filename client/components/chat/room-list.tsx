@@ -1,20 +1,18 @@
 'use client';
 
 import { useAuth } from "@/context/authContext";
+import { dummyRooms } from '@/data/room';
 import api from "@/lib/api";
 import { ChatStep } from "@/types/data";
 import { ChatRoom, ChatRoomListProps, User } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
-import { Avatar, Button, Input, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
-import { useEffect, useState } from "react";
-import { DrawerIcon, EditDocumentIcon, SearchIcon } from "../icons/icons";
-import React from "react";
-import { dummyRooms } from '@/data/room';
+import { Avatar, Button, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
+import { usePress } from "@react-aria/interactions";
+import { isAppleDevice } from "@react-aria/utils";
+import React, { useEffect, useState } from "react";
 import AuthButton from "../auth/auth-button";
+import { DrawerIcon, EditDocumentIcon } from "../icons/icons";
 import { SearchLinearIcon } from "../icons/linear/search";
-import {isAppleDevice} from "@react-aria/utils";
-import {usePress} from "@react-aria/interactions";
-import UserSelect from "../user/user-select";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   <div
