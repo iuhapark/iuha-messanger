@@ -60,6 +60,7 @@ public class SecurityConfig {
                     config.setAllowCredentials(true);
                     return config;
                 }))
+//                모든 요청을 https로 강제 (localhost에선 꺼두기)
                 .requiresChannel(channel ->
                         channel.anyRequest().requiresSecure()
                 )
