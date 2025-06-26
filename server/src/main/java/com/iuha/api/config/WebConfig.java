@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("https://*.iuhapark.com") // prod env
-                .allowedOrigins("http://localhost:3000") // dev env
+//                .allowedOrigins("http://localhost:3000") // dev env
                 .allowedMethods("*")
                 .allowCredentials(true);
     }
