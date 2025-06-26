@@ -1,0 +1,11 @@
+dist
+node_modules
+plop
+coverage
+.changeset
+.next
+build
+scripts
+*.tsx
+*.ts
+*.d.ts
