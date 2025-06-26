@@ -34,7 +34,8 @@ jobs:
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
       - name: Build with Gradle
-        run: ./gradlew :server:build -x test
+        run: ./gradlew :server:bootJar
+        working-directory: server
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
@@ -114,7 +115,7 @@ jobs:
 #            git pull origin main
 #            sudo docker compose down
 #            sudo docker compose pull
-#            sudo docker compose up -d --build
+#            sudo docker compose up -d --buildv
 
             sudo docker run -p ${{ secrets.PORT }}:${{ secrets.PORT }} \
             --name ${{ secrets.PROJECT_NAME }} \
