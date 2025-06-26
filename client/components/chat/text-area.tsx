@@ -11,9 +11,9 @@ const TextArea = ({ id, participants, lastMessage, onRefresh, isLocal = false }:
   const { user } = useAuth();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
+  // useEffect(() => {
+  //   inputRef.current?.focus();
+  // }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

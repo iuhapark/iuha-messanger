@@ -19,6 +19,7 @@
   gap: 0.5rem;
   padding: 0.5rem;
   background-color: var(--background);
+  backdrop-filter: blur(4px);
   min-height: 56px;
 }
 
@@ -50,11 +51,11 @@
       background-color: var(--active-bg);
       border: 1px solid var(--active-border);
     } */
-
-    .avatar{
+   
+  }
+   .avatar{
       object-fit: cover;
       cursor: pointer;
       background-color: var(--profile-color);
       color: var(--text-color);
     }
-  }

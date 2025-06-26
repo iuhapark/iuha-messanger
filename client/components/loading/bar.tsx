@@ -1,4 +1,4 @@
-import {CircularProgress, Progress} from "@heroui/react";
+import {Progress} from "@heroui/react";
 import React from "react";
 
 export default function Loading() {
