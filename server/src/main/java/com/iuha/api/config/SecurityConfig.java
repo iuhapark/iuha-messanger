@@ -52,15 +52,15 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-//                    config.setAllowedOrigins(List.of("http://localhost:3000"));
-                    config.setAllowedOrigins(List.of("https://*.iuhapark.com"));
+//                    config.setAllowedOrigins(List.of("http://localhost:3000")); // dev env
+                    config.setAllowedOrigins(List.of("https://*.iuhapark.com")); // prod env
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
 //                    config.setExposedHeaders(List.of("Authorization"));
                     config.setAllowCredentials(true);
                     return config;
                 }))
-//                모든 요청을 https로 강제 (localhost에선 꺼두기)
+//               prod env - 모든 요청을 https로 강제
                 .requiresChannel(channel ->
                         channel.anyRequest().requiresSecure()
                 )

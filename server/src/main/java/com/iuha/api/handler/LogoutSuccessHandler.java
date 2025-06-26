@@ -46,8 +46,8 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
 
 
         // 리디렉션
-//        response.sendRedirect("http://localhost:3000");
-         response.sendRedirect("https://www.iuhapark.com");
+//        response.sendRedirect("http://localhost:3000"); // dev env
+         response.sendRedirect("https://www.iuhapark.com"); // prod env
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
