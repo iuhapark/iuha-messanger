@@ -5,7 +5,7 @@ import EmptyChatView from "@/components/chat/empty";
 import Room from "@/components/chat/room";
 import RoomList from "@/components/chat/room-list";
 import { DrawerIcon } from "@/components/icons/icons";
-import UserSelect from "@/components/user/select";
+import UserSelect from "@/components/user/user-select";
 import { ChatStep } from "@/types/data";
 import { ChatRoom as ChatRoomType } from "@/types/index";
 import { Tooltip } from "@heroui/react";
@@ -17,6 +17,7 @@ const ChatPage = () => {
   
   const [refresh, setRefresh] = useState(0);
   const [isOpen, setIsOpen] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   /* 채팅방 새로고침 함수 */
   const onRefresh = () => setRefresh(prev => prev + 1);
@@ -26,11 +27,13 @@ const ChatPage = () => {
     setRoom(room);
     setStep(ChatStep.READY);
     setIsOpen(false);
+    setShowModal(false);
   };
 
   const content = () => {
     if (step === ChatStep.NEW) {
-      return <UserSelect onSelect={(room) => { onSelect(room); onRefresh(); }} setStep={setStep} />;
+      return <UserSelect onSelect={(room) => { onSelect(room); onRefresh(); }} setStep={setStep} isOpen={true}
+        onClose={() => setStep(ChatStep.READY)}/>;
     }
     if (step === ChatStep.READY && room) {
       return <Room {...room} onRefresh={onRefresh} isOpen={isOpen} onOpen={() => setIsOpen(true)} />;
@@ -39,7 +42,7 @@ const ChatPage = () => {
   };
 
     const drawerToggle = (
-    <div className='z-10 absolute md:static bg-transparent md:bg-transparent md:block hidden'
+    <div className='z-10 px-[0.8rem] absolute md:static bg-transparent md:bg-transparent md:block hidden'
          style={{ backgroundColor: 'var(--aside-background)' }}>
       <div className='chat-header'>
         <Tooltip content='Open' placement='right'>
@@ -53,9 +56,9 @@ const ChatPage = () => {
 
   return (
     <ProtectedRoute>
-    <div className='chat-page md:h-[745px] h-[calc(100vh-64px-48px)]'>
+    <div className='chat-page'>
       {isOpen ? (
-        <div className='z-10 absolute md:static w-full md:max-w-[257px] h-full'>
+        <div className='z-10 absolute md:static w-full md:max-w-[240px] h-full'>
           <RoomList
             onSelect={onSelect}
             setStep={setStep}

@@ -20,13 +20,12 @@ import githubInfo from "@/config/github-info.json";
 import { siteConfig } from "@/config/site";
 import { fetchSessionUser } from "@/lib/user";
 import { Button } from "@heroui/button";
+import { Divider } from "@heroui/react";
 import { SearchLinearIcon } from "./icons/linear/search";
 import AvatarProps from "./user/avatar";
-// import { useState } from "react";
 
 const Navbar = async () => {
   const user = await fetchSessionUser();
-  // const [commandKey, setCommandKey] = useState<"ctrl" | "command">("command");
 
   const searchInput = (
     <Button
@@ -39,12 +38,12 @@ const Navbar = async () => {
       }
       startContent={
         <SearchLinearIcon
-          className="text-base text-default-400 pointer-events-none flex-shrink-0"
+          className='text-base text-default-400 pointer-events-none flex-shrink-0'
           size={16}
           strokeWidth={2}
         />
       }
-      variant="bordered"
+      variant='bordered'
     >
       Search
     </Button>
@@ -66,16 +65,15 @@ const Navbar = async () => {
         className='hidden sm:flex basis-1/5 sm:basis-full'
         justify='end'
       >
-        <NavbarItem className='hidden sm:flex gap-2'>
-          <Link isExternal aria-label='Blog' href={siteConfig.links.githubPages}>
-            <BlogIcon className='text-default-500' />
-          </Link>
-          <ThemeSwitch
-            classNames={{
-              wrapper: '!text-default-500 dark:!text-default-500',
-            }}
-          />
+        <NavbarItem>
+          <NextLink
+            color='foreground'
+            href={siteConfig.links.githubPages}
+          >
+            Blog
+          </NextLink>
         </NavbarItem>
+        <Divider className='h-7 hidden lg:flex' orientation='vertical' />
         <NavbarItem className='hidden lg:flex'>{searchInput}</NavbarItem>
         <Link
           isExternal
@@ -86,6 +84,9 @@ const Navbar = async () => {
           <GithubIcon className='text-default-500' />
           <span className="text-xs font-medium">{githubInfo.stars.formatted}</span>
         </Link>
+        <ThemeSwitch
+          className='flex gap-0.5 items-center h-10 px-2 border-1 border-default-200 rounded-full text-default-600 dark:text-default-500'
+        />
         <NavbarItem className='hidden md:flex'>
           <AvatarProps initUser={user} />
         </NavbarItem>

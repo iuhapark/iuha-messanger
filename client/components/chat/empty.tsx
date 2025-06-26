@@ -1,7 +1,7 @@
 'use client'
 
 import { Tooltip } from "@heroui/react";
-import { PrevArrowIcon } from "../icons/icons";
+import { DrawerIcon, PrevArrowIcon } from "../icons/icons";
 
 export default function EmptyChatView({ isOpen, onOpen }: { isOpen: boolean; onOpen: () => void; }) {
   
@@ -12,7 +12,7 @@ export default function EmptyChatView({ isOpen, onOpen }: { isOpen: boolean; onO
       <div className='md:hidden block'>
         <Tooltip content='Open' placement='right'>
           <button className='btn-aside pl-3' onClick={onOpen}>
-            <PrevArrowIcon />
+            <DrawerIcon className='md:size-6 size-7' />
           </button>
         </Tooltip>
       </div>

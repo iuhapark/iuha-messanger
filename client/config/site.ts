@@ -50,11 +50,7 @@ export const siteConfig = {
     },
     {
       label: 'Sign out',
-      onClick: () => {
-        if (typeof window !== 'undefined') {
-          window.location.href = '/logout';
-        }
-      }
+      href: '/sign-out',
     },
   ] as NavMenuItem[],
   links: {

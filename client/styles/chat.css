@@ -3,7 +3,7 @@
   flex: 1;
   transition: all 0.3s;
   position: relative;
-  /* height: var(--screen-height); */
+  height: var(--screen-height);
   background-color: var(--chat-background);
   
   .content-wrapper {

@@ -11,7 +11,7 @@ type Receiver = {
 const MessageHeader = ({ receiver, onOpen, isOpen }: Receiver) => (
   <div className='message-header'>
     {!isOpen && (
-      <div className='md:hidden block'>
+      <div className='flex md:hidden'>
         <Tooltip content='Open' placement='right'>
           <button className='btn-aside pl-3' onClick={onOpen}>
             <PrevArrowIcon />

@@ -5,12 +5,16 @@ import api from "@/lib/api";
 import { ChatStep } from "@/types/data";
 import { ChatRoom, ChatRoomListProps, User } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
-import { Avatar, Input, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
+import { Avatar, Button, Input, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { DrawerIcon, EditDocumentIcon, SearchIcon } from "../icons/icons";
 import React from "react";
 import { dummyRooms } from '@/data/room';
 import AuthButton from "../auth/auth-button";
+import { SearchLinearIcon } from "../icons/linear/search";
+import {isAppleDevice} from "@react-aria/utils";
+import {usePress} from "@react-aria/interactions";
+import UserSelect from "../user/user-select";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   <div
@@ -31,6 +35,7 @@ const RoomList = ({
   const { user, loading } = useAuth();
   const myId = user?.id;
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [commandKey, setCommandKey] = useState<"ctrl" | "command">("command");
 
   /* 채팅방 로딩 */
   useEffect(() => {
@@ -66,31 +71,72 @@ const filteredChatrooms = React.useMemo(() => {
     return matchesParticipant || matchesLastMessage;
   });
   }, [rooms, searchQuery, myId]);
-
+  
+  const handleOpenSearch = () => {
     
+  };
+
+  const {pressProps} = usePress({
+    onPress: handleOpenSearch,
+  });
+
+  useEffect(() => {
+    setCommandKey(isAppleDevice() ? 'command' : 'ctrl');
+  }, []);
+
   return (
     <ListboxWrapper>
       <div className='chat-header'>
         <Tooltip content='Close' placement='right'>
-          <DrawerIcon className='btn-aside' onClick={onClose} />
+          <DrawerIcon className='btn-aside md:size-6 size-7' onClick={onClose} />
         </Tooltip>
         <Tooltip content='New' placement='right'>
-          <EditDocumentIcon className='btn-aside' onClick={() => { setStep(ChatStep.NEW); onClose(); }} />
+          <EditDocumentIcon className='btn-aside md:size-6 size-7'
+          onClick={() => {
+            setStep(ChatStep.NEW);
+            onClose();}}
+          />
         </Tooltip>
       </div>
-      <Input
+      <Button
+      aria-label='Quick search'
+      className='border-none justify-start md:text-medium text-lg'
+      endContent={
+        <Kbd
+        className='hidden text-xs rounded-full py-0.5 px-1.5 lg:inline-block'
+        keys={commandKey}
+      >
+        K
+      </Kbd>
+      }
+      startContent={
+        <SearchLinearIcon
+          className='text-base text-default-400 pointer-events-none flex-shrink-0'
+          size={16}
+          strokeWidth={2}
+        />
+      }
+      onPress={handleOpenSearch}
+      variant='bordered'
+    >
+      Search
+    </Button>
+      {/* <Input
+        className='px-3'
         aria-label='Search'
-        classNames={{
-          input: 'text-sm',
-        }}
-        className='px-3 pb-[1rem]'
-        size='sm'
-        labelPlacement='outside'
         placeholder='Search chats...'
         value={searchQuery}
         onValueChange={setSearchQuery}
-        startContent={<SearchIcon className='text-default-400 pointer-events-none flex-shrink-0' />}
-      />
+        variant='bordered'
+        radius='full'
+        startContent={
+        <SearchLinearIcon
+          className='text-base text-default-400 pointer-events-none flex-shrink-0'
+          size={16}
+          strokeWidth={2}
+        />
+        }
+      /> */}
       <div className='flex-1 overflow-auto'>
         <Listbox aria-label='Chats'>
           {filteredChatrooms.map((room) => (
@@ -99,30 +145,49 @@ const filteredChatrooms = React.useMemo(() => {
                 {room.participants
                   .filter((user: User) => user.id !== myId)
                   .map((user: User) => (
-                    <div key={user.id} className='rooms'>
-                      <Avatar
-                        showFallback
-                        name={user.name}
-                        src={user.profile}
-                        alt={user.name}
-                        className='avatar'
-                      />
-                      <div className='flex-col justify-start gap-2 px-2'>
-                        {user.name}
-                        <div className='text-[0.8rem]'
-                        style={{ color: 'var(--text-color)' }}>{room.lastMessage?.slice(0, 19)}</div>
+                  <div key={user.id} className='rooms flex items-center md:min-h-[3rem] min-h-[4rem]'>
+                    <Avatar
+                      showFallback
+                      name={user.name}
+                      src={user.profile}
+                      alt={user.name}
+                      className='aside-avatar flex-shrink-0'
+                    />
+                    <div className='flex flex-col justify-center gap-1 px-2 overflow-hidden'>
+                      <div className='truncate md:text-[0.9rem] text-[1.1rem]'>{user.name}</div>
+                      <div
+                        className='md:text-[0.8rem] text-[0.9rem] leading-tight max-h-[2.5rem] overflow-hidden text-default-400'
+                        style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 1,
+                          WebkitBoxOrient: 'vertical'
+                        }}
+                      >
+                      {room.lastMessage}
                       </div>
                     </div>
+                  </div>
                   ))}
               </Skeleton>
             </ListboxItem>
           ))}
         </Listbox>
       </div>
-      <footer className='chat-footer shrink-0'>
-      <AuthButton initUser={user} />
+      <footer className='chat-footer'>
+        <div className='flex items-center gap-5 md:text-md text-lg font-semibold'>
+          <Avatar
+            showFallback
+            name={user?.name}
+            src={user?.profile}
+            alt={user?.name}
+            className='size-9'
+          />
+          {user?.name}
+        </div>
+        <div className='flex-[2] flex justify-end'>
+          <AuthButton initUser={user} />
+        </div>
       </footer>
-      
     </ListboxWrapper>
   );
 };

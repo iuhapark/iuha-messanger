@@ -1,15 +1,14 @@
 import "@/styles/index.css";
-import { Metadata, Viewport } from "next";
-import { Link } from "@heroui/link";
 import clsx from "clsx";
+import { Metadata, Viewport } from "next";
 
-import { Providers } from "./providers";
-import { fetchSessionUser } from "@/lib/user";
-import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
 import Navbar from "@/components/navbar";
+import { fontSans } from "@/config/fonts";
+import { siteConfig } from "@/config/site";
 import { AuthProvider } from "@/context/authContext";
 import { LoadingProvider } from "@/context/loadingContext";
+import { fetchSessionUser } from "@/lib/user";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: {
@@ -52,17 +51,17 @@ export default async function RootLayout({
             <main className='container mx-auto max-w-full flex-grow'>
               {children}
             </main>
-            <footer className='hidden w-full items-center justify-center py-3'>
+            {/* <footer className='flex w-full items-center justify-center py-3'>
               <Link
                 isExternal
                 className='flex items-center gap-1 text-current'
                 href='mailto: juhabahk@gmail.com'
                 title='gmail.com email'
               >
-                <span className='text-default-600'>Developed by</span>
-                <p className='text-primary'>Juha Park</p>
+                <span className='text-default-600 text-xs'>Developed by</span>
+                <p className='text-primary text-xs'>Juha Park</p>
               </Link>
-            </footer>
+            </footer> */}
           </div>
           </AuthProvider>
           </LoadingProvider>
