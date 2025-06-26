@@ -86,10 +86,10 @@ const filteredChatrooms = React.useMemo(() => {
     <ListboxWrapper>
       <div className='chat-header'>
         <Tooltip content='Close' placement='right'>
-          <DrawerIcon className='btn-aside md:size-6 size-7' onClick={onClose} />
+          <DrawerIcon className='btn-aside' onClick={onClose} />
         </Tooltip>
         <Tooltip content='New' placement='right'>
-          <EditDocumentIcon className='btn-aside md:size-6 size-7'
+          <EditDocumentIcon className='btn-aside'
           onClick={() => {
             setStep(ChatStep.NEW);
             onClose();}}
@@ -98,7 +98,7 @@ const filteredChatrooms = React.useMemo(() => {
       </div>
       <Button
       aria-label='Quick search'
-      className='border-none justify-start md:text-medium text-lg'
+      className='border-none justify-start'
       endContent={
         <Kbd
         className='hidden text-xs rounded-full py-0.5 px-1.5 lg:inline-block'
@@ -178,7 +178,6 @@ const filteredChatrooms = React.useMemo(() => {
             name={user?.name}
             src={user?.profile}
             alt={user?.name}
-            className='size-9'
           />
           {user?.name}
         </div>

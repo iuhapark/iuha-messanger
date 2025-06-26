@@ -9,10 +9,10 @@ export default function EmptyChatView({ isOpen, onOpen }: { isOpen: boolean; onO
     <div className='chat-room text-center text-gray-500 dark:text-gray-400'>
     <div className='message-header'>
     {!isOpen && (
-      <div className='md:hidden block'>
+      <div className='md:hidden'>
         <Tooltip content='Open' placement='right'>
-          <button className='btn-aside pl-3' onClick={onOpen}>
-            <DrawerIcon className='md:size-6 size-7' />
+          <button className='btn-aside' onClick={onOpen}>
+            <DrawerIcon />
           </button>
         </Tooltip>
       </div>

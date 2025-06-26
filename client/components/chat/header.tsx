@@ -13,7 +13,7 @@ const MessageHeader = ({ receiver, onOpen, isOpen }: Receiver) => (
     {!isOpen && (
       <div className='flex md:hidden'>
         <Tooltip content='Open' placement='right'>
-          <button className='btn-aside pl-3' onClick={onOpen}>
+          <button className='btn-aside' onClick={onOpen}>
             <PrevArrowIcon />
           </button>
         </Tooltip>

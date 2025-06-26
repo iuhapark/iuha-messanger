@@ -42,7 +42,7 @@ const ChatPage = () => {
   };
 
     const drawerToggle = (
-    <div className='z-10 px-[0.8rem] absolute md:static bg-transparent md:bg-transparent md:block hidden'
+    <div className='z-10 absolute md:static bg-transparent md:bg-transparent md:block hidden'
          style={{ backgroundColor: 'var(--aside-background)' }}>
       <div className='chat-header'>
         <Tooltip content='Open' placement='right'>
