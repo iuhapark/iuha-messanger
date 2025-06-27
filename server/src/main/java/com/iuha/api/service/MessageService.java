@@ -30,6 +30,7 @@ public interface MessageService {
                 .sender(UserDto.builder()
                         .id(message.getSender().getId())
                         .name(message.getSender().getName())
+                        .username(message.getSender().getUsername())
                         .profile(message.getSender().getProfile())
                         .build())
                 .type(message.getType())
