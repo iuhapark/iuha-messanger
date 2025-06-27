@@ -5,7 +5,7 @@ RUN ./gradlew :server:bootJar -x test
 
 FROM openjdk:17-alpine
 RUN mkdir /app
-COPY --from=builder /gradle/server/build/libs/*.jar /app/app.jar
+COPY --from=builder /server/build/libs/*.jar /app/app.jar
 COPY server/src/main/resources/application.yml /app/application.yml
 ARG PROFILE
 EXPOSE 8761
