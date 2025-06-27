@@ -33,8 +33,8 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
-      label: 'Account',
-      href: '/account',
+      label: 'Profile',
+      href: '/profile',
     },
     {
       label: 'Friends',

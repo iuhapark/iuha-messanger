@@ -25,8 +25,12 @@ const AvatarProps = ({ initUser }: { initUser: User | null }) => {
   });
 
   return (
-    <Dropdown>
-      <DropdownTrigger>
+    <Dropdown >
+      <DropdownTrigger
+        style={{
+         backgroundColor: 'var(--bubble-color)',
+        }}
+      >
         <Avatar
           showFallback
           name={user?.name}

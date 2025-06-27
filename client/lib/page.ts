@@ -1,7 +1,7 @@
 export const enum PAGE {
     USER = '/users',
     CHAT = '/chat',
-    ACCOUNT = '/account',
+    PROFILE = '/profile',
     FRIENDS = '/friends',
     SETTINGS = '/settings',
     SIGNIN = '/sign-in',

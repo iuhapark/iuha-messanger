@@ -8,7 +8,7 @@ const AccountNavTabs = () => {
 
   const filtered = siteConfig.navMenuItems.filter(
     (item): item is { label: string; href: string } =>
-      !!item.href && ['/account', '/friends', '/settings'].includes(item.href)
+      !!item.href && ['/profile', '/friends', '/settings'].includes(item.href)
   );
 
   return (

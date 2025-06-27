@@ -10,16 +10,12 @@ import { Avatar, Button, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@h
 import { usePress } from "@react-aria/interactions";
 import { isAppleDevice } from "@react-aria/utils";
 import React, { useEffect, useState } from "react";
-import AuthButton from "../auth/auth-button";
 import { DrawerIcon, EditDocumentIcon } from "../icons/icons";
 import { SearchLinearIcon } from "../icons/linear/search";
+import AvatarProps from "../user/avatar";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
-  <div
-    className='listbox'
-  >
-    {children}
-  </div>
+  <div className='listbox'>{children}</div>
 );
 
 const RoomList = ({
@@ -33,7 +29,7 @@ const RoomList = ({
   const { user, loading } = useAuth();
   const myId = user?.id;
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [commandKey, setCommandKey] = useState<"ctrl" | "command">("command");
+  const [commandKey, setCommandKey] = useState<'ctrl' | 'command'>('command');
 
   /* 채팅방 로딩 */
   useEffect(() => {
@@ -51,28 +47,26 @@ const RoomList = ({
     fetchRooms();
   }, [refresh, loading, user]);
 
-const filteredChatrooms = React.useMemo(() => {
-  if (!searchQuery.trim()) return rooms;
+  const filteredChatrooms = React.useMemo(() => {
+    if (!searchQuery.trim()) return rooms;
 
-  const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase();
 
-  return rooms.filter((room) => {
-    const matchesParticipant = room.participants
-      .filter((u) => u.id !== myId)
-      .some((user) =>
-        user.name.toLowerCase().includes(q) ||
-        user.username.toLowerCase().includes(q)
-      );
+    return rooms.filter((room) => {
+      const matchesParticipant = room.participants
+        .filter((u) => u.id !== myId)
+        .some((user) =>
+          user.name.toLowerCase().includes(q) ||
+          user.username.toLowerCase().includes(q)
+        );
 
-    const matchesLastMessage = room.lastMessage?.toLowerCase().includes(q);
+      const matchesLastMessage = room.lastMessage?.toLowerCase().includes(q);
 
-    return matchesParticipant || matchesLastMessage;
-  });
+      return matchesParticipant || matchesLastMessage;
+    });
   }, [rooms, searchQuery, myId]);
   
-  const handleOpenSearch = () => {
-    
-  };
+  const handleOpenSearch = () => {};
 
   const {pressProps} = usePress({
     onPress: handleOpenSearch,
@@ -89,36 +83,38 @@ const filteredChatrooms = React.useMemo(() => {
           <DrawerIcon className='btn-aside' onClick={onClose} />
         </Tooltip>
         <Tooltip content='New' placement='right'>
-          <EditDocumentIcon className='btn-aside'
-          onClick={() => {
-            setStep(ChatStep.NEW);
-            onClose();}}
+          <EditDocumentIcon
+            className='btn-aside'
+            onClick={() => {
+              setStep(ChatStep.NEW);
+              onClose();
+            }}
           />
         </Tooltip>
       </div>
-      <Button
-      aria-label='Quick search'
-      className='border-none justify-start'
-      endContent={
-        <Kbd
-        className='hidden text-xs rounded-full py-0.5 px-1.5 lg:inline-block'
-        keys={commandKey}
+      {/* <Button
+        aria-label='Quick search'
+        className='border-none justify-start'
+        endContent={
+          <Kbd
+            className='hidden text-xs rounded-full py-0.5 px-1.5 lg:inline-block'
+            keys={commandKey}
+          >
+            K
+          </Kbd>
+        }
+        startContent={
+          <SearchLinearIcon
+            className='text-base text-default-400 pointer-events-none flex-shrink-0'
+            size={16}
+            strokeWidth={2}
+          />
+        }
+        onPress={handleOpenSearch}
+        variant='bordered'
       >
-        K
-      </Kbd>
-      }
-      startContent={
-        <SearchLinearIcon
-          className='text-base text-default-400 pointer-events-none flex-shrink-0'
-          size={16}
-          strokeWidth={2}
-        />
-      }
-      onPress={handleOpenSearch}
-      variant='bordered'
-    >
-      Search
-    </Button>
+        Search
+      </Button> */}
       {/* <Input
         className='px-3'
         aria-label='Search'
@@ -143,28 +139,28 @@ const filteredChatrooms = React.useMemo(() => {
                 {room.participants
                   .filter((user: User) => user.id !== myId)
                   .map((user: User) => (
-                  <div key={user.id} className='rooms flex items-center md:min-h-[3rem] min-h-[4rem]'>
-                    <Avatar
-                      showFallback
-                      name={user.name}
-                      src={user.profile}
-                      alt={user.name}
-                      className='aside-avatar flex-shrink-0'
-                    />
-                    <div className='flex flex-col justify-center gap-1 px-2 overflow-hidden'>
-                      <div className='truncate md:text-[0.9rem] text-[1.1rem]'>{user.name}</div>
-                      <div
-                        className='md:text-[0.8rem] text-[0.9rem] leading-tight max-h-[2.5rem] overflow-hidden text-default-400'
-                        style={{
-                          display: '-webkit-box',
-                          WebkitLineClamp: 1,
-                          WebkitBoxOrient: 'vertical'
-                        }}
-                      >
-                      {room.lastMessage}
+                    <div key={user.id} className='rooms flex items-center md:min-h-[3rem] min-h-[4rem]'>
+                      <Avatar
+                        showFallback
+                        name={user.name}
+                        src={user.profile}
+                        alt={user.name}
+                        className='aside-avatar flex-shrink-0'
+                      />
+                      <div className='flex flex-col justify-center gap-1 px-2 overflow-hidden'>
+                        <div className='truncate md:text-[0.9rem] text-[1.1rem]'>{user.name}</div>
+                        <div
+                          className='md:text-[0.8rem] text-[0.9rem] leading-tight max-h-[2.5rem] overflow-hidden text-default-400'
+                          style={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 1,
+                            WebkitBoxOrient: 'vertical'
+                          }}
+                        >
+                        {room.lastMessage}
+                        </div>
                       </div>
                     </div>
-                  </div>
                   ))}
               </Skeleton>
             </ListboxItem>
@@ -172,17 +168,9 @@ const filteredChatrooms = React.useMemo(() => {
         </Listbox>
       </div>
       <footer className='chat-footer'>
-        <div className='flex items-center gap-5 md:text-md text-lg font-semibold'>
-          <Avatar
-            showFallback
-            name={user?.name}
-            src={user?.profile}
-            alt={user?.name}
-          />
+        <div className='flex items-center gap-4 text-sm font-semibold'>
+          <AvatarProps initUser={user}/>
           {user?.name}
-        </div>
-        <div className='flex-[2] flex justify-end'>
-          <AuthButton initUser={user} />
         </div>
       </footer>
     </ListboxWrapper>

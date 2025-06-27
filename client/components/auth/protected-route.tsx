@@ -12,11 +12,11 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if (!loading && !user) {
-      addToast({
-        title: 'Sign in Required',
-        description: 'Redirecting to the sign in page.',
-        icon: 'warning',
-      })
+      // addToast({
+      //   title: 'Sign in Required',
+      //   description: 'Redirecting to the sign in page.',
+      //   icon: 'warning',
+      // })
       router.replace('/sign-in')
     }
   }, [loading, user, router])

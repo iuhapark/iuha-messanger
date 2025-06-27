@@ -69,7 +69,6 @@ const ChatPage = () => {
             onSelectChatroom={() => {}} />
         </div>
       ) : drawerToggle}
-      {/* <DrawerProps /> */}
       <div className={`content-wrapper ${isOpen ? 'md:ml-auto' : ''}`}>
         {content()}
       </div>

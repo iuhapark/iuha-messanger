@@ -22,6 +22,7 @@ export default function AuthButton({ initUser }: { initUser: User | null }) {
       radius='full'
       href={siteConfig.navItems.find(item => item.label === 'Sign in')?.href}
       variant='flat'
+      className='md:w-auto w-18 md:h-9 text-xs'
     >
       Sign in
     </Button>
@@ -32,7 +33,7 @@ export default function AuthButton({ initUser }: { initUser: User | null }) {
       // size='sm'
       radius='full'
       onPress={logout}
-      className='md:w-auto w-18 md:h-9 md:text-xs text-md'
+      className='md:w-auto w-18 md:h-9 text-xs'
     >
       Sign out
     </Button>

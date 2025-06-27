@@ -121,7 +121,7 @@
   display: flex;
   align-items: center;
   background-color: var(--background);
-  padding-top: 0.5rem;
+  padding-block: 0.5rem;
 
   .input-wrapper {
     display: flex;

@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState, useMemo } from "react";
 import api from "@/lib/api";
-import { User, UserListProps } from "@/types/index";
 import { ChatStep } from "@/types/data";
+import { User, UserListProps } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
-import { useAuth } from "@/context/authContext";
-import { Listbox, ListboxItem, Avatar, Modal, useDisclosure, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@heroui/react";
+import { Avatar, Listbox, ListboxItem, Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
+import { useEffect, useState } from "react";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   <div>
@@ -20,19 +19,18 @@ type Props = UserListProps & {
 
 const UserSelect = ({ setStep, onSelect, isOpen, onClose }: Props) => {
   const [receivers, setReceivers] = useState<User[]>([]);
-  const { user } = useAuth();
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
 
+  const fetchUsers = async () => {
+    try {
+      const res = await api.get(`/users/user-list?page=0&size=1000`);
+      setReceivers(res.data.content);
+    } catch (err) {
+      parseAPIError(err);
+    }
+  };
+
   useEffect(() => {
-    if (!user || !user.id) return;
-    const fetchUsers = async () => {
-      try {
-        const res = await api.get('/users/user-list');
-        setReceivers(res.data);
-      } catch (err) {
-        parseAPIError(err);
-      }
-    };
     fetchUsers();
   }, []);
 
@@ -65,7 +63,7 @@ const UserSelect = ({ setStep, onSelect, isOpen, onClose }: Props) => {
     >
       <ModalContent>
       <ModalHeader className="flex flex-col gap-1">
-        Select a friend
+        <p>{receivers.length} users</p>
       </ModalHeader>
       <ModalBody>
         <ListboxWrapper>
@@ -86,7 +84,7 @@ const UserSelect = ({ setStep, onSelect, isOpen, onClose }: Props) => {
           >
             {(item) => (
               <ListboxItem key={item.id} textValue={item.name}>
-                <div className='flex gap-2 items-center'>
+                <div className='flex items-center'>
                   <Avatar alt={item.name} className='flex-shrink-0' size='sm' src={item.profile} />
                   <div className='flex flex-col'>
                     <span className='text-small'>{item.name}</span>

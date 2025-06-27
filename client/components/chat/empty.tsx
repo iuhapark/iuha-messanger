@@ -1,7 +1,7 @@
 'use client'
 
 import { Tooltip } from "@heroui/react";
-import { DrawerIcon, PrevArrowIcon } from "../icons/icons";
+import { DrawerIcon } from "../icons/icons";
 
 export default function EmptyChatView({ isOpen, onOpen }: { isOpen: boolean; onOpen: () => void; }) {
   

@@ -16,18 +16,18 @@
 .message-header {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   gap: 0.5rem;
   background-color: var(--background);
 }
 
 .chat-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   text-align: center;
   align-items: center;
   gap: 0.5rem;
-  padding-block: 0.8rem;
+  padding: 1rem;
 }
 
 .btn-aside {
