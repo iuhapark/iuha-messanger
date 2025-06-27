@@ -34,7 +34,7 @@ jobs:
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: ./gradlew bootJar
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
@@ -62,10 +62,8 @@ jobs:
 
       - name: make application.yml
         run: |
-          cd ./src/main/resources
-          touch ./application.yml
+          mkdir -p server/src/main/resources
           echo "${{ secrets.APPLICATION_YML }}" > ./application.yml
-        working-directory: server
 
       # Gradle Build를 위한 권한 부여
       - name: Grant execute permission for gradlew
