@@ -62,7 +62,7 @@ jobs:
 
       - name: make application.yml
         run: |
-          cd server/src/main/resources
+          cd .server/src/main/resources
           touch ./application.yml
           echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > ./src/main/resources/application.yml
 
