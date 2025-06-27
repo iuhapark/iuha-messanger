@@ -74,7 +74,8 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/user").authenticated()
+                        .requestMatchers("/api/chat/**").authenticated()
+                        .requestMatchers("/api/auth/user").permitAll()
                         .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/api/**").permitAll()
                         .anyRequest().authenticated())
                 // 로그아웃 성공 시 / 주소로 이동
