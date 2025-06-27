@@ -1,18 +1,19 @@
 'use client';
 
-import { EyeFilledIcon, EyeSlashFilledIcon } from "@/components/icons/icons";
+import { EyeFilledIcon, EyeSlashFilledIcon, InformationIcon } from "@/components/icons/icons";
 import Loading from "@/components/loading/circular";
 import { useLoading } from "@/context/loadingContext";
 import api from "@/lib/api";
 import { User } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
 import { Button } from "@heroui/button";
-import { addToast, Form, Input } from "@heroui/react";
+import { addToast, Form, Input, Tooltip } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { title } from "../primitives";
+import { subtitle } from "../primitives";
 import { PAGE } from "@/lib/page";
+import clsx from "clsx";
 
 const JoinForm = () => {
   const router = useRouter();
@@ -68,8 +69,28 @@ const JoinForm = () => {
 
   return (
     loading ? <Loading /> : (
-    <div className='flex flex-col items-center justify-center h-full gap-12'>
-      <h1 className={title()}>Sign up</h1>
+    <div className='flex flex-col items-center justify-center h-full py-20'>
+      <div className='flex flex-row gap-4'>
+      <h1 className={clsx(' font-bold', subtitle())}>Sign up</h1>
+      <Tooltip 
+        placement='bottom'
+        content={
+          <div className='px-1 py-2'>
+            <div className='text-tiny'>스프링 시큐리티가 야근 중이에요. 정보는 안전하지만, </div>
+            <div className='text-tiny'>그래도 혹시 모르니까... 안 쓰던 비밀번호 쓰는 건 어때요?</div>
+            <br/>
+            <div className='text-tiny'>Your credentials are safe with Spring Security,</div>
+            <div className='text-tiny'> HTTPS, and CSRF. But hey—maybe don&apos;t reuse</div>
+            <div className='text-tiny'> an old password, just in case... 😅</div>
+          </div>
+        }
+      >
+        <button className='btn-aside'>
+          <InformationIcon />
+        </button>
+      </Tooltip>
+      </div>
+      <div className='mb-4'></div>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           isRequired

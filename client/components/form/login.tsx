@@ -5,12 +5,13 @@ import Loading from '@/components/loading/circular';
 import { useLoading } from '@/context/loadingContext';
 import { login } from '@/lib/auth';
 import { Input } from '@heroui/input';
-import { addToast, Button, Form } from '@heroui/react';
+import { addToast, Button, Form, Spacer } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { IoMdLogIn } from 'react-icons/io';
-import { title } from '../primitives';
+import { subtitle } from '../primitives';
 import { PAGE } from '@/lib/page';
+import clsx from 'clsx';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('haru');
@@ -73,8 +74,9 @@ const LoginForm = () => {
 
   return (
     loading ? <Loading /> : (
-    <div className='flex flex-col items-center justify-center h-full gap-12'>
-      <h1 className={title()}>Sign in</h1>
+    <div className='flex flex-col items-center justify-center gap-4 h-full py-20'>
+      <div className={clsx(' font-bold', subtitle())}>Hi there!</div>
+      <div className='mb-4'>Welcome to iuha, so happy to see you! 🔥</div>
       <Form onSubmit={handleLogin}>
         <Input
           isRequired
@@ -104,19 +106,27 @@ const LoginForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <Spacer y={3} />
+         <Button
+            className='btn-primary w-full h-[2rem] self-center text-sm'
+            aria-label='Google login'
+            type='submit'
+          >Login
+          </Button>
+          <Spacer y={1} />
           <Button
             startContent={<GoogleIcon />}
-            className='btn-primary h-[2rem] mt-4 self-center'
+            className='btn-secondary w-full h-[2rem] self-center text-sm'
             aria-label='Google login'
             onPress={login}
-          >
+          >Continue with Google
           </Button>
       </Form>
       <button
         type='button'
         onClick={() => router.push(PAGE.SIGNUP)}
         rel='noopener noreferrer'
-        className='text-sm text-blue-500 hover:underline mt-4 inline-block'
+        className='text-sm text-blue-500 hover:underline inline-block'
       >
         Not a member?
       </button>
