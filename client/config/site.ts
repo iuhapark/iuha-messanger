@@ -55,7 +55,7 @@ export const siteConfig = {
   ] as NavMenuItem[],
   links: {
     githubPages: 'https://iuhapark.github.io',
-    github: 'https://github.com/iuhapark',
+    github: 'https://github.com/iuhapark/iuha-messenger',
     docs: 'https://docs.google.com/presentation/d/1Nyw-CviIb-cDY1qQ5Cxgh4Fsegyy2neI31IluuQ1fLA',
     google: `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`
   },
