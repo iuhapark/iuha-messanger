@@ -7,6 +7,8 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@heroui/button";
 import Image from "next/image";
 import clsx from "clsx";
+import { Counter } from "@/components/counter";
+import { Spacer } from "@heroui/react";
 
 export default function Home() {
   return (
@@ -14,6 +16,10 @@ export default function Home() {
       <section className='relative w-[full] h-[700px] overflow-hidden flex items-center justify-center'>
         <div className='relative z-10 flex flex-col items-center justify-center gap-4 px-52 py-40 text-center'>
           <div className='inline-block max-w-xl'>
+            <div className='flex justify-center'>
+              <Counter />
+            </div>
+            <Spacer y={5} />
             <span className={title()}>It&apos;s not magic.&nbsp;</span>
             <br />
             <span className={title()}>It&apos;s&nbsp;</span>
@@ -58,13 +64,15 @@ export default function Home() {
         </div>
       </section>
       {/* <div className='absolute inset-0 z-0'>
-        <Image
-          src='/assets/img/main.png'
-          alt='main'
-          fill
-          className='mt-20 object-cover '
-          priority
-        />
+        <video
+          className='absolute inset-0 object-cover z-0'
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src='/assets/gradient.mp4' type='video/mp4' />
+        </video>
       </div> */}
     </>
   );
