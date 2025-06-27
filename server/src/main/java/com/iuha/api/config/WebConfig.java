@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://*.iuhapark.com") // prod env
+                .allowedOrigins("https://iuhapark.com", "https://www.iuhapark.com") // prod env
 //                .allowedOrigins("http://localhost:3000") // dev env
                 .allowedMethods("*")
                 .allowCredentials(true);
