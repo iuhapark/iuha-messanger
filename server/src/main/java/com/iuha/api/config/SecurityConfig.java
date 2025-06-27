@@ -67,15 +67,15 @@ public class SecurityConfig {
                 .formLogin(
 //                        form -> form.disable()
                         form -> form
-                        .loginProcessingUrl("/login")
-                        .successHandler(loginSuccessHandler)
-                        .failureHandler(loginFailureHandler)
-                        .permitAll()
+                                .loginProcessingUrl("/login")
+                                .successHandler(loginSuccessHandler)
+                                .failureHandler(loginFailureHandler)
+                                .permitAll()
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//                        .requestMatchers("/api/chat/**").authenticated()
                         .requestMatchers("/api/auth/user").permitAll()
+                        .requestMatchers("/api/chat/**").authenticated()
                         .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/api/**").permitAll()
                         .anyRequest().authenticated())
                 // 로그아웃 성공 시 / 주소로 이동
