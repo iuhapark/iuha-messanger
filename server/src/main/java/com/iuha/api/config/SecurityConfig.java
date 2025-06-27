@@ -53,11 +53,11 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
 //                    config.setAllowedOrigins(List.of("http://localhost:3000")); // dev env
-                    config.setAllowedOrigins(List.of("https://*.iuhapark.com")); // prod env
+                    config.setAllowedOrigins(List.of("https://iuhapark.com", "https://www.iuhapark.com")); // prod env
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
 //                    config.setExposedHeaders(List.of("Authorization"));
-                    config.setAllowCredentials(true);
+                    config.setAllowCredentials(true); // * 허용 안됨
                     return config;
                 }))
 //               prod env only - 모든 요청을 https로 강제
