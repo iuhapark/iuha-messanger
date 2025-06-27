@@ -7,6 +7,8 @@ import com.iuha.api.entity.dto.UserDto;
 import com.iuha.api.entity.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -40,7 +42,7 @@ public interface UserService {
     SessionUser login(LoginRequest req, HttpServletRequest request, HttpServletResponse response);
     Messenger save(UserDto dto) throws SQLException;
     Optional<User> findById(String id);
-    List<UserDto> getUsers(String id);
+    Page<UserDto> getUsers(String id, Pageable pageable);
     UserDto oauthJoin(UserDto dto);
 //    List<User> findByName(String name) throws Exception;
 }

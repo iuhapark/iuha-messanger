@@ -8,6 +8,9 @@ import com.iuha.api.repository.UserRepository;
 import com.iuha.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +28,14 @@ public class UserController {
 
     /** 사용자 목록 조회 */
     @GetMapping("/user-list")
-    public ResponseEntity<List<UserDto>> getUsers(@LoginUser SessionUser user) throws Exception {
+    public ResponseEntity<Page<UserDto>> getUsers(
+            @LoginUser SessionUser user,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "9") int size) throws Exception {
         log.info("유저 목록 조회: {}", user);
         if (user == null) throw new Exception("Session has expired.");
-        return ResponseEntity.ok(userService.getUsers(user.getId()));
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(userService.getUsers(user.getId(), pageable));
     }
 
     /** 회원가입 */

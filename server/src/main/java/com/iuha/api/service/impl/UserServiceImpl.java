@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -103,8 +105,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getUsers(String id) {
-        return userRepository.getUsers(id);
+    public Page<UserDto> getUsers(String id, Pageable pageable) {
+        return userRepository.getUsers(id, pageable);
     }
 
     private void deleteCookie(String name, HttpServletResponse response) {
