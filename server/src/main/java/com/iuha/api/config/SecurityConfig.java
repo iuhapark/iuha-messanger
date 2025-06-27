@@ -74,7 +74,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/chat/**").authenticated()
+//                        .requestMatchers("/api/chat/**").authenticated()
                         .requestMatchers("/api/auth/user").permitAll()
                         .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/login/**", "/logout/**", "/api/**").permitAll()
                         .anyRequest().authenticated())
