@@ -16,7 +16,7 @@ export default function Landing() {
           <span className={title()}>It&apos;s not magic.&nbsp;</span>
           <br />
           <span className={title()}>It&apos;s&nbsp;</span>
-          <span className={title({ color: 'violet' })}>messaging</span>
+          <span className={title({ color: 'pink' })}>messaging</span>
           <span className={title()}>.&nbsp;</span>
           <div className={subtitle({ class: 'mt-4' })}>
             Experience seamless conversations, zero delay.

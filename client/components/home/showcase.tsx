@@ -1,11 +1,10 @@
 'use client';
 
+import CarouselList from "@/components/card/carousel-list";
+import { title } from "@/components/primitives";
+import clsx from "clsx";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import CarouselList from "@/components/card/carousel-list";
-import { subtitle, title } from "@/components/primitives";
-import clsx from "clsx";
-import { Spacer } from "@heroui/react";
 
 export default function Showcase() {
   const cardRef = useRef(null);

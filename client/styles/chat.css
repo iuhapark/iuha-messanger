@@ -123,7 +123,7 @@
 
 .text-area {
   display: flex;
-  background-color: var(--background);
+  background-color: transparent;
   padding-block: 0.5rem;
   max-width: 750px;
   width: 100%;
