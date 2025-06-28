@@ -109,22 +109,29 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsers(id, pageable);
     }
 
-    private void deleteCookie(String name, HttpServletResponse response) {
-        Cookie cookie = new Cookie(name, null);
-        cookie.setPath("/");
-        cookie.setMaxAge(0); // 즉시 만료
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
-    }
+    @Transactional
+    @Override
+    public Messenger update(UserDto dto) {
+        Optional<User> optionalUser = userRepository.findById(dto.getId());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            User modifyUser = user.toBuilder()
+                    .username(dto.getUsername())
+                    .email(dto.getEmail())
+                    .name(dto.getName())
+                    .password(passwordEncoder.encode(dto.getPassword()))
+                    .profile(dto.getProfile())
+                    .build();
+            String userId = userRepository.save(modifyUser).getId();
 
-    private String getCookieValue(HttpServletRequest request, String name) {
-        if (request.getCookies() == null) return null;
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals(name)) {
-                return cookie.getValue();
-            }
+            return Messenger.builder()
+                    .message("SUCCESS ID is " + userId)
+                    .build();
+        } else {
+            return Messenger.builder()
+                    .message("FAILURE")
+                    .build();
         }
-        return null;
     }
 
 }

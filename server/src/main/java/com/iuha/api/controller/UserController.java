@@ -1,5 +1,6 @@
 package com.iuha.api.controller;
 
+import com.iuha.api.component.Messenger;
 import com.iuha.api.config.auth.LoginUser;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.entity.dto.UserDto;
@@ -31,7 +32,7 @@ public class UserController {
     public ResponseEntity<Page<UserDto>> getUsers(
             @LoginUser SessionUser user,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "9") int size) throws Exception {
+            @RequestParam(value = "size", defaultValue = "6") int size) throws Exception {
         log.info("유저 목록 조회: {}", user);
         if (user == null) throw new Exception("Session has expired.");
         Pageable pageable = PageRequest.of(page, size);
@@ -51,15 +52,10 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    /** 이름으로 사용자 조회 */
-//    @GetMapping("/{name}")
-//    public ResponseEntity<List<User>> findByName(@PathVariable("name") String name) {
-//        log.info("유저 findByName: {}", name);
-//        List<User> users = userRepository.findByName(name);
-//        if (users.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(users);
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Messenger> update(@RequestBody UserDto dto) {
+        log.info("유저 update dto: {}", dto);
+        return ResponseEntity.ok(userService.update(dto));
+    }
 
 }

@@ -39,10 +39,11 @@ public interface UserService {
                 .build();
     }
 
-    SessionUser login(LoginRequest req, HttpServletRequest request, HttpServletResponse response);
+    UserDto oauthJoin(UserDto dto);
     Messenger save(UserDto dto) throws SQLException;
+    SessionUser login(LoginRequest req, HttpServletRequest request, HttpServletResponse response);
     Optional<User> findById(String id);
     Page<UserDto> getUsers(String id, Pageable pageable);
-    UserDto oauthJoin(UserDto dto);
+    Messenger update(UserDto dto);
 //    List<User> findByName(String name) throws Exception;
 }
