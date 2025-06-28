@@ -52,8 +52,8 @@ const UserSelect = ({ setStep, onSelect, isOpen, onClose }: Props) => {
 
   return (
     <Modal
-      isDismissable={false}
-      isKeyboardDismissDisabled={true}
+      isDismissable={true}
+      isKeyboardDismissDisabled={false}
       isOpen={isOpen}
       onOpenChange={onClose}
       backdrop='transparent'

@@ -8,6 +8,7 @@ import { Message } from "@/types";
 import { parseAPIError } from "@/utils/error";
 import { Avatar } from "@heroui/react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import ModalAvatar from "../avatar/modal";
 
 const Messages = ({ roomId }: { roomId: string }) => {
   const { messages: newMessages } = useStomp(roomId);
@@ -64,12 +65,11 @@ const Messages = ({ roomId }: { roomId: string }) => {
       {allMessages.map((m, i) => (
         <div key={i} className={`message-wrapper ${m.sender?.id === userId ? 'me' : 'you'}`}>
           <div className={`user-wrapper ${m.sender?.id === userId ? 'me' : 'you'}`}>
-            <Avatar
-              isBordered
-              src={m.sender?.profile}
-              name={m.sender?.name}
-              className='avatar'
-            />
+            {m.sender && (
+              <ModalAvatar
+                user={m.sender}
+              />
+            )}
             <div>
               <div>{m.sender?.name}</div>
               <div className='text-xs' style={{ color: 'var(--text-color)' }}>{`@` + m.sender?.username}</div>

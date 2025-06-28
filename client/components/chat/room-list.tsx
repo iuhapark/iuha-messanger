@@ -6,14 +6,12 @@ import api from "@/lib/api";
 import { ChatStep } from "@/types/data";
 import { ChatRoom, ChatRoomListProps, User } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
-import { Avatar, Button, Input, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
-import { usePress } from "@react-aria/interactions";
+import { Avatar, Button, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
 import { isAppleDevice } from "@react-aria/utils";
 import React, { useEffect, useState } from "react";
 import { DrawerIcon, EditDocumentIcon } from "../icons/icons";
 import { SearchLinearIcon } from "../icons/linear/search";
-import AvatarProps from "../user/avatar";
-import Search from "./search";
+import DropdownAvatar from "../avatar/dropdown";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   <div className='listbox'>{children}</div>
@@ -169,7 +167,7 @@ const RoomList = ({
       </div>
       <footer className='chat-footer'>
         <div className='flex items-center gap-4 text-sm font-semibold'>
-          <AvatarProps initUser={user}/>
+          <DropdownAvatar initUser={user}/>
           {user?.name}
         </div>
       </footer>

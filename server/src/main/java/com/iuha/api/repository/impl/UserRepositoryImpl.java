@@ -32,6 +32,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .stream()
                 .map(u -> UserDto.builder()
                         .id(u.getId())
+                        .username(u.getUsername())
                         .name(u.getName())
                         .profile(u.getProfile())
                         .build())

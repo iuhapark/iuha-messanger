@@ -13,7 +13,7 @@ import {
   Link,
 } from '@heroui/react';
 
-const AvatarProps = ({ initUser }: { initUser: User | null }) => {
+const DropdownAvatar = ({ initUser }: { initUser: User | null }) => {
 
   const { user } = useAuth();
 
@@ -67,4 +67,4 @@ const AvatarProps = ({ initUser }: { initUser: User | null }) => {
   );
 };
 
-export default AvatarProps;
+export default DropdownAvatar;

@@ -16,8 +16,6 @@ import {
   Input,
   Button,
   Card,
-  CardHeader,
-  CardFooter,
   Divider,
   Form,
   Spacer,

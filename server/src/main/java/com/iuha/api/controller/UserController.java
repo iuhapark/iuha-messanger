@@ -47,9 +47,11 @@ public class UserController {
 
     /** ID로 사용자 조회 */
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> findById(@PathVariable("id") String id) {
+    public ResponseEntity<UserDto> findById(@PathVariable("id") String id) {
         log.info("유저 findById: {}", id);
-        return ResponseEntity.ok(userService.findById(id));
+        return userService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")

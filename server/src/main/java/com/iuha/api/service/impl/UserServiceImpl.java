@@ -100,8 +100,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findById(String id) {
-        return userRepository.findById(id);
+    public Optional<UserDto> findById(String id) {
+        return userRepository.findById(id).map(this::entityToDto);
     }
 
     @Override
@@ -112,26 +112,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public Messenger update(UserDto dto) {
-        Optional<User> optionalUser = userRepository.findById(dto.getId());
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            User modifyUser = user.toBuilder()
-                    .username(dto.getUsername())
-                    .email(dto.getEmail())
-                    .name(dto.getName())
-                    .password(passwordEncoder.encode(dto.getPassword()))
-                    .profile(dto.getProfile())
-                    .build();
-            String userId = userRepository.save(modifyUser).getId();
+        User user = userRepository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-            return Messenger.builder()
-                    .message("SUCCESS ID is " + userId)
-                    .build();
-        } else {
-            return Messenger.builder()
-                    .message("FAILURE")
-                    .build();
-        }
+        user.updateFromDto(dto, passwordEncoder);
+
+        return Messenger.builder()
+                .message("Your profile was updated, " + user.getUsername() + "!")
+                .build();
     }
-
 }

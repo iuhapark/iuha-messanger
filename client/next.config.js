@@ -6,3 +6,7 @@ const nextConfig = {
 module.exports = {
     nextConfig,
 };
+
+experimental: {
+  turbo: false
+}

@@ -33,7 +33,7 @@ public interface UserService {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .name(user.getName())
-                .password(user.getPassword())
+//                .password(user.getPassword())
                 .profile(user.getProfile())
                 .role(user.getRole())
                 .build();
@@ -42,7 +42,7 @@ public interface UserService {
     UserDto oauthJoin(UserDto dto);
     Messenger save(UserDto dto) throws SQLException;
     SessionUser login(LoginRequest req, HttpServletRequest request, HttpServletResponse response);
-    Optional<User> findById(String id);
+    Optional<UserDto> findById(String id);
     Page<UserDto> getUsers(String id, Pageable pageable);
     Messenger update(UserDto dto);
 //    List<User> findByName(String name) throws Exception;

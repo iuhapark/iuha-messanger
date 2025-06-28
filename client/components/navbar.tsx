@@ -22,7 +22,7 @@ import { fetchSessionUser } from "@/lib/user";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/react";
 import { SearchLinearIcon } from "./icons/linear/search";
-import AvatarProps from "./user/avatar";
+import DropdownAvatar from "./avatar/dropdown";
 
 const Navbar = async () => {
   const user = await fetchSessionUser();
@@ -98,7 +98,7 @@ const Navbar = async () => {
           className='flex gap-0.5 items-center h-10 px-2 border-1 border-default-200 rounded-full text-default-600 dark:text-default-500'
         />
         <NavbarItem className='hidden md:flex'>
-          <AvatarProps initUser={user} />
+          <DropdownAvatar initUser={user} />
         </NavbarItem>
       </NavbarContent>
 
