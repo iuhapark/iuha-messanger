@@ -1,11 +1,13 @@
 'use client';
 
 import UserList from '@/components/user/list';
-import { Card, CardBody, CardFooter, CardHeader, Divider, Pagination } from '@heroui/react';
+import { Card, CardBody, Pagination } from '@heroui/react';
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import { User } from '@/types';
 import { parseAPIError } from '@/utils/error';
+import clsx from 'clsx';
+import { subtitle } from '@/components/primitives';
 
 export default function FriendsPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -29,24 +31,26 @@ export default function FriendsPage() {
   }, [page]);
 
   return (
-    <Card className='md:w-[480px] w-[90vw] p-3' style={{ backgroundColor: 'var(--aside-background)' }}>
-      <CardHeader className='flex gap-3'>
-        <h1 className='text-lg font-semibold'>{total} users</h1>
-      </CardHeader>
-      <Divider />
+  <div className='max-w-md w-[280px] flex flex-col items-center justify-center gap-4 py-10'>
+    <div className={clsx('font-bold', subtitle())}>Users of iuha</div>
+    <div className='self-start text-sm text-default-600'>{total} users</div>
+
+    <Card className='w-full min-h-[356px] border' style={{ backgroundColor: 'var(--aside-background)' }}>
       <CardBody>
         <UserList users={users} />
       </CardBody>
-      <CardFooter className='flex justify-center'>
-        <Pagination
-          initialPage={1}
-          page={page}
-          total={totalPages}
-          showControls
-          color='default'
-          onChange={setPage}
-        />
-      </CardFooter>
     </Card>
+
+    <Card className='w-full h-12 border bg-transparent flex items-center justify-center'>
+      <Pagination
+        initialPage={1}
+        page={page}
+        total={totalPages}
+        showControls
+        color='primary'
+        onChange={setPage}
+      />
+    </Card>
+  </div>
   );
 }

@@ -17,7 +17,7 @@ const UserList = ({ users }: { users: User[] }) => {
                 />
                 <span className='font-medium'>{user.name}</span>
               </div>
-              <Button color='default' size='sm' radius='full' variant='solid'>Talk</Button>
+              <Button color='default' size='sm' radius='full' variant='solid'>Follow</Button>
             </div>
           </ListboxItem>
         ))}

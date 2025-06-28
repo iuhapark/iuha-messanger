@@ -57,13 +57,15 @@ const UserSelect = ({ setStep, onSelect, isOpen, onClose }: Props) => {
       isOpen={isOpen}
       onOpenChange={onClose}
       backdrop='transparent'
+      className='overflow-auto'
+      placement='center'
       style={{
         backgroundColor: 'var(--aside-background)',
+        maxHeight: '600px'
       }}
     >
       <ModalContent>
       <ModalHeader className="flex flex-col gap-1">
-        <p>{receivers.length} users</p>
       </ModalHeader>
       <ModalBody>
         <ListboxWrapper>

@@ -6,13 +6,14 @@ import api from "@/lib/api";
 import { ChatStep } from "@/types/data";
 import { ChatRoom, ChatRoomListProps, User } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
-import { Avatar, Button, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
+import { Avatar, Button, Input, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
 import { usePress } from "@react-aria/interactions";
 import { isAppleDevice } from "@react-aria/utils";
 import React, { useEffect, useState } from "react";
 import { DrawerIcon, EditDocumentIcon } from "../icons/icons";
 import { SearchLinearIcon } from "../icons/linear/search";
 import AvatarProps from "../user/avatar";
+import Search from "./search";
 
 export const ListboxWrapper = ({ children }: { children: React.ReactNode }) => (
   <div className='listbox'>{children}</div>
@@ -65,12 +66,6 @@ const RoomList = ({
       return matchesParticipant || matchesLastMessage;
     });
   }, [rooms, searchQuery, myId]);
-  
-  const handleOpenSearch = () => {};
-
-  const {pressProps} = usePress({
-    onPress: handleOpenSearch,
-  });
 
   useEffect(() => {
     setCommandKey(isAppleDevice() ? 'command' : 'ctrl');
@@ -92,7 +87,7 @@ const RoomList = ({
           />
         </Tooltip>
       </div>
-      {/* <Button
+      <Button
         aria-label='Quick search'
         className='border-none justify-start'
         endContent={
@@ -108,13 +103,18 @@ const RoomList = ({
             className='text-base text-default-400 pointer-events-none flex-shrink-0'
             size={16}
             strokeWidth={2}
+            onClick={() => {
+              setStep(ChatStep.SEARCH);
+              onClose();
+            }}
           />
         }
-        onPress={handleOpenSearch}
         variant='bordered'
       >
         Search
-      </Button> */}
+      </Button>
+      
+      {/* 기존 Search */}
       {/* <Input
         className='px-3'
         aria-label='Search'

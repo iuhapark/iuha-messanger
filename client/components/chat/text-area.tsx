@@ -42,6 +42,7 @@ const TextArea = ({ id, participants, lastMessage, onRefresh, isLocal = false }:
   };
 
   return (
+  <div className='w-full flex justify-center md:p-0 px-1'>
     <div className='text-area'>
       <form className='input-wrapper' onSubmit={handleSubmit}>
         <input
@@ -55,6 +56,7 @@ const TextArea = ({ id, participants, lastMessage, onRefresh, isLocal = false }:
         <button type='submit' className='btn-primary px-2.5'><UpArrowIcon /></button>
       </form>
     </div>
+  </div>
   );
 };
 

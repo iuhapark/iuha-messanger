@@ -4,6 +4,7 @@ import ProtectedRoute from "@/components/auth/protected-route";
 import EmptyChatView from "@/components/chat/empty";
 import Room from "@/components/chat/room";
 import RoomList from "@/components/chat/room-list";
+import Search from "@/components/chat/search";
 import { DrawerIcon } from "@/components/icons/icons";
 import UserSelect from "@/components/user/user-select";
 import { ChatStep } from "@/types/data";
@@ -34,6 +35,9 @@ const ChatPage = () => {
     if (step === ChatStep.NEW) {
       return <UserSelect onSelect={(room) => { onSelect(room); onRefresh(); }} setStep={setStep} isOpen={true}
         onClose={() => setStep(ChatStep.READY)}/>;
+    }    
+    if (step === ChatStep.SEARCH) {
+      return <Search />;
     }
     if (step === ChatStep.READY && room) {
       return <Room {...room} onRefresh={onRefresh} isOpen={isOpen} onOpen={() => setIsOpen(true)} />;
@@ -58,7 +62,7 @@ const ChatPage = () => {
     <ProtectedRoute>
     <div className='chat-page'>
       {isOpen ? (
-        <div className='z-10 absolute md:static w-full md:max-w-[240px] h-full'>
+        <div className='z-10 absolute md:static w-full max-w-[240px] h-full'>
           <RoomList
             onSelect={onSelect}
             setStep={setStep}

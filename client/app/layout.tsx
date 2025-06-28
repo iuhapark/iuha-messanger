@@ -9,6 +9,7 @@ import { AuthProvider } from "@/context/authContext";
 import { LoadingProvider } from "@/context/loadingContext";
 import { fetchSessionUser } from "@/lib/user";
 import { Providers } from "./providers";
+import { Link } from "@heroui/link";
 
 export const metadata: Metadata = {
   title: {

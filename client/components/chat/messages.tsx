@@ -60,7 +60,7 @@ const Messages = ({ roomId }: { roomId: string }) => {
     [dummyLoaded, dbMessages, newMessages]);
 
   return (
-    <div className='messages p-[1rem] md:auto'>
+    <div className='messages'>
       {allMessages.map((m, i) => (
         <div key={i} className={`message-wrapper ${m.sender?.id === userId ? 'me' : 'you'}`}>
           <div className={`user-wrapper ${m.sender?.id === userId ? 'me' : 'you'}`}>

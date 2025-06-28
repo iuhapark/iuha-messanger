@@ -66,12 +66,22 @@ const Navbar = async () => {
         justify='end'
       >
         <NavbarItem>
-          <NextLink
+          <Link
+            isExternal
+            color='foreground'
+            href={siteConfig.navItems.find(i => i.label === 'Chat')?.href}
+          >
+            Chat
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            isExternal
             color='foreground'
             href={siteConfig.links.githubPages}
           >
             Blog
-          </NextLink>
+          </Link>
         </NavbarItem>
         <Divider className='h-7 hidden lg:flex' orientation='vertical' />
         <NavbarItem className='hidden lg:flex'>{searchInput}</NavbarItem>

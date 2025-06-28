@@ -13,7 +13,6 @@ const Room = ({ id, participants, lastMessage, onRefresh, isOpen, onOpen }: Chat
       {receiver && <MessageHeader receiver={receiver} onOpen={onOpen} isOpen={isOpen} />}
       <Messages roomId={id} />
       <TextArea id={id} participants={participants} lastMessage={lastMessage} onRefresh={onRefresh} />
-
     </div>
   );
 };

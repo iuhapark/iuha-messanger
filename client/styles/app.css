@@ -31,7 +31,6 @@
 .btn-group {
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
   gap: 0.5rem;
 }
 
@@ -40,4 +39,16 @@
   &:hover {
     background-color: var(--hover-bg); 
   }
+}
+
+.carousel-container {
+  padding-left: 24px;
+}
+
+.carousel-visual {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 357 / 390;
 }
