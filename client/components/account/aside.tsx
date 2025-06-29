@@ -52,17 +52,17 @@ export default function Account() {
   if (loading) return <Loading />;
 
   return (
-    <div className='flex flex-col max-h-[74vh] h-full'>
-      <Card className='panel flex-[1]'>
-        <Avatar name={me?.username} src={me?.profile} alt={me?.name} className='size-16' />
+    <div className='flex flex-col h-full'>
+      <Card className='panel md:flex-[1.5]'>
+        <Avatar name={me?.username} src={me?.profile} alt={me?.name} className='size-16 mb-4' />
         <p className='text-md font-bold'>{me?.name}</p>
         <p className='text-sm text-default-600'>{me?.email}</p>
       </Card>
 
       <Spacer y={4} />
 
-      <Card className='panel flex-[3]'>
-        <div className='flex flex-col gap-5'>
+      <Card className='panel md:flex-[4]'>
+        <div className='flex flex-col gap-5 items-start'>
           <Link
             title='personal information'
             href={siteConfig.navAccountItems.find((i) => i.label === 'Information')?.href}

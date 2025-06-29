@@ -26,8 +26,8 @@ const Folloing = () => {
   }, [page]);
 
   return (
-    <Card className='follower h-[750px]'>
-      <Switch
+    <Card className='follower'>
+      {/* <Switch
         className='mb-4'
         size='sm'
         color='success'
@@ -35,7 +35,7 @@ const Folloing = () => {
         onValueChange={setIsVertical}
       >
         {isVertical ? 'Vertical view' : 'Horizontal view'}
-      </Switch>
+      </Switch> */}
 
       <Tabs
         aria-label='Options'
@@ -43,7 +43,7 @@ const Folloing = () => {
         variant='underlined'
         fullWidth
         classNames={{
-          panel: 'h-[660px] overflow-hidden',
+          panel: 'overflow-hidden',
         }}
       >
         <Tab key='followers' title='Followers'>

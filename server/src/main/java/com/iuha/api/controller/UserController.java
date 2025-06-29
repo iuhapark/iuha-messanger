@@ -32,7 +32,7 @@ public class UserController {
     public ResponseEntity<Page<UserDto>> getUsers(
             @LoginUser SessionUser user,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) throws Exception {
+            @RequestParam(value = "size", defaultValue = "20") int size) throws Exception {
         log.info("유저 목록 조회: {}", user);
         if (user == null) throw new Exception("Session has expired.");
         Pageable pageable = PageRequest.of(page, size);
