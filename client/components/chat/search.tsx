@@ -49,7 +49,6 @@ const Search = ({ isOpen, onClose, rooms, myId, onSelect }: Props) => {
             <ModalHeader>Search</ModalHeader>
             <ModalBody>
               <Input
-                autoFocus
                 isClearable
                 aria-label='Search'
                 placeholder='Search chats...'
