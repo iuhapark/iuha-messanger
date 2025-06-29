@@ -1,6 +1,7 @@
 'use client';
 
-import UserList from "@/components/user/user-list";
+import ProtectedRoute from "@/components/auth/protected-route";
+import UserScroll from "@/components/user/list/scroll";
 import api from "@/lib/api";
 import { User } from "@/types";
 import { parseAPIError } from "@/utils/error";
@@ -26,38 +27,30 @@ const Folloing = () => {
   }, [page]);
 
   return (
-    <Card className='follower'>
-      {/* <Switch
-        className='mb-4'
-        size='sm'
-        color='success'
-        isSelected={isVertical}
-        onValueChange={setIsVertical}
-      >
-        {isVertical ? 'Vertical view' : 'Horizontal view'}
-      </Switch> */}
-
-      <Tabs
-        aria-label='Options'
-        isVertical={isVertical}
-        variant='underlined'
-        fullWidth
-        classNames={{
-          panel: 'overflow-hidden',
-        }}
-      >
-        <Tab key='followers' title='Followers'>
-          <div className='h-full'>
-            <UserList />
-          </div>
-        </Tab>
-        <Tab key='following' title='Following'>
-          <div className='h-full'>
-            <UserList />
-          </div>
-        </Tab>
-      </Tabs>
-    </Card>
+    <ProtectedRoute>
+      <Card className='follower'>
+        <Tabs
+          aria-label='Options'
+          isVertical={isVertical}
+          variant='underlined'
+          fullWidth
+          classNames={{
+            panel: 'overflow-hidden',
+          }}
+        >
+          <Tab key='followers' title='Followers'>
+            <div className='h-full'>
+              <UserScroll />
+            </div>
+          </Tab>
+          <Tab key='following' title='Following'>
+            <div className='h-full'>
+              <UserScroll />
+            </div>
+          </Tab>
+        </Tabs>
+      </Card>
+    </ProtectedRoute>
   );
 };
 

@@ -1,6 +1,7 @@
 'use client';
 
-import UserList from '@/components/user/user-list';
+import ProtectedRoute from '@/components/auth/protected-route';
+import UserScroll from '@/components/user/list/scroll';
 import api from '@/lib/api';
 import { User } from '@/types';
 import { parseAPIError } from '@/utils/error';
@@ -29,21 +30,23 @@ export default function FriendsPage() {
   }, [page]);
 
   return (
-  <div className='flex flex-col items-center justify-center h-full'>
-    <Spacer y={20} />
-    <h1 className='text-2xl font-bold mb-4'>Friends</h1>
-      {total} users
-    <UserList />    
-    {/* <Card className='w-full h-12 border bg-transparent flex items-center justify-center'>
-      <Pagination
-        initialPage={1}
-        page={page}
-        total={totalPages}
-        showControls
-        color='primary'
-        onChange={setPage}
-      />
-    </Card> */}
-  </div>
+  <ProtectedRoute>
+    <div className='flex flex-col items-center justify-center h-full'>
+      <Spacer y={20} />
+      <h1 className='text-2xl font-bold mb-4'>Friends</h1>
+        {total} users
+      <UserScroll />    
+      {/* <Card className='w-full h-12 border bg-transparent flex items-center justify-center'>
+        <Pagination
+          initialPage={1}
+          page={page}
+          total={totalPages}
+          showControls
+          color='primary'
+          onChange={setPage}
+        />
+      </Card> */}
+    </div>
+  </ProtectedRoute>
   );
 }

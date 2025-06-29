@@ -13,14 +13,14 @@ import {
   TableRow,
 } from "@heroui/react";
 import { useEffect, useRef, useState } from "react";
-import ModalAvatar from "../avatar/modal";
-import Detail from "./detail";
+import ModalAvatar from "../../avatar/modal";
+import Detail from "../detail";
 import { useInfiniteScroll } from "@heroui/use-infinite-scroll";
 import api from "@/lib/api";
 
 const PAGE_SIZE = 20;
 
-const UserList = () => {
+const UserScroll = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const pageRef = useRef(0);
@@ -121,4 +121,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default UserScroll;

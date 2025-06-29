@@ -1,14 +1,22 @@
 'use client';
 
 import { useAuth } from "@/context/authContext";
-// import { dummyRooms } from '@/data/room';
 import api from "@/lib/api";
 import { ChatStep } from "@/types/data";
 import { ChatRoom, ChatRoomListProps, User } from "@/types/index";
 import { parseAPIError } from "@/utils/error";
-import { Avatar, Button, Kbd, Listbox, ListboxItem, Skeleton, Tooltip } from "@heroui/react";
+import {
+  Avatar,
+  Button,
+  Input,
+  Kbd,
+  Listbox,
+  ListboxItem,
+  Skeleton,
+  Tooltip,
+} from "@heroui/react";
 import { isAppleDevice } from "@react-aria/utils";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { DrawerIcon, EditDocumentIcon } from "../icons/icons";
 import { SearchLinearIcon } from "../icons/linear/search";
 import DropdownAvatar from "../avatar/dropdown";
@@ -22,48 +30,50 @@ const RoomList = ({
   onSelect,
   refresh,
   onClose,
-}: ChatRoomListProps & { setStep: (step: ChatStep) => void; refresh: number; onClose: () => void }) => {
-
-  const [rooms, setRooms] = useState<ChatRoom[]>([]);
+  setRooms, // 상위 상태 전달 함수
+}: ChatRoomListProps & {
+  setStep: (step: ChatStep) => void;
+  refresh: number;
+  onClose: () => void;
+  setRooms: (rooms: ChatRoom[]) => void;
+}) => {
+  const [localRooms, setLocalRooms] = useState<ChatRoom[]>([]);
   const { user, loading } = useAuth();
   const myId = user?.id;
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [commandKey, setCommandKey] = useState<'ctrl' | 'command'>('command');
 
-  /* 채팅방 로딩 */
   useEffect(() => {
     if (loading || !user?.id) return;
-    // setRooms(dummyRooms);
 
     const fetchRooms = async () => {
       try {
         const res = await api.get('/chat/room-list');
-        setRooms(res.data);
+        setLocalRooms(res.data);
+        setRooms(res.data); // 상위에 전달
       } catch (err) {
         alert(parseAPIError(err));
       }
     };
     fetchRooms();
-  }, [refresh, loading, user]);
+  }, [refresh, loading, user, setRooms]);
 
-  const filteredChatrooms = React.useMemo(() => {
-    if (!searchQuery.trim()) return rooms;
-
+  const filteredChatrooms = useMemo(() => {
+    if (!searchQuery.trim()) return localRooms;
     const q = searchQuery.toLowerCase();
 
-    return rooms.filter((room) => {
+    return localRooms.filter(room => {
       const matchesParticipant = room.participants
-        .filter((u) => u.id !== myId)
-        .some((user) =>
+        .filter(u => u.id !== myId)
+        .some(user =>
           user.name.toLowerCase().includes(q) ||
           user.username.toLowerCase().includes(q)
         );
 
       const matchesLastMessage = room.lastMessage?.toLowerCase().includes(q);
-
       return matchesParticipant || matchesLastMessage;
     });
-  }, [rooms, searchQuery, myId]);
+  }, [localRooms, searchQuery, myId]);
 
   useEffect(() => {
     setCommandKey(isAppleDevice() ? 'command' : 'ctrl');
@@ -85,14 +95,12 @@ const RoomList = ({
           />
         </Tooltip>
       </div>
+
       <Button
         aria-label='Quick search'
         className='border-none justify-start'
         endContent={
-          <Kbd
-            className='hidden text-xs rounded-full py-0.5 px-1.5 lg:inline-block'
-            keys={commandKey}
-          >
+          <Kbd className='hidden text-xs rounded-full py-0.5 px-1.5 lg:inline-block' keys={commandKey}>
             K
           </Kbd>
         }
@@ -101,37 +109,19 @@ const RoomList = ({
             className='text-base text-default-400 pointer-events-none flex-shrink-0'
             size={16}
             strokeWidth={2}
-            onClick={() => {
-              setStep(ChatStep.SEARCH);
-              onClose();
-            }}
           />
         }
         variant='bordered'
+        onPress={() => {
+          setStep(ChatStep.SEARCH);
+          onClose();
+        }}
       >
         Search
       </Button>
-      
-      {/* 기존 Search */}
-      {/* <Input
-        className='px-3'
-        aria-label='Search'
-        placeholder='Search chats...'
-        value={searchQuery}
-        onValueChange={setSearchQuery}
-        variant='bordered'
-        radius='full'
-        startContent={
-        <SearchLinearIcon
-          className='text-base text-default-400 pointer-events-none flex-shrink-0'
-          size={16}
-          strokeWidth={2}
-        />
-        }
-      /> */}
       <div className='flex-1 overflow-auto'>
         <Listbox aria-label='Chats'>
-          {filteredChatrooms.map((room) => (
+          {filteredChatrooms.map(room => (
             <ListboxItem key={room.id} onClick={() => onSelect(room)}>
               <Skeleton className='rounded-full' isLoaded={!!room.participants}>
                 {room.participants
@@ -152,10 +142,10 @@ const RoomList = ({
                           style={{
                             display: '-webkit-box',
                             WebkitLineClamp: 1,
-                            WebkitBoxOrient: 'vertical'
+                            WebkitBoxOrient: 'vertical',
                           }}
                         >
-                        {room.lastMessage}
+                          {room.lastMessage}
                         </div>
                       </div>
                     </div>
@@ -167,7 +157,7 @@ const RoomList = ({
       </div>
       <footer className='chat-footer'>
         <div className='flex items-center gap-4 text-sm font-semibold'>
-          <DropdownAvatar initUser={user}/>
+          <DropdownAvatar initUser={user} />
           {user?.name}
         </div>
       </footer>

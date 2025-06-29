@@ -119,7 +119,7 @@ const Navbar = async () => {
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={
-                  index === 3 
+                  index === 1
                     ? 'primary'
                     : index === siteConfig.navMenuItems.length - 1
                       ? 'danger'

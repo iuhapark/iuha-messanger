@@ -37,7 +37,7 @@ export interface ChatRoomListProps {
   refresh: number;
   onClose: () => void;
   
-  chatrooms: ChatRoom[];
+  // chatrooms: ChatRoom[];
   selectedChatroom: ChatRoom | null;
   onSelectChatroom: (chatroom: ChatRoom) => void;
 }

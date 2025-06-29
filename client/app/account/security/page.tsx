@@ -9,6 +9,7 @@ import { addToast, Card, Spacer } from "@heroui/react";
 import { useEffect, useState } from "react";
 import EmailInput from "../../../components/input/email-intpu";
 import PasswordInput from "../../../components/input/password-input";
+import ProtectedRoute from "@/components/auth/protected-route";
 
 const Security = () => {
   const { user } = useAuth();
@@ -59,14 +60,16 @@ const Security = () => {
   if (!me) return null;
 
   return (
-    <Card className='card'>
-      <div className='text-lg font-bold'>Sign in and Security</div>
-      <Spacer y={12} />
-      <div className='flex flex-col gap-2'>
-        <EmailInput email={me.email} onUpdate={handleUpdate} />
-        <PasswordInput onUpdate={handleUpdate} />
-      </div>
-    </Card>
+    <ProtectedRoute>
+      <Card className='card'>
+        <div className='text-lg font-bold'>Sign in and Security</div>
+        <Spacer y={12} />
+        <div className='flex flex-col gap-2'>
+          <EmailInput email={me.email} onUpdate={handleUpdate} />
+          <PasswordInput onUpdate={handleUpdate} />
+        </div>
+      </Card>
+    </ProtectedRoute>
   );
 };
 

@@ -61,7 +61,7 @@ export default function Account() {
 
       <Spacer y={4} />
 
-      <Card className='panel md:flex-[4]'>
+      <Card className='panel md:min-flex-[4]'>
         <div className='flex flex-col gap-5 items-start'>
           <Link
             title='personal information'

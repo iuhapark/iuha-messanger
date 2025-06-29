@@ -8,6 +8,7 @@ import { parseAPIError } from "@/utils/error";
 import { addToast, Card, Spacer } from "@heroui/react";
 import { useEffect, useState } from "react";
 import NameInput from "../../../components/input/name-input";
+import ProtectedRoute from "@/components/auth/protected-route";
 
 const PersonalInfo = () => {
   const { user } = useAuth();
@@ -56,11 +57,13 @@ const PersonalInfo = () => {
   if (!me) return null;
 
   return (
-    <Card className='card'>
-      <div className='text-lg font-bold'>Personal Information</div>
-      <Spacer y={12} />
-      <NameInput name={me.name} onUpdate={handleUpdate} />
-    </Card>
+    <ProtectedRoute>
+      <Card className='card'>
+        <div className='text-lg font-bold'>Personal Information</div>
+        <Spacer y={12} />
+        <NameInput name={me.name} onUpdate={handleUpdate} />
+      </Card>
+    </ProtectedRoute>
   );
 };
 

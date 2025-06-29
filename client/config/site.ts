@@ -32,17 +32,17 @@ export const siteConfig = {
     },
   ],
   navMenuItems: [
-    {
-      label: 'Account',
-      href: '/account/information',
-    },
-    {
-      label: 'Friends',
-      href: '/friends',
-    },
+    // {
+    //   label: 'Account',
+    //   href: '/account/information',
+    // },
+    // {
+    //   label: 'Friends',
+    //   href: '/friends',
+    // },
     {
       label: 'Settings',
-      href: '/settings',
+      href: '/account/information',
     },
     {
       label: 'Sign in',

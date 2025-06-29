@@ -17,7 +17,7 @@ type Props = UserListProps & {
   onClose: () => void;
 };
 
-const UserSelect = ({ setStep, onSelect, isOpen, onClose }: Props) => {
+const UserModal = ({ setStep, onSelect, isOpen, onClose }: Props) => {
   const [receivers, setReceivers] = useState<User[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
 
@@ -103,4 +103,4 @@ const UserSelect = ({ setStep, onSelect, isOpen, onClose }: Props) => {
   );
 };
 
-export default UserSelect;
+export default UserModal;
