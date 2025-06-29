@@ -7,6 +7,7 @@ export const useStomp = (roomId: string) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
+    setMessages([]);
     const client = new Stomp.Client({
       brokerURL: process.env.NEXT_PUBLIC_SOCKET_URL,
       reconnectDelay: 5000,
