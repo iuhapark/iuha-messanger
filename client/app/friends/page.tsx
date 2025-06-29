@@ -29,9 +29,11 @@ export default function FriendsPage() {
   }, [page]);
 
   return (
-  <div className='flex flex-col max-h-[64vh] h-full'>
-    <UserList />
-    <Spacer y={4} />
+  <div className='flex flex-col items-center justify-center h-full'>
+    <Spacer y={20} />
+    <h1 className='text-2xl font-bold mb-4'>Friends</h1>
+      {total} users
+    <UserList />    
     {/* <Card className='w-full h-12 border bg-transparent flex items-center justify-center'>
       <Pagination
         initialPage={1}
