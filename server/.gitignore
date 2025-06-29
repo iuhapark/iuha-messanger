@@ -69,3 +69,8 @@ next-env.d.ts
 *.yml
 
 .gradle/
+**/.gradle/
+
+dump.rdb
+build
+.next/
