@@ -1,7 +1,6 @@
 package com.iuha.api.config.auth;
 
 import com.iuha.api.entity.dto.SessionUser;
-import com.iuha.api.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

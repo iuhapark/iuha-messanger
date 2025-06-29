@@ -1,0 +1,15 @@
+.panel {
+    @apply flex flex-col items-start justify-start p-10 bg-transparent border;
+}
+
+.card {
+    max-height: 74vh;
+    height: 100%;
+    @apply flex flex-col items-center justify-start p-10 bg-transparent border;
+}
+
+.follower {
+    max-height: 74vh;
+    height: 100%;
+    @apply flex flex-col items-center justify-start p-10 bg-transparent border;
+}

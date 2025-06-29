@@ -33,8 +33,8 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
-      label: 'Profile',
-      href: '/profile',
+      label: 'Account',
+      href: '/account/information',
     },
     {
       label: 'Friends',
@@ -51,6 +51,20 @@ export const siteConfig = {
     {
       label: 'Sign out',
       href: '/sign-out',
+    },
+  ] as NavMenuItem[],
+  navAccountItems: [
+    {
+      label: 'Information',
+      href: '/account/information',
+    },
+    {
+      label: 'Security',
+      href: '/account/security',
+    },
+    {
+      label: 'Folloing',
+      href: '/account/following',
     },
   ] as NavMenuItem[],
   links: {

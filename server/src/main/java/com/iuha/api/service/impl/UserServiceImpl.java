@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
         user.updateFromDto(dto, passwordEncoder);
 
         return Messenger.builder()
-                .message("Your profile was updated, " + user.getUsername() + "!")
+                .message("Change saved.")
                 .build();
     }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from "@/context/authContext";
-import { dummyRooms } from '@/data/room';
+// import { dummyRooms } from '@/data/room';
 import api from "@/lib/api";
 import { ChatStep } from "@/types/data";
 import { ChatRoom, ChatRoomListProps, User } from "@/types/index";
@@ -33,7 +33,7 @@ const RoomList = ({
   /* 채팅방 로딩 */
   useEffect(() => {
     if (loading || !user?.id) return;
-    setRooms(dummyRooms);
+    // setRooms(dummyRooms);
 
     const fetchRooms = async () => {
       try {

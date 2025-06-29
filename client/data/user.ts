@@ -1,4 +1,3 @@
-// /data/user.ts
 import { User } from "@/types";
 
 const haru: User = {

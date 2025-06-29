@@ -67,7 +67,6 @@ const Navbar = async () => {
       >
         <NavbarItem>
           <Link
-            isExternal
             color='foreground'
             href={siteConfig.navItems.find(i => i.label === 'Chat')?.href}
           >

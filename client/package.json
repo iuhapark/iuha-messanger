@@ -23,6 +23,7 @@
     "@heroui/skeleton": "2.2.12",
     "@heroui/alert": "2.2.19",
     "@heroui/react": "2.7.8",
+    "@heroui/use-infinite-scroll": "2.2.9",
     "@react-aria/ssr": "3.9.8",
     "@react-aria/visually-hidden": "3.8.22",
     "clsx": "2.1.1",
@@ -44,7 +45,8 @@
     "uuid": "^11.1.0",
     "react-hook-form": "^7.56.4",
     "react-router-dom": "^7.6.1",
-    "styled-components": "^6.1.18"
+    "styled-components": "^6.1.18",
+    "@react-stately/data": "^3.13.1"
   },
   "devDependencies": {
     "@eslint/compat": "1.2.8",

@@ -13,9 +13,8 @@ import {
   Link,
 } from '@heroui/react';
 
-const DropdownAvatar = ({ initUser }: { initUser: User | null }) => {
-
-  const { user } = useAuth();
+const DropdownAvatar = ({initUser}: {initUser: User | null}) => {
+  const {user} = useAuth();
 
   /* 로그인 여부에 따라 메뉴 필터링 */
   const filteredItems = siteConfig.navMenuItems.filter((item) => {
@@ -25,7 +24,7 @@ const DropdownAvatar = ({ initUser }: { initUser: User | null }) => {
   });
 
   return (
-    <Dropdown >
+    <Dropdown>
       <DropdownTrigger>
         <Avatar
           showFallback
@@ -40,25 +39,30 @@ const DropdownAvatar = ({ initUser }: { initUser: User | null }) => {
           const isSignOut = item.label === 'Sign out';
 
           return (
-            <DropdownItem
-              key={item.label}
-              showDivider={index === 2}
-              >
-              <Link
-              color={
-                  index === 3
-                    ? 'primary'
-                    : index === filteredItems.length - 1
-                    ? 'danger'
-                    : 'foreground'
-                }
-                href={isSignOut ? undefined : item.href}
-                onPress={isSignOut ? logout : undefined}
-                size='sm'
-                className={isSignOut ? 'text-danger' : undefined}
-              >
-              {item.label}
-            </Link>
+            <DropdownItem key={item.label} showDivider={index === 2}>
+              {item.label === 'Sign out' ? (
+                <button
+                  onClick={logout}
+                  className='text-danger text-sm w-full text-left px-2 py-1 hover:bg-danger-100 transition rounded'
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <Link
+                  href={siteConfig.navItems.find((i) => i.label === item.label)?.href || item.href}
+                  color={
+                    index === 3
+                      ? 'primary'
+                      : index === filteredItems.length - 1
+                        ? 'danger'
+                        : 'foreground'
+                  }
+                  size='sm'
+                  className='block w-full px-2 py-1 rounded hover:bg-default-100'
+                >
+                  {item.label}
+                </Link>
+              )}
             </DropdownItem>
           );
         })}

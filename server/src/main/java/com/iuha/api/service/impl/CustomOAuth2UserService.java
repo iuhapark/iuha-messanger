@@ -17,8 +17,6 @@ import com.iuha.api.entity.dto.OAuthAttributes;
 import com.iuha.api.entity.dto.SessionUser;
 import com.iuha.api.repository.UserRepository;
 
-import java.util.Collections;
-
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {

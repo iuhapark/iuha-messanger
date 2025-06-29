@@ -46,12 +46,15 @@ public class User {
     }
 
     public void updateFromDto(UserDto dto, PasswordEncoder encoder) {
-        this.username = dto.getUsername();
-        this.email = dto.getEmail();
-        this.name = dto.getName();
-        this.password = encoder.encode(dto.getPassword());
-//        this.profile = dto.getProfile();
+        if (dto.getUsername() != null) this.username = dto.getUsername();
+        if (dto.getEmail() != null) this.email = dto.getEmail();
+        if (dto.getName() != null) this.name = dto.getName();
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            this.password = encoder.encode(dto.getPassword());
+        }
+        if (dto.getProfile() != null) this.profile = dto.getProfile();
     }
+
 
 
     public String getRoleKey() {

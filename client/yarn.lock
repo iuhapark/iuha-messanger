@@ -1313,6 +1313,13 @@
     "@heroui/react-utils" "2.1.10"
     "@heroui/use-safe-layout-effect" "2.1.7"
 
+"@heroui/use-infinite-scroll@2.2.9":
+  version "2.2.9"
+  resolved "https://registry.yarnpkg.com/@heroui/use-infinite-scroll/-/use-infinite-scroll-2.2.9.tgz#8dfbdab537166e2bea88a11082d0b0f557cc7f26"
+  integrity sha512-PCd8Gx5/c6tOj1gy9hApT9y0N1LOdeFM6632fPZC8bk9xSOp02uphY2mdjNjzpMD6lz3qIKly/wzB2D2YkWgnA==
+  dependencies:
+    "@heroui/shared-utils" "2.1.9"
+
 "@heroui/use-intersection-observer@2.2.11":
   version "2.2.11"
   resolved "https://registry.yarnpkg.com/@heroui/use-intersection-observer/-/use-intersection-observer-2.2.11.tgz#f64bb951bb3af9649881f86f911e88f90f41385f"
@@ -2459,6 +2466,14 @@
     "@react-stately/select" "^3.6.14"
     "@react-stately/utils" "^3.10.7"
     "@react-types/combobox" "^3.13.6"
+    "@react-types/shared" "^3.30.0"
+    "@swc/helpers" "^0.5.0"
+
+"@react-stately/data@^3.13.1":
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/@react-stately/data/-/data-3.13.1.tgz#876042e9eb922bfcadcfd06f9e9912a76ca19b00"
+  integrity sha512-hKEvHCM/nHM6FFJz3gT6Ms85H+qNhXfHDYP/TU7XiDoeVHzUpj2Yc3xGsIty6/K2k7jrblUj+LuKmdvidd9mug==
+  dependencies:
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
