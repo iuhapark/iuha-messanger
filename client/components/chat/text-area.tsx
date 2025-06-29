@@ -43,7 +43,7 @@ const TextArea = ({ id, participants, lastMessage, onRefresh, isLocal = false }:
 
   return (
   <div className='w-full flex justify-center md:p-0 px-1'>
-    <div className='text-area'>
+    <div className='text-area md:px-auto px-1'>
       <form className='input-wrapper' onSubmit={handleSubmit}>
         <input
           ref={inputRef}

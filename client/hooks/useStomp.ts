@@ -1,23 +1,23 @@
 import { useEffect, useRef, useState } from "react";
-import * as Stomp from "@stomp/stompjs";
-import { Message } from "@/types/index";
+import { Client } from "@stomp/stompjs";
+import { Message } from "@/types";
 
 export const useStomp = (roomId: string) => {
-  const clientRef = useRef<Stomp.Client | null>(null);
-  const subscriptionRef = useRef<Stomp.Subscription | null>(null);
+  const clientRef = useRef<Client | null>(null);
+  const subscriptionRef = useRef<ReturnType<Client['subscribe']> | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    setMessages([]); // ✅ 방 이동 시 초기화
+    setMessages([]); // 방 이동 시 메시지 초기화
 
-    const client = new Stomp.Client({
-      brokerURL: process.env.NEXT_PUBLIC_SOCKET_URL,
+    const client = new Client({
+      brokerURL: process.env.NEXT_PUBLIC_SOCKET_URL!,
       reconnectDelay: 5000,
       onConnect: () => {
-        if (subscriptionRef.current) {
-          subscriptionRef.current.unsubscribe();
-        }
+        // 기존 구독 해제
+        subscriptionRef.current?.unsubscribe();
 
+        // 새 구독 생성
         const subscription = client.subscribe(`/topic/${roomId}`, (msg) => {
           const content: Message = JSON.parse(msg.body);
           setMessages((prev) => [...prev, content]);
@@ -31,9 +31,7 @@ export const useStomp = (roomId: string) => {
     client.activate();
 
     return () => {
-      if (subscriptionRef.current) {
-        subscriptionRef.current.unsubscribe();
-      }
+      subscriptionRef.current?.unsubscribe();
       client.deactivate();
     };
   }, [roomId]);

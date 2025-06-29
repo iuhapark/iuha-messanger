@@ -51,7 +51,7 @@ const DropdownAvatar = ({initUser}: {initUser: User | null}) => {
                 <Link
                   href={siteConfig.navItems.find((i) => i.label === item.label)?.href || item.href}
                   color={
-                    index === 3
+                    index === 1
                       ? 'primary'
                       : index === filteredItems.length - 1
                         ? 'danger'

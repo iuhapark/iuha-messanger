@@ -38,7 +38,7 @@ public class ChatController {
                         .chatRoom(chatRoom)
                         .sender(sender)
                         .type(Message.MessageType.TALK)
-                        .message(HtmlUtils.htmlEscape(dto.getMessage()))
+                        .message(dto.getMessage())
                         .timestamp(LocalDateTime.now())
                         .build()
         );
