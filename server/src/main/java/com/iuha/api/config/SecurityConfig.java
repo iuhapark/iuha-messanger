@@ -62,16 +62,12 @@ public class SecurityConfig {
                 }))
 //               prod env only - 모든 요청을 https로 강제
                 .requiresChannel(channel ->
-                        channel.anyRequest().requiresSecure()
-                )
-                .formLogin(
-//                        form -> form.disable()
-                        form -> form
+                        channel.anyRequest().requiresSecure())
+                .formLogin(form -> form
                                 .loginProcessingUrl("/login")
                                 .successHandler(loginSuccessHandler)
                                 .failureHandler(loginFailureHandler)
-                                .permitAll()
-                )
+                                .permitAll())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
